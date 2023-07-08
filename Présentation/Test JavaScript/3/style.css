@@ -1,0 +1,12 @@
+.texte
+{
+    font-size: 50px;
+    border-bottom: 4px double blue;
+    width: fit-content;
+}
+
+.couleur
+{
+    color: blue;
+}
+

@@ -1,0 +1,61 @@
+#super_section_box
+{
+    text-align: center;
+    color: #2e2e2e;
+    padding-top: 52px;
+}
+
+header
+{
+    font-size:25px;
+    font-weight: bolder;
+}
+
+#super_list_box
+{
+    margin: 131px;
+    position: relative;
+    top: -53px;
+}
+
+
+#super_list_box ul
+{
+    display: flex;
+    list-style-type: none;
+    gap: 32px;
+    margin-bottom: 30px;
+}
+
+div.img_box
+{
+    display: flex;
+    justify-content: center;
+}
+
+div.img
+{
+    display: flex;
+    background-color: #DD5555;
+    width: 120px;
+    height: 120px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100%;
+}
+
+#super_list_box header
+{
+    margin-top: 15px;
+    font-size: 28px;
+    font-family: "Open Sans";
+    font-weight: 600;
+}
+
+#super_list_box p
+{
+    font-size: 16px;
+    margin-top: 7px;
+    font-family: "Open Sans";
+}
+

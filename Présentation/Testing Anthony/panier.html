@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Panier</title>
+</head>
+<body>
+    <section id="main">
+
+        <header id="menu_navigation">
+            <div id="acceuil_box">
+                <button class="menu_naviguation_button">
+                    <span>Accueil</span>
+                </button>
+            </div>
+
+            <div id="panier_box">
+                <button class="menu_naviguation_button">
+                    <a href="panier.html"><span title="Vous êtes sur cette page">Panier</span></a>
+                </button>
+            </div>
+
+            <div id="titre">
+                <h1>Le guide du voyageur inter-galactique</h1>
+            </div>
+
+            <div id="logo">
+                <i class="fa-solid fa-meteor"></i>
+            </div>
+        </header>
+        
+        <main>
+            <div id="section_article">
+                <div class="article_box">
+                    <div id="no_article"></div>
+                    <div class="article">
+                        <div class="photo_produit">
+                            <div>
+                                <img src="./images/ship.jpg" alt="">
+                            </div>
+                        </div>
+                        <div class="texte_produit">
+                            <div class="nom_produit">
+                                <h2>DestroyerStellaire</h2>
+                                <div class="prix"><span class="prix_value">999998.99 </span>€</i></i></div>
+                            </div>
+                            <div class="description_produit">
+                                <p>Caractéristique technique principal : Coque en alliage ultra-résistant, propulsion supraluminique, 2 kilomètres d'envergure.</p>
+                                <p>Armement : Canons ioniques, turbolasers, torpilles à plasma modèle Nova-X ( vu sur Andor ).</p>
+                                <p>Système embarqué : Quartier de commandement, générateurs de boucliers déflecteurs, système de communication "HyperComm".</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="interaction_produit">
+                        <div class="sous_total_prix">Total pour cet article : <span class="sous_total_value">1000</span> €</div>
+                        <div class="del"><i class="fa-solid fa-minus"></i></div>
+                        <div class="quantiter" contenteditable="true">1</div>
+                        <div class="add"><i class="fa-solid fa-plus"></i></div>
+                        <div class="trash"><i class="fa-solid fa-trash"></i></div>
+                    </div>
+                </div>
+
+                <div class="article_box">
+                    <div class="article">
+                        <div class="photo_produit">
+                            <div>
+                                <img src="./images/toilette.jpg" alt="">
+                            </div>
+                        </div>
+                        <div class="texte_produit">
+                            <div class="nom_produit">
+                                <h2>StellarClean</h2>
+                                <div class="prix"><span class="prix_value">299.99</span> €</div>
+                            </div>
+                            <div class="description_produit">
+                                <p>Ultime fusion de confort et de technologie intergalactique.</p>
+                                <p>Technologie : Système de recyclage avancés, gravité artificielle ajustable, interface holographique intuitive.</p>
+                                <p>Propreté et confort sans compromis, la quintessence des commodités cosmiques !</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="interaction_produit">
+                        <div class="sous_total_prix">Total pour cet article : <span class="sous_total_value">100</span> €</div>
+                        <div class="del">
+                            <i class="fa-solid fa-minus"></i>
+                        </div>
+                        <div class="quantiter" contenteditable="true">2</div>
+                        <div class="add">
+                            <i class="fa-solid fa-plus"></i>
+                        </div>
+                        <div class="trash">
+                            <i class="fa-solid fa-trash"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="article_box">
+                    <div class="article">
+                        <div class="photo_produit">
+                            <div>
+                                <img src="./images/medical.png" alt="">
+                            </div>
+                        </div>
+                        <div class="texte_produit">
+                            <div class="nom_produit">
+                                <h2>MediKit Cosmos</h2>
+                                <div class="prix"><span class="prix_value">69.99</span> €</div>
+                            </div>
+                            <div class="description_produit">
+                                <p>Votre compagnon médical ultime idéal dans les confins de l'espace !</p>
+                                <p>Contenu : Scanner biométrique, dispositifs de diagnostic à distance, large gamme de médicaments interstellaires.</p>
+                                <p>Garantit des soins médicaux de qualité, même dans les environnements les plus extrêmes de l'univers.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="interaction_produit">
+                        <div class="sous_total_prix">Total pour cet article : <span class="sous_total_value">200</span> €</div>
+                        <div class="del">
+                            <i class="fa-solid fa-minus"></i>
+                        </div>
+                        <div class="quantiter" contenteditable="true">3</div>
+                        <div class="add">
+                            <i class="fa-solid fa-plus"></i>
+                        </div>
+                        <div class="trash">
+                            <i class="fa-solid fa-trash"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="article_box">
+                    <div class="article">
+                        <div class="photo_produit">
+                            <div>
+                                <img src="./images/tool.jpg" alt="">
+                            </div>
+                        </div>
+                        <div class="texte_produit">
+                            <div class="nom_produit">
+                                <h2>GalacticToolBox</h2>
+                                <div class="prix"><span class="prix_value">69.99</span> €</div>
+                            </div>
+                            <div class="description_produit">
+                                <p>Boite à outils tout-en-un modèle : "Interstellar", conçus spécialement pour les aventuriers de l'espace.</p>
+                                <p>Contenu : Fer à souder à plasma d'une précision extraterrestre, gants interstellaires pourvu d'une adhérence exceptionnelle, appareil magnétique gravitationnel qui défie les lois de la physique.</p>
+                                <p>Soyez prêt à affronter toutes les réparations cosmiques avec style et amusement !</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="interaction_produit">
+                        <div class="sous_total_prix">Total pour cet article : <span class="sous_total_value">300.99</span> €</div>
+                        <div class="del">
+                            <i class="fa-solid fa-minus"></i>
+                        </div>
+                        <div class="quantiter" contenteditable="true">4</div>
+                        <div class="add">
+                            <i class="fa-solid fa-plus"></i>
+                        </div>
+                        <div class="trash">
+                            <i class="fa-solid fa-trash"></i>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+
+            <div id="total_separateur_box">
+                <div id="separateur"></div>
+                <div id="total">
+                    <span id="return"><i class="fa-solid fa-rotate-left"></i></span>
+                    <span id="total_texte">Prix du panier :</span>
+                    <span id="valeur_panier"><span id="valeur_panier_value"></span> €</span>
+                </div>
+            </div>
+
+        </main>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>
