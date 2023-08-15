@@ -1,0 +1,222 @@
+*{margin: 0; padding: 0;}
+
+/*******************/
+/* Animation Class */
+/*******************/
+.apparition
+{
+    animation: apparition 0.5s ease;
+    animation-fill-mode: backwards;
+}
+
+.disparition
+{
+    animation: disparition 1s ease;
+    animation-fill-mode: backwards;
+}
+
+/*************************/
+/* Animation Description */
+/*************************/
+@keyframes apparition
+{
+    0%
+    {
+        opacity: 0;
+    }
+
+    100%
+    {
+        opacity: 1;
+    }
+}
+
+@keyframes disparition
+{
+    0%
+    {
+        opacity: 1;
+    }
+
+    100%
+    {
+        opacity: 0;
+    }
+}
+
+/*********/
+/* Hover */
+/*********/
+
+#choice_level button:hover
+{
+    box-shadow: 0px 0px 5px  black inset,
+                0px 0px 5px  black;
+    cursor: pointer;
+}
+
+#color_list .circle_color:hover
+{
+    box-shadow: 0px 0px 10px  black inset,
+                0px 0px 5px  black;
+    
+    cursor: pointer;
+}
+
+#button_verification:hover
+{
+    box-shadow: 0 0 15px black,
+                0 0 7px black inset;
+
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0.579);
+}
+
+#color_use div:hover
+{
+    cursor: pointer;
+}
+
+/*********/
+/* Basic */
+/*********/
+
+body
+{
+    background-color: rgb(109, 146, 173);
+}
+
+main
+{
+    width: 1600px;
+    margin-left: 100px;
+    margin-top: 100px;
+    display: flex;
+    gap: 100px;
+}
+
+/* Choix des niveaux */
+#choice_level
+{
+    display: flex;
+    gap: 20px;
+    width: fit-content;
+    position: relative;
+    margin-left: 100px;
+    margin-top: 5px;
+}
+
+#choice_level button
+{
+    padding: 5px;
+    height: 40px;
+    width: 100px;
+    font-size: 15px;
+    border: none;
+    box-shadow: 0 0 5px black;
+}
+
+#level_1{background: rgba(89, 213, 89, 0.545);}
+#level_2{background: rgba(182, 213, 89, 0.545);}
+#level_3{background: rgba(214, 192, 69, 0.62);}
+
+/* Box de gauche */
+
+#color_presentation
+{
+    outline: 3px solid black;
+    width: 100%;
+    height: 500px;
+    display: flex;
+}
+
+#correct_color_presentation
+{
+    background-color: rgba(0, 128, 0, 0.615);
+    width: 50%;
+    border-right: 3px dashed black;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+#incorrect_color_presentation
+{
+    background-color: rgba(255, 0, 0, 0.415);
+    width: 50%;
+    overflow-y: auto;
+}
+
+/* Bouton de vérification */
+
+#box_button_verification
+{
+    display: flex;
+    justify-content: center;
+}
+
+#button_verification
+{
+    height: 50px;
+    width: 120px;
+    font-size: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px black,
+                0 0 5px black inset;
+
+    background: none;
+    border: none;
+    background-color: rgba(255, 255, 255, 0.32);
+}
+
+/* Box de droite */
+
+#user_box
+{
+    outline: 3px solid black;
+    width: 40%;
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+#color_use
+{
+    background-color: rgba(0, 0, 0, 0.21);
+    height: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    overflow-x: auto;
+}
+
+#color_list
+{
+    height: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding-left: 10px;
+    border-top: 3px dashed black;
+}
+
+.circle_color
+{
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+    box-shadow: 0px 0px 5px  black inset;
+}
+
+/* Color */
+
+.color_red{background-color: rgb(220, 2, 2);}
+.color_green{background-color: rgb(5, 116, 5);}
+.color_blue{background-color: blue;}
+.color_yellow{background-color: rgb(227, 227, 2);}
+.color_orange{background-color: rgb(208, 136, 2);}
+.color_violet{background-color: violet;}
+
