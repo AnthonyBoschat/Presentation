@@ -1,0 +1,324 @@
+*{margin: 0; padding: 0;}
+
+/*******************/
+/* Animation Class */
+/*******************/
+.apparition
+{
+    animation: apparition 0.5s ease;
+    animation-fill-mode: backwards;
+}
+
+.disparition
+{
+    animation: disparition 0.5s ease;
+    animation-fill-mode: backwards;
+}
+
+/*************************/
+/* Animation Description */
+/*************************/
+@keyframes apparition
+{
+    0%
+    {
+        opacity: 0;
+    }
+
+    100%
+    {
+        opacity: 1;
+    }
+}
+
+@keyframes disparition
+{
+    0%
+    {
+        opacity: 1;
+    }
+
+    100%
+    {
+        opacity: 0;
+    }
+}
+
+/*********/
+/* Hover */
+/*********/
+#test_box_correct:hover
+{
+    cursor: pointer;
+    background-color: rgb(1, 133, 1);
+}
+
+#test_box_incorrect:hover
+{
+    cursor: pointer;
+    background-color: rgb(203, 11, 1);
+}
+
+#choice_level button:hover
+{
+    box-shadow: 0px 0px 5px  black inset,
+                0px 0px 5px  black;
+    cursor: pointer;
+}
+
+#color_list .circle_color:hover
+{
+    box-shadow: 0px 0px 10px  black inset,
+                0px 0px 5px  black;
+    
+    cursor: pointer;
+}
+
+#box_button_verification button:hover
+{
+    box-shadow: 0 0 15px black,
+                0 0 7px black inset;
+
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0.579);
+}
+
+#color_use div:hover
+{
+    cursor: pointer;
+}
+
+/*********/
+/* Basic */
+/*********/
+
+body
+{
+    background-color: rgb(109, 146, 173);
+}
+
+/* Boite de test */
+
+#test_box
+{
+    background-color: rgba(0, 0, 0, 0.945);
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+}
+
+#comptage_test_box
+{
+    display: none;
+    color: white;
+    font-size: 30px;
+}
+
+#test_box_color_presentation
+{
+    width: fit-content;
+    display: none;
+    gap: 5px;
+}
+
+#test_box_response
+{
+    display: none;
+    gap: 100px;
+}
+
+#test_box_correct
+{
+    width: 100px;
+    height: 50px;
+    background-color: rgb(1, 103, 1);
+    border: none;
+    font-size: 25px;
+}
+
+#test_box_incorrect
+{
+    width: 100px;
+    height: 50px;
+    background-color: rgb(173, 9, 1);
+    border: none;
+    font-size: 25px;
+}
+
+
+/* Choix des niveaux */
+
+#choice_level
+{
+    display: flex;
+    gap: 20px;
+    width: fit-content;
+    margin: auto;
+    margin-top: 2%;
+}
+
+#choice_level button
+{
+    padding: 5px;
+    height: 40px;
+    width: 100px;
+    font-size: 15px;
+    border: none;
+    box-shadow: 0 0 5px black;
+}
+
+#level_1
+{
+    background: rgba(89, 213, 89, 0.545); 
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+#level_2
+{
+    background: rgba(182, 213, 89, 0.545); 
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+#level_3
+{
+    background: rgba(214, 192, 69, 0.62); 
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+#level_4
+{
+    background: rgba(214, 158, 69, 0.62); 
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Box du haut */
+
+main
+{
+    width: 1200px;
+    margin: auto;
+    margin-top: 60px;
+    display: flex;
+    gap: 100px;
+}
+
+#color_presentation
+{
+    outline: 3px solid black;
+    width: 100%;
+    height: 500px;
+    display: flex;
+}
+
+#correct_color_presentation
+{
+    background-color: rgba(0, 128, 0, 0.615);
+    width: 50%;
+    border-right: 3px dashed black;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+#incorrect_color_presentation
+{
+    background-color: rgba(255, 0, 0, 0.415);
+    width: 50%;
+    overflow-y: auto;
+}
+
+/* Bouton de vérification */
+
+#box_button_verification
+{
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+}
+
+#box_button_verification button
+{
+    height: 50px;
+    width: fit-content;
+    padding: 10px;
+    font-size: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px black,
+                0 0 5px black inset;
+
+    background: none;
+    border: none;
+    background-color: rgba(255, 255, 255, 0.32);
+}
+
+/* Box du bas */
+
+#user_box
+{
+    margin: auto;
+    margin-top: 40px;
+    outline: 3px solid black;
+    width: 500px;
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+#color_use
+{
+    background-color: rgba(0, 0, 0, 0.21);
+    height: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    overflow-x: auto;
+}
+
+#color_list
+{
+    height: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding-left: 10px;
+    border-top: 3px dashed black;
+}
+
+.circle_color
+{
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+    box-shadow: 0px 0px 5px  black inset;
+}
+
+/* Color */
+
+.color_red{background-color: rgb(220, 2, 2);}
+.color_green{background-color: rgb(5, 116, 5);}
+.color_blue{background-color: blue;}
+.color_yellow{background-color: rgb(227, 227, 2);}
+.color_orange{background-color: rgb(208, 136, 2);}
+.color_violet{background-color: violet;}
