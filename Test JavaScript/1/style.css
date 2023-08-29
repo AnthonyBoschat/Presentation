@@ -1,0 +1,46 @@
+*{margin: 0; padding: 0;}
+
+body
+{
+    background-color: rgb(191, 191, 191);
+}
+
+.question_response_box_t1
+{
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    height: fit-content;
+    gap: 20px;
+    padding: 10px;
+}
+
+.question_response_box_t2
+{
+    display: flex;
+    flex-direction: row;
+    font-size: 20px;
+    gap: 20px;
+}
+
+.question:hover
+{
+    color:rgb(169, 0, 0);
+    cursor: pointer;
+}
+
+.response
+{
+    display: none;
+}
+
+.response:hover
+{
+    cursor: pointer;
+    color: green;
+}
+
+.response_under
+{
+    display: none;
+}

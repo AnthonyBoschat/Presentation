@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="recette_style.css">
+    <title>Recette</title>
+</head>
+<body>
+
+    <h1>Programme</h1>
+    <section id="all">
+        <section id="user_box">
+            <section id="recette_user_box">
+                <h2>Ma recette</h2>
+                <div id="recette_entry">
+                    <div class="img">
+                        <div>
+                            <div class="img_add recette">
+                                <img src="image/add.svg" alt="" class="recette">
+                            </div>
+                        </div>
+                        <div>
+                            <div class="img_del recette">
+                                <img src="image/close.svg" alt="" class="recette">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input" id="inputs_recette">
+                        <div class="input_ingredient_poid">
+                            <input type="text" class="ingredient required" placeholder="Ingrédient : farine" required>
+                            <input type="text" class="poid_recette required" placeholder="Poid : 100 (gramme)" required>
+                        </div>
+                    </div>
+                    <div class="total">
+                        <div id="total">total poid recette</div>
+                        <div id="recette_user_total">0 g</div>
+                    </div>
+                </div>
+            </section>
+            <section id="product_user_box">
+                <h2>Produit voulu</h2>
+                <div id="produit_voulu_entry">
+                    <div class="img">
+                        <div>
+                            <div class="img_add produit_voulu">
+                                <img src="image/add.svg" alt="" class="produit_voulu">
+                            </div>
+                        </div>
+                        <div>
+                            <div class="img_del produit_voulu">
+                                <img src="image/close.svg" alt="" class="produit_voulu">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input" id="inputs_produit_voulu">
+                        <div class="input_nom_nombre_poid">
+                            <input type="text" class="nom_produit_voulu required" placeholder= "Nom : baguette" required>
+                            <input type="text" class="nombre_produit_voulu required" placeholder= "Nombre : 10" required>
+                            <input type="text" class="poid_produit_voulu required" placeholder= "Poid cru : 350g" required>
+                        </div>
+                    </div>
+                    <div id="total_poid_cru_produit_voulu"></div>
+                </div>
+            </section>
+        </section>
+
+        <section id="programm_box">
+            <div id="recette_final_box">
+                <div id="titre_recette_final">
+                    <h2>Recette final</h2>
+                </div>
+                <div id="recette_final_programm_box">
+                    <div id="affichage_recette_box">
+                        
+                    </div>
+                    <div id="other">
+                        <div id="coefficient_multiplicateur">
+                            <div id="coefficient_multiplicateur_title">coefficient multiplicateur</div>
+                            <div>~ <span id="coefficient_multiplicateur_value">0</span></div>
+                        </div>
+                        <div id="poid_total_recette_final">
+                            <div id="poid_total_recette_final_title">Poid total</div>
+                            <div id="poid_total_recette_final_value"></div>
+                        </div>
+                        <div id="pour_ces_produits">
+                            <div class="produit">pour 10 baguette à 350g</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </section>
+    <button id="bouton_calculer" type="submit"></button>
+    <script src="recette_js.js"></script>
+</body>
+</html>

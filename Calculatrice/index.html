@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <title>Calculatrice</title>
+</head>
+<body>
+
+    <main>
+        <div id="content_box">
+            <div id="display">
+                <div id="display_box_all">
+                    <div class="display">
+                        <span id="display_box_up"></span>
+                    </div>
+                    <div class="display display_box_down">
+                        <span id="display_box_down"></span>
+                    </div>
+                </div>
+            </div>
+            <div id="touch_box">
+
+                <div class="touch_line">
+                    <div class="touch special_touch" id="(">(</div>
+                    <div class="touch special_touch" id=")">)</div>
+                    <i class="touch special_touch option fa-solid fa-delete-left" id="Backspace"></i>
+                    <i class="touch special_touch option fa-solid fa-c" id="Delete"></i></i>
+                </div>
+
+                <div class="touch_line">
+                    <div class="touch number" id="7">7</div>
+                    <div class="touch number" id="8">8</div>
+                    <div class="touch number" id="9">9</div>
+                    <i class="touch special_touch fa-solid fa-plus" id="+"></i>
+                </div>
+
+                <div class="touch_line">
+                    <div class="touch number" id="4">4</div>
+                    <div class="touch number" id="5">5</div>
+                    <div class="touch number" id="6">6</div>
+                    <i class="touch special_touch fa-solid fa-xmark" id="*"></i>
+                </div>
+
+                <div class="touch_line">
+                    <div class="touch number" id="1">1</div>
+                    <div class="touch number" id="2">2</div>
+                    <div class="touch number" id="3">3</div>
+                    <i class="touch special_touch fa-solid fa-minus" id="-"></i>
+                </div>
+
+                <div class="touch_line">
+                    <div class="touch special_touch number" id=".">.</div>
+                    <div class="touch number" id="0">0</div>
+                    <i class="touch special_touch option fa-solid fa-equals" id="Enter"></i>
+                    <i class="touch special_touch fa-solid fa-divide" id="/"></i>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <script src="main.js"></script>
+</body>
+</html>

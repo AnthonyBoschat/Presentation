@@ -1,0 +1,100 @@
+#storm_trooper_section_box
+{
+    width: 100%;
+    height: 669px;
+    background-image: url(img/team.jpg.png);
+    margin-top: -120px;
+}
+
+#storm_trooper_title_box
+{
+    width: 100%;
+    height: 240px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    color: white;
+    font-size: 48px;
+    font-weight: bold;
+}
+
+#team_box_large
+{
+    padding-top: 10px;
+    width: 100%;
+    height: 500px;
+    background-color: white;
+}
+
+#team_box_small
+{
+    display: flex;
+    margin-left: 142px;
+    margin-right: 142px;
+    margin-top: 64px;
+}
+
+#team_box_small ul
+{
+    display: flex;
+    list-style-type: none;
+    gap: 53px;
+}
+
+img.team_img
+{
+    border-radius: 100%;
+    width: 239px;
+    height: 239px;
+    opacity: 0.8;
+}
+
+p.name
+{
+    text-align: center;
+    margin-top: 24px;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+
+
+.button_write
+{
+    display: flex;
+    width: 100%;
+    height: 40px;
+    justify-content: center;
+    align-items: center;
+    margin-top: 24px;
+}
+
+.button_write button
+{
+    display: flex;
+    background-color: #DD5555;
+    height: 100%;
+    width: 125px;
+    border-radius: 7%;
+    border: none;
+    justify-content: left;
+    align-items: center;
+}
+
+.button_write button img
+{
+    position: relative;
+    left: 10px;
+    width: 23px;
+}
+
+.button_write button span
+{
+    position: relative;
+    left: 15.1px;
+    color: white;
+    font-size: 17px;
+}
+
+

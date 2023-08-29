@@ -1,0 +1,320 @@
+*{margin: 0; padding: 0;}
+
+
+body
+{
+    background-color: rgb(220, 220, 220);
+
+    display: flex;
+    flex-direction: column;
+    
+    padding-top: 40px;
+}
+
+h1
+{
+    width: fit-content;
+    margin: auto;
+    font-size: 50px;
+    text-align: center;
+}
+
+#all
+{
+    display: flex;
+    outline: 1px solid black;
+    gap: 80px;
+}
+
+#user_box
+{
+    display: flex;
+    flex-direction: column;
+    
+    margin-left: 80px;
+    margin-top: 30px;
+    gap: 50px;
+}
+
+#recette_user_box
+{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    height: 150px;
+}
+
+h2
+{
+    text-align: center;
+}
+
+#recette_entry
+{
+    display: flex;
+    gap: 10px;
+    
+}
+
+.img
+{
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    position: relative;
+    top: -2px;
+    left: 3px;
+}
+
+.img div
+{
+    display: flex;
+    justify-content: center;
+}
+
+.img_add
+{
+    display: flex;
+    height: 15px;
+    padding: 5px;
+}
+
+.img_del
+{
+    display: flex;
+    height: 23px;
+}
+
+.img div .img_add:hover
+{
+    cursor: pointer;
+    box-shadow: 0 0 8px rgb(39, 75, 255);
+}
+
+.img div .img_del:hover
+{
+    cursor: pointer;
+    box-shadow: 0 0 8px rgb(193, 4, 4);
+}
+
+.input
+{
+    display: flex;
+    flex-direction: column;
+    max-height: 100px;
+    overflow-y: auto;
+    gap: 3px;
+}
+
+.input_ingredient_poid
+{
+   display: flex;
+   gap: 1px;
+}
+
+.input_ingredient_poid input
+{
+    width: 150px;
+    text-align: center;
+}
+
+.total
+{
+    position: relative;
+    top: -8px;
+    left: 10px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+#total
+{
+    font-size: 18px;
+    border-bottom: 2px double black;
+    padding-bottom: 5px;
+}
+
+#recette_user_total
+{
+    text-align: center;
+}
+
+#product_user_box
+{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#produit_voulu_entry
+{
+    display: flex;
+    gap: 10px;
+}
+
+#produit_voulu_entry input
+{
+    text-align: center;
+    width: 150px;
+}
+
+.input_nom_nombre_poid
+{
+    display: flex;
+    gap: 1px;
+}
+
+
+/* Pogramme_box */
+
+#programm_box
+{
+    margin-top: 30px;
+    display: flex;
+    width: 100%;
+    outline: 1px solid black;
+    justify-content: center;
+}
+
+#recette_final_box
+{
+    display: flex;
+    flex-direction: column;
+    outline: 1px solid black;
+    width: 100%;
+}
+
+#recette_final_programm_box
+{
+    display: flex;
+    outline: 1px solid black;
+    height: 300px;
+    margin-top: 15px;
+    
+}
+
+#affichage_recette_box
+{
+    display: flex;
+    flex-direction: column;
+    outline: 1px solid black;
+    width: 70%;
+    gap: 10px;
+    overflow: auto;
+}
+
+.recette_final_ingredient_poid
+{
+    display: flex;
+    outline: 1px solid black;
+    padding-left: 20px;
+}
+
+.recette_final_ingredient
+{
+    outline: 1px solid black;
+    width: 70%;
+    text-align: center;
+}
+
+.recette_final_poid
+{
+    outline: 1px solid black;
+    width: 30%;
+    text-align: center;
+}
+
+#other
+{
+    display: flex;
+    flex-direction: column;
+    outline: 1px solid black;
+    width: 30%;
+    max-width: 30%;
+}
+
+#coefficient_multiplicateur
+{
+    height: 30%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+
+    padding-top: 10px;
+    padding-bottom: 10px;
+
+    outline: 1px solid black;
+    
+}
+
+#coefficient_multiplicateur_title
+{
+    color: rgb(166, 7, 7);
+}
+
+#coefficient_multiplicateur_value
+{
+    font-size: 20px;
+}
+
+#poid_total_recette_final
+{
+    height: 30%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+
+    padding-top: 10px;
+    padding-bottom: 10px;
+
+    outline: 1px solid black;   
+}
+
+#poid_total_recette_final_title
+{
+    color: rgb(166, 7, 7);
+}
+
+#poid_total_recette_final_value
+{
+    font-size: 20px;
+}
+
+#pour_ces_produits
+{
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 5px;
+    padding-top: 10px;
+    overflow: auto;
+
+    
+
+    outline: 1px solid black;
+}
+
+.produit
+{
+    display: flex;
+    font-size: 12px;
+    width: 100%;
+    outline: 1px solid black;
+}
+
+#bouton_calculer
+{
+    width: 50px;
+    margin: auto;
+    margin-top: 50px;
+    height: 50px;
+}
