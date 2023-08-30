@@ -1,7 +1,10 @@
 <?php
 require "php_tools.php";
 
-$controle_inscription = false;
+// On définie un ID en null
+echo '<script>';
+echo 'var ID = null;';
+echo '</script>';
 $controle_connection = false;
 
 // On verifie si l'utilisateur clique sur le bouton d'inscription
@@ -41,6 +44,11 @@ else if($information = controle_button_clic("connection"))
 // On controle que l'utilisateur a réussi à se connecter
 if($controle_connection === true)
 {
+    // On rend accessible l'ID dans le fichier javascript
+    echo '<script>';
+    echo 'var ID = ' . $user_id . ';';
+    echo '</script>';
+
     // on initie un tableau qui contient l'etat intial de controle_level;
     $controle_level = array
     (
@@ -177,7 +185,7 @@ if($controle_connection === true)
     </div>
 
 <!-- Rouge, Vert, Bleu, Jaune, Orange, violet -->
-    
+
     <script src="javascript.js"></script>
 </body>
 </html>

@@ -3,7 +3,6 @@
 /* Récupération du HTML */
 //////////////////////////////////////////////
 //////////////////////////////////////////////
-
 const   color_pickable = document.querySelectorAll("#color_list .circle_color"),
         color_pick = document.getElementById("color_use"),
         correct_color_presentation = document.getElementById("correct_color_presentation"),
@@ -1195,8 +1194,14 @@ function victory(gestionnaire_event_button_correct, gestionnaire_event_button_in
             destination_4.innerHTML = "<i class=\"fa-solid fa-check\"></i>"
             break
     }
-    // On enregistre la victoire dans la base de donnée
-    add_data()
+    
+    // Si un ID est définie ( si un utilisateur est connecter et qu'on a son ID)
+    if(ID !== null)
+    {
+        // On enregistre la victoire dans la base de donnée
+       add_data() 
+    }
+    
     
     defeat(gestionnaire_event_button_correct, gestionnaire_event_button_incorrect)
 }
@@ -1275,7 +1280,7 @@ function know_occurence(x, i=0)
 //////////////////////////////////////////////
 //////////////////////////////////////////////
 function add_data()
-{
+{   
     // On veut faire passer à 1 une colonne du tableau
     var boolean = 1
 
@@ -1302,7 +1307,7 @@ function add_data()
 
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
 
-    xhr.send("boolean="+encodeURIComponent(boolean)+"&colonne="+encodeURIComponent(colonne))
+    xhr.send("boolean="+encodeURIComponent(boolean)+"&colonne="+encodeURIComponent(colonne)+"&id="+encodeURIComponent(ID))
 
     xhr.onreadystatechange = function()
     {
