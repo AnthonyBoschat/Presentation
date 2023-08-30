@@ -1,5 +1,9 @@
 <?php
+// On défini les fichier nécessaire
 require "php_tools.php";
+require "../../global_tools.php";
+// On initialise une Session
+init_session();
 
 // On définie un ID en null
 echo '<script>';
@@ -10,11 +14,16 @@ $controle_connection = false;
 // On verifie si l'utilisateur clique sur le bouton d'inscription
 if($information = controle_button_clic("inscription"))
 {
+    // Si c'est le cas, et que les deux champs de saisies ont été rempli
+    // On récupère les informations saisi, et l'objet PDO pour créé des requête
     $user_name = $information["name"];
     $user_password = $information["password"];
     $PDO = $information["PDO"];
+
+    // On vérifie si l'utilisateur peut s'inscrire avec inscription()
     if($information = inscription($PDO, $user_name, $user_password))
     {
+        // On récupère l'ID
         $user_id = $information["ID"];
         // controle_connection = l'utilisateur est connecter
         $controle_connection = true;
@@ -22,14 +31,19 @@ if($information = controle_button_clic("inscription"))
     }
 }
 
-// Si c'est le bouton de connection qui est cliquer
+// On verifie si l'utilisateur clique sur le bouton de connection
 else if($information = controle_button_clic("connection"))
 {
+    // Si c'est le cas, et que les deux champs de saisies ont été rempli
+    // On récupère les informations saisi, et l'objet PDO pour créé des requête
     $user_name = $information["name"];
     $user_password = $information["password"];
     $PDO = $information["PDO"];
+
+    // On vérifie si l'utilisateur peut se connecter avec ces informations avec connection()
     if($information = connection($PDO, $user_name, $user_password))
     {
+        // On récupère l'ID
         $user_id = $information["ID"];
         // controle_connection = l'utilisateur est connecter
         $controle_connection = true;
@@ -41,7 +55,7 @@ else if($information = controle_button_clic("connection"))
     }
 }
 
-// On controle que l'utilisateur a réussi à se connecter
+// On controle que l'utilisateur a réussi à se connecter, via inscription ou connection
 if($controle_connection === true)
 {
     // On rend accessible l'ID dans le fichier javascript

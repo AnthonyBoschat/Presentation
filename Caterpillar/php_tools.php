@@ -1,17 +1,5 @@
 <?php
 
-function console($x)
-{
-    echo "<script>console.log(\"$x\")</script>";
-}
-
-function pre($x)
-{
-    echo "<pre>";
-    print_r($x);
-    echo "</pre>";
-}
-
 function controle_button_clic($x)
 {
     // Si l'utilisateur clique sur le bouton X
@@ -75,7 +63,7 @@ function connection_pdo($x, ...$y)
 // Fonction pour inscrire l'utilisateur, et mettre à jour la base de donnée
 function inscription($x, $user_name, $user_password)
 {
-    // On prepare la requete qui va récupérer l'id de l'utilisateur
+    // On prepare la requete qui va chercher un id correspondant au nom d'utilisateur saisie
     $requete = $x->prepare("SELECT user_id FROM user_connection_information WHERE user_name = :user_name");
     // On définie la valeur :user_name
     $requete->bindParam(":user_name", $user_name);
@@ -83,13 +71,13 @@ function inscription($x, $user_name, $user_password)
     $requete->execute();
 
     // Si la requête renvoie quelque chose ( s'il y a plus de 0 ligne ) c'est que le nom d'utilisateur existe déjà, et on ne peut pas l'inscrire
-    if($requete->rowCount() > 0)
+    if($requete->fetch(PDO::FETCH_ASSOC))
     {
         console("Nom d'utilisateur déjà utiliser");
         return false;
     }
 
-    // Si la requête ne renvoie rien, l'utilisateur peut etre inscrit
+    // Si la requête ne renvoie rien, Il n'existe pas d'ID correspondant à ce nom d'utilisateur, il peut etre inscrit
     else
     {
         // On prépare la requete d'enregistrement des données de connection de l'utilisateur
@@ -152,11 +140,11 @@ function connection($x, $user_name, $user_password)
     
     if($data_line)
     {
-        // On récupère l'information user_name
+        // On récupère le nom base de donnée correspondant à ce que l'utilisateur à indiquer comme nom d'utilisateur, pour le comparer ensuite
         $user_name_initial = $data_line["user_name"];
-        console("controle initial 157: ".$user_name_initial);
-        // On prepare une requête pour comparer le hashage du mot de passe renseigner avec celui inscrit dans la base de donnée
-        // OLD : $requete = $x->prepare("SELECT user_name FROM user_connection_information WHERE user_password = SHA2(:user_password, 256)");
+        console("controle initial: ".$user_name_initial);
+
+        // On prepare une requête pour selectionner le nom d'utilisateur dans la base de donner, qui aurait le mot de passe renseigner
         $requete = $x->prepare("SELECT user_name FROM user_connection_information WHERE user_password = SHA2(:user_password, 256) AND user_name = :user_name");
         // On définie la valeur de :user_password et :user_name
         $requete->bindParam(":user_password", $user_password);
@@ -168,10 +156,12 @@ function connection($x, $user_name, $user_password)
         $data_line = $requete->fetch(PDO::FETCH_ASSOC);
 
         // Si la requete à renvoyer quelque chose
-        if($data_line == true)
+        if($data_line)
         {
+            // On récupère le nom base de donnée correspondant au mot de passe qu'a indiquer l'utilisateur
             $user_name_comparaison = $data_line["user_name"];
-            console("controle comparaison 174 : ".$user_name_comparaison);
+            console("controle comparaison: ".$user_name_comparaison);
+            // On compare les deux noms, s'ils sont strictement indentique, c'est que le mot de passe et le nom d'utilisateur sont bien enregistrer ensemble
             if($user_name_initial === $user_name_comparaison)
             {
                 // On prépare une requete pour renvoyer son id
@@ -188,6 +178,7 @@ function connection($x, $user_name, $user_password)
                 return $information;
             }
         }
+        // Si la requete n'a rien renvoyer, c'est qu'elle ne trouve pas de mot de passe correspondant
         else
         {
             console("Le mot de passe est incorrecte");
@@ -196,6 +187,7 @@ function connection($x, $user_name, $user_password)
         
         
     }
+    // Si la requête n'a rien renvoyer, c'est quelle ne trouve pas de nom d'utilisateur dans la base de donnée qui possède le nom d'utilisateur indiquer
     else
     {
         console("Nom d'utilisateur ou mot de passe inconnue");
@@ -217,4 +209,19 @@ function controle_level_check($x, $y)
     {
         echo "<i class=\"fa-solid fa-check\"></i>";
     }
+}
+
+function init_session() : bool
+{
+    // S'il n'y a pas d'identifiant de session
+    if(!session_id())
+    {
+        // On démarre la session
+        session_start();
+        // On régénère l'ID, pour être sur
+        session_regenerate_id();
+        return true;
+    }
+    // S'il y a un identifiant de session
+    return false;
 }
