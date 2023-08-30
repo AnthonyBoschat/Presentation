@@ -85,7 +85,7 @@ if($controle_connection === true)
 </head>
 <body>
     <div id="connection_box">
-        <form action="http://localhost/Test,%20jeu%20et%20autres/Caterpillar/" method="post">
+        <form action="http://localhost/Présentation/Caterpillar/" method="post">
             <div id="user_name_box">
                 <div>Nom : </div>
                 <input type="text" name="user_name">

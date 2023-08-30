@@ -1195,7 +1195,9 @@ function victory(gestionnaire_event_button_correct, gestionnaire_event_button_in
             destination_4.innerHTML = "<i class=\"fa-solid fa-check\"></i>"
             break
     }
-
+    // On enregistre la victoire dans la base de donnée
+    add_data()
+    
     defeat(gestionnaire_event_button_correct, gestionnaire_event_button_incorrect)
 }
 /* Fonction en cas de défaite */
@@ -1265,6 +1267,53 @@ function know_occurence(x, i=0)
         })
     
     return occurences
+}
+
+//////////////////////////////////////////////
+//////////////////////////////////////////////
+/* Fonction pour enregistrer des données */
+//////////////////////////////////////////////
+//////////////////////////////////////////////
+function add_data()
+{
+    // On veut faire passer à 1 une colonne du tableau
+    var boolean = 1
+
+    switch(niveau_choisi)
+    {
+        case 1:
+            var colonne = "level_1"
+            break
+        case 2:
+            var colonne = "level_2"
+            break
+        case 3:
+            var colonne = "level_3"
+            break
+        case 4:
+            var colonne = "level_4"
+            break
+
+    }
+
+    var xhr = new XMLHttpRequest()
+
+    xhr.open("POST", "xml_request.php", true)
+
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
+
+    xhr.send("boolean="+encodeURIComponent(boolean)+"&colonne="+encodeURIComponent(colonne))
+
+    xhr.onreadystatechange = function()
+    {
+        // Quand la requete est fini
+        if(xhr.readyState === 4 && xhr.status === 200)
+        {
+            // on affiche un texte
+            console.log(xhr.responseText)
+        }
+    }
+
 }
 
 // getEventListeners(test_box_button_correct)
