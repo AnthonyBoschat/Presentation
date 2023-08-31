@@ -225,3 +225,9 @@ function init_session() : bool
     // S'il y a un identifiant de session
     return false;
 }
+
+function close_session()
+{
+    session_unset();
+    session_destroy();
+}

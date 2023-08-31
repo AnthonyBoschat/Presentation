@@ -28,6 +28,10 @@ if($information = controle_button_clic("inscription"))
         // controle_connection = l'utilisateur est connecter
         $controle_connection = true;
         console("Nom utilisateur : ".$user_name);
+
+        // On stock l'ID, le nom d'utilisateur dans des variables de session
+        $_SESSION["ID"] = $user_id;
+        $_SESSION["username"] = $user_name;
     }
 }
 
@@ -41,18 +45,27 @@ else if($information = controle_button_clic("connection"))
     $PDO = $information["PDO"];
 
     // On vérifie si l'utilisateur peut se connecter avec ces informations avec connection()
-    if($information = connection($PDO, $user_name, $user_password))
+    if($information = connection($PDO, $user_name, $user_password))  
     {
         // On récupère l'ID
         $user_id = $information["ID"];
         // controle_connection = l'utilisateur est connecter
         $controle_connection = true;
         console("Nom utilisateur : ".$user_name);
+
+        // On stock l'ID, le nom d'utilisateur dans des variables de session
+        $_SESSION["ID"] = $user_id;
+        $_SESSION["username"] = $user_name;
     }
     else
     {
         console("probleme de connection");
     }
+}
+
+else if(isset($_POST["deconnexion"]))
+{
+    close_session();
 }
 
 // On controle que l'utilisateur a réussi à se connecter, via inscription ou connection
@@ -106,21 +119,34 @@ if($controle_connection === true)
     <title>Document</title>
 </head>
 <body>
-    <div id="connection_box">
+    <!-- Si la variable superglobal $_SESSION ID existe c'est que l'utilisateur est connecter, on lui montre un message personnaliser, et un bouton de déconnection -->
+    <?php if(isset($_SESSION["ID"])): ?>
+
+        <p>Utilisateur : <?= $_SESSION["username"] ?></p>
         <form action="http://localhost/Présentation/Caterpillar/" method="post">
-            <div id="user_name_box">
-                <div>Nom : </div>
-                <input type="text" name="user_name">
-            </div>
-            <div id="user_password_box">
-                <div>Mot de passe : </div>
-                <input type="password" name="user_password">
-            </div>
-            <div id="connection_button_box">
-                <input type="submit" value="Connection" name="connection"><input type="submit" value="Inscription" name="inscription">
-            </div>
+            <button name="deconnexion">Déconnexion</button>
         </form>
-    </div>
+    <!-- Si elle n'existe pas, l'utilisateur n'est pas connecter, on lui montre le formulaire de connection -->
+    <?php else: ?>
+
+        <div id="connection_box">
+            <form action="http://localhost/Présentation/Caterpillar/" method="post">
+                <div id="user_name_box">
+                    <div>Nom : </div>
+                    <input type="text" name="user_name">
+                </div>
+                <div id="user_password_box">
+                    <div>Mot de passe : </div>
+                    <input type="password" name="user_password">
+                </div>
+                <div id="connection_button_box">
+                    <input type="submit" value="Connection" name="connection"><input type="submit" value="Inscription" name="inscription">
+                </div>
+            </form>
+        </div>
+        
+    <?php endif; ?>
+
     <div id="test_box">
         <div id="comptage_test_box"><span id="comptage_test_indice"></span>/15</div>
         <div id="test_box_color_presentation">
