@@ -5,10 +5,6 @@ require "../../global_tools.php";
 // On initialise une Session
 init_session();
 
-// On définie un ID en null
-echo '<script>';
-echo 'var ID = null;';
-echo '</script>';
 $controle_connection = false;
 
 // On verifie si l'utilisateur clique sur le bouton d'inscription
@@ -71,11 +67,6 @@ else if(isset($_POST["deconnexion"]))
 // On controle que l'utilisateur a réussi à se connecter, via inscription ou connection
 if($controle_connection === true)
 {
-    // On rend accessible l'ID dans le fichier javascript
-    echo '<script>';
-    echo 'var ID = ' . $user_id . ';';
-    echo '</script>';
-
     // on initie un tableau qui contient l'etat intial de controle_level;
     $controle_level = array
     (
@@ -224,8 +215,16 @@ if($controle_connection === true)
     <div id="destination_test">
     </div>
 
-<!-- Rouge, Vert, Bleu, Jaune, Orange, violet -->
 
+    <?php if(isset($_SESSION["ID"])): ?>
+        <script>
+            var ID = <?= $_SESSION["ID"] ?> 
+        </script>
+    <?php else:?>
+        <script>
+            var ID = null
+        </script>
+    <?php endif;?>
     <script src="javascript.js"></script>
 </body>
 </html>
