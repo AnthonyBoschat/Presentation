@@ -112,11 +112,12 @@ if($controle_connection === true)
 <body>
     <!-- Si la variable superglobal $_SESSION ID existe c'est que l'utilisateur est connecter, on lui montre un message personnaliser, et un bouton de déconnection -->
     <?php if(isset($_SESSION["ID"])): ?>
-
-        <p>Utilisateur : <?= $_SESSION["username"] ?></p>
-        <form action="http://localhost/Présentation/Caterpillar/" method="post">
-            <button name="deconnexion">Déconnexion</button>
-        </form>
+        <div id="connecter_box">
+            <p id="user_presentation">Utilisateur : <?= $_SESSION["username"] ?></p>
+            <form action="http://localhost/Présentation/Caterpillar/" method="post">
+                <button name="deconnexion">Déconnexion</button>
+            </form>
+        </div>
     <!-- Si elle n'existe pas, l'utilisateur n'est pas connecter, on lui montre le formulaire de connection -->
     <?php else: ?>
 
@@ -124,11 +125,11 @@ if($controle_connection === true)
             <form action="http://localhost/Présentation/Caterpillar/" method="post">
                 <div id="user_name_box">
                     <div>Nom : </div>
-                    <input type="text" name="user_name">
+                    <input type="text" name="user_name" class="connection_input">
                 </div>
                 <div id="user_password_box">
                     <div>Mot de passe : </div>
-                    <input type="password" name="user_password">
+                    <input type="password" name="user_password" class="connection_input">
                 </div>
                 <div id="connection_button_box">
                     <input type="submit" value="Connection" name="connection"><input type="submit" value="Inscription" name="inscription">
@@ -214,17 +215,7 @@ if($controle_connection === true)
         </div>
     <div id="destination_test">
     </div>
-
-
-    <?php if(isset($_SESSION["ID"])): ?>
-        <script>
-            var ID = <?= $_SESSION["ID"] ?> 
-        </script>
-    <?php else:?>
-        <script>
-            var ID = null
-        </script>
-    <?php endif;?>
     <script src="javascript.js"></script>
 </body>
 </html>
+

@@ -1192,13 +1192,33 @@ function victory(gestionnaire_event_button_correct, gestionnaire_event_button_in
             break
     }
     
-    // Si un ID est définie ( si un utilisateur est connecter et qu'on a son ID)
-    if(ID !== null)
+    // On va récupérer l'id renvoyer par le fichier ID.php
+    xhr = new XMLHttpRequest;
+
+    xhr.open("GET", "ID.php", true)
+    xhr.onreadystatechange = function()
     {
-        // On enregistre la victoire dans la base de donnée
-       add_data() 
+        if(xhr.readyState === 4 && xhr.status === 200)
+        {
+            var retour = JSON.parse(xhr.responseText);
+
+            if(retour.ID !== null)
+            {
+                var ID = retour.ID;
+                console.log("La valeur de $_SESSION ID : "+ID)
+                add_data(ID)
+            }
+            else
+            {
+                var ID = retour.ID;
+                console.log("La valeur de $_SESSION ID : "+ID)
+                console.log("Aucun utilisateur de connecter, aucune sauvegarde possible")
+            }
+        }
+        
     }
-    
+
+    xhr.send();
     
     defeat(gestionnaire_event_button_correct, gestionnaire_event_button_incorrect)
 }
@@ -1276,7 +1296,7 @@ function know_occurence(x, i=0)
 /* Fonction pour enregistrer des données */
 //////////////////////////////////////////////
 //////////////////////////////////////////////
-function add_data()
+function add_data(ID)
 {   
     // On veut faire passer à 1 une colonne du tableau
     var boolean = 1

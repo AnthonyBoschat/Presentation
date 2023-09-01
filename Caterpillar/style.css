@@ -97,6 +97,26 @@ body
     background-color: rgb(109, 146, 173);
 }
 
+/* Boite connecter */
+#connecter_box
+{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: fit-content;
+    align-items: center;
+}
+
+#user_presentation
+{
+    font-size: 30px;
+}
+
+#connecter_box button
+{
+    font-size: 20px;
+}
+
 /* Boite de connexion */
 
 #connection_box
@@ -104,7 +124,7 @@ body
     position: absolute;
     left: 10px;
     width:fit-content;
-    font-size: 20px;
+    font-size: 30px;
 }
 
 #connection_box form
@@ -124,6 +144,11 @@ body
 #connection_button_box input
 {
     width: 50%;
+}
+
+.connection_input
+{
+    height: 20px;
 }
 
 
