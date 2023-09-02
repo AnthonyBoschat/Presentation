@@ -1,13 +1,24 @@
 <?php
-require "../../../global_tools.php";
 require "function.php";
 // On démarre la session utilisateur
 session_start();
 
 // On verifie que les champs de saisi sont correctement rempli
-if(verification_champ_saisi_rempli())
+if($informations = verification_champ_saisi_rempli())
 {
-    console("ok");
+    // On récupère les informations donnée dans verification_champ_saisi_rempli
+    $user_name = $informations["user_name"];
+    $user_password = $informations["user_password"];
+    // On se connecte à PDO
+    $PDO = connection_PDO("boulangerie");
+    // On lance la fonction qui permet de determiner si le bouton connection ou inscription est appuyer
+    $input = inscription_connexion_controle();
+    // On lance les fonction de query pour la connexion ou l'inscription
+    if($input == "inscription")
+    {
+        $retour = query_inscription($PDO, $user_name, $user_password);
+        console($retour);
+    }
 }
 
 ?>

@@ -16,3 +16,11 @@ CREATE TABLE IF NOT EXISTS user_information
 
 
 select * from user_information;
+
+
+
+INSERT INTO user_information(user_name, user_password)
+VALUES
+(
+    "Anthony", "sudo"
+);
