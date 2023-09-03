@@ -1,15 +1,3 @@
-<?php
-require "../login_page/function.php";
-// On continue la session de l'utilisateur
-session_start();
-// Si l'utilisateur veut se deconnecter
-if(isset($_POST["deconnection"]))
-{
-    fin_de_session();
-    header("Location: http://localhost/Pr%C3%A9sentation/Boulangerie/login_page/login.php");
-}
-
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,7 +13,7 @@ if(isset($_POST["deconnection"]))
         <div id="name_user">Utilisateur : <?= $_SESSION["user_name"] ?></div>
         <div id="calcule_recette">Calcule de recette</div>
         <div id="deconnection">
-            <form action="" method="post"><input type="submit" name="deconnection" value="Se déconnecter" id="deconnection_button"></form>
+            <form action="main_treatment.php" method="post"><input type="submit" name="deconnection" value="Se déconnecter" id="deconnection_button"></form>
         </div>
     </header>
 

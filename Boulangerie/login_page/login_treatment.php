@@ -1,5 +1,5 @@
 <?php
-require "function.php";
+require "login_function.php";
 // On démarre la session utilisateur
 session_start();
 // Controle_connection = False == L'utilisateur n'est pas encore connecter
@@ -32,6 +32,7 @@ if($informations = verification_champ_saisi_rempli())
         else
         {
             console("Inscription impossible, nom d'utilisateur déjà utiliser");
+            header("Location: login.html");
         }
     }
     // Pour la connexion
@@ -53,12 +54,14 @@ if($informations = verification_champ_saisi_rempli())
             else
             {
                 console("Le mot de passe est incorrecte");
+                header("Location: login.html");
             }
         }
         // Si autre chose que false, aucun nom d'utilisateur trouver, ne peut pas être connecter
         else
         {
             console("Ce nom d'utilisateur n'existe pas, connection impossible");
+            header("Location: login.html");
         }
     }
 }
@@ -71,41 +74,5 @@ if($controle_connection == true)
     $_SESSION["ID"] =  recuperation_ID($PDO, $_SESSION["user_name"]);
     console($_SESSION["user_name"]);
     console($_SESSION["ID"]);
-    header("Location: http://localhost/Pr%c3%a9sentation/Boulangerie/main_page/");
+    header("Location: ../main_page/main.html");
 }
-
-?>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="login_style.css">
-    <title>Identification</title>
-</head>
-<body>
-    
-    <main>
-        <form method="post" action="" id="connection_box">
-            <div id="saisi_box">
-                <div>
-                    <div class="texte">Nom d'utilisateur :</div>
-                    <input type="text" class="input" name="name">
-                </div>
-                <div>
-                    <div class="texte">Mot de passe :</div>
-                    <input type="password" class="input" name="password">
-                </div>
-            </div>
-            <div id="submit_box">
-                <input type="submit" value="Connexion" class="submit" name="connection">
-                <input type="submit" value="Inscription" class="submit" name="inscription">
-            </div>
-        </form>
-    </main>
-    
-<script src="login_javascript.js"></script>
-</body>
-</html>
