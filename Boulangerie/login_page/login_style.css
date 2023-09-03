@@ -29,7 +29,9 @@ body
 
 #error_box
 {
-    
+    position: absolute;
+    top: 15%;
+    font-size: 30px;
 }
 
 main

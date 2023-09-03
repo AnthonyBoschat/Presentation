@@ -9,9 +9,15 @@
 </head>
 <body>
     
-    <div id="error_box">
-        Le nom d'utilisateur existe déjà, merci d'en saisir un nouveau
-    </div>
+    <?php if(isset($_GET["erreur_inscription"])): ?>
+        <div id="error_box">
+            Le nom d'utilisateur est déjà utiliser, merci d'en saisir un nouveau
+        </div>
+    <?php elseif(isset($_GET["erreur_connexion"])): ?>
+        <div id="error_box">
+            Le nom d'utilisateur ou le mot de passe est incorrect
+        </div>
+    <?php endif; ?>
     
     <main>
         <form method="post" action="login_treatment.php" id="connection_box">
@@ -30,8 +36,7 @@
                 <input type="submit" value="Inscription" class="submit" name="inscription">
             </div>
         </form>
-
     </main>
-    
+<script src="login_javascript.js"></script>
 </body>
 </html>

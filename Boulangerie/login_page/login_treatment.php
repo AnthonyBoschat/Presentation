@@ -24,14 +24,12 @@ if($informations = verification_champ_saisi_rempli())
         if(verif_nom_utilisateur($PDO, $user_name))
         {
             inscription($PDO, $user_name, $user_password);
-            console(("Les informations utilisateur ont bien été enregistrés dans la base de donnée"));
             // On passe $controle_connection à true, l'utilisateur est connecté
             $controle_connection = true;
         }
         // Si autre chose que true, l'utilisateur ne peut pas etre inscrit
         else
         {
-            console("Inscription impossible, nom d'utilisateur déjà utiliser");
             header("Location: login.php?erreur_inscription");
         }
     }
@@ -46,22 +44,19 @@ if($informations = verification_champ_saisi_rempli())
             // Si true, le mot de passe correspond, l'utilisateur peut être connecté
             if(verif_mot_de_passe($PDO, $user_name, $user_password))
             {
-                console("Le mot de passe saisie est correcte, l'utilisateur peut être connecté");
                 // On passe $controle_connection à true, l'utilisateur est connecté
                 $controle_connection = true;
             }
             // Si autre que True, le mot de passe n'est pas valide pour l'utilisateur
             else
             {
-                console("Le mot de passe est incorrect");
-                header("Location: login.php?erreur_mot_de_passe");
+                header("Location: login.php?erreur_connexion");
             }
         }
         // Si autre chose que false, aucun nom d'utilisateur trouver, ne peut pas être connecter
         else
         {
-            console("Ce nom d'utilisateur n'existe pas, connection impossible");
-            header("Location: login.php?erreur_nom_utilisateur");
+            header("Location: login.php?erreur_connexion");
         }
     }
 }
@@ -69,10 +64,8 @@ if($informations = verification_champ_saisi_rempli())
 // On défini des variables de SESSION si l'utilisateur est parvenu à se connecter
 if($controle_connection == true)
 {
-    console("controle connection = true, Etablissement des variables de SESSION");
     $_SESSION["user_name"] = $user_name;
     $_SESSION["ID"] =  recuperation_ID($PDO, $_SESSION["user_name"]);
-    console($_SESSION["user_name"]);
-    console($_SESSION["ID"]);
+    echo "controle";
     header("Location: ../main_page/main.php");
 }
