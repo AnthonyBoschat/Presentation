@@ -32,7 +32,7 @@ if($informations = verification_champ_saisi_rempli())
         else
         {
             console("Inscription impossible, nom d'utilisateur déjà utiliser");
-            header("Location: login.html");
+            header("Location: login.php?erreur_inscription");
         }
     }
     // Pour la connexion
@@ -53,15 +53,15 @@ if($informations = verification_champ_saisi_rempli())
             // Si autre que True, le mot de passe n'est pas valide pour l'utilisateur
             else
             {
-                console("Le mot de passe est incorrecte");
-                header("Location: login.html");
+                console("Le mot de passe est incorrect");
+                header("Location: login.php?erreur_mot_de_passe");
             }
         }
         // Si autre chose que false, aucun nom d'utilisateur trouver, ne peut pas être connecter
         else
         {
             console("Ce nom d'utilisateur n'existe pas, connection impossible");
-            header("Location: login.html");
+            header("Location: login.php?erreur_nom_utilisateur");
         }
     }
 }
@@ -74,5 +74,5 @@ if($controle_connection == true)
     $_SESSION["ID"] =  recuperation_ID($PDO, $_SESSION["user_name"]);
     console($_SESSION["user_name"]);
     console($_SESSION["ID"]);
-    header("Location: ../main_page/main.html");
+    header("Location: ../main_page/main.php");
 }

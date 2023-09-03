@@ -16,19 +16,27 @@
 /* Basic */
 /*********/
 
+
 body
 {
     background-color: rgb(108, 49, 19);
     height: 100vh;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+#error_box
+{
+    
 }
 
 main
 {
     background-color: rgba(211, 211, 211, 0.545);
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 50%;

@@ -9,6 +9,10 @@
 </head>
 <body>
     
+    <div id="error_box">
+        Le nom d'utilisateur existe déjà, merci d'en saisir un nouveau
+    </div>
+    
     <main>
         <form method="post" action="login_treatment.php" id="connection_box">
             <div id="saisi_box">
@@ -26,6 +30,7 @@
                 <input type="submit" value="Inscription" class="submit" name="inscription">
             </div>
         </form>
+
     </main>
     
 </body>

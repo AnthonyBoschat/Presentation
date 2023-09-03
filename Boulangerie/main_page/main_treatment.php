@@ -7,5 +7,5 @@ session_start();
 if(isset($_POST["deconnection"]))
 {
     fin_de_session();
-    header("Location: ../login_page/login.html");
+    header("Location: ../login_page/login.php");
 }
