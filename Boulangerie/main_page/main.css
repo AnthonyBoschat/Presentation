@@ -110,25 +110,27 @@ header div
 #user_input_box
 {
     width: 50%;
+    padding-right: 20px;
 }
 
 /* Box de l'utilisateur : class*/
 .title
 {
-    font-size: 40px;
+    font-size: 60px;
     font-weight: 700;
-    text-align: center;
     padding-top: 5px;
     padding-bottom: 5px;
     width: 80%;
+    position: relative;
+    top: -10px;
 }
 
 .add_minus_box
 {
     width: 5%;
-    font-size: 30px;
+    font-size: 40px;
     position: relative;
-    top: 3px;
+    top: 83px;
     display: flex;
     flex-direction: column;
     gap: 5px;
@@ -136,14 +138,15 @@ header div
 
 .input_box
 {
-    width: fit-content;
+    width: 100%;
+    max-width: 100%;
     display: flex;
     flex-direction: column;
     gap: 10px;
     height: 100%;
-    max-height: 60%;
+    max-height: 100%;
     overflow-y: auto;
-    padding-right: 20px;
+    padding-right: 5px;
 }
 
 .input_line
@@ -156,14 +159,21 @@ header div
 
 .input_box input
 {
-    height: 20px;
+    height: 30px;
     width: 50%;
     border-radius: 10px;
     box-shadow: 3px 3px 5px black;
     padding: 5px;
     text-align: center;
-    font-size: 15px;
+    font-size: 20px;
     font-weight: 700;
+}
+
+.input_box_global
+{
+    display: flex;
+    height: 90%;
+    flex-direction: column;
 }
 
 /* Box recette*/
@@ -191,10 +201,8 @@ header div
 #user_poid_total_recette_box
 {
     display: flex;
-    height: fit-content;
-    width: 35%;
+    margin-top: 40px;
     justify-content: center;
-    margin-left: 30px;
 }
 
 #user_poid_total_recette
