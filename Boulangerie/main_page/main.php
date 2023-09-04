@@ -25,7 +25,6 @@
                 <div id="recette_box">
                     <div id="title_box">
                         <div class="title">Ma recette</div>
-                        <div id="user_poid_total_recette_box"><span id="user_poid_total_recette">0 g</span></div>
                     </div>
                     
                     <div id="recette_box_child">
@@ -38,6 +37,9 @@
                                 <input type="text" placeholder="Farine" id="user_recette_ingredient">
                                 <input type="text" placeholder="1000 (g)" id="user_recette_poid">
                             </div>
+                        </div>
+                        <div id="user_poid_total_recette_box">
+                            <span id="user_poid_total_recette">0 g</span>
                         </div>
                     </div>
                 </div>

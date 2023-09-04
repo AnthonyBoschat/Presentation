@@ -180,27 +180,29 @@ header div
     display: flex;
 }
 
-#user_poid_total_recette_box
-{
-    display: flex;
-    align-items: center;
-}
-
-#user_poid_total_recette
-{
-    font-size: 25px;
-    font-weight: 700;
-}
-
 #recette_box_child
 {
-    display: flex;
     gap: 20px;
+    display: flex;
     height: 100%;
     padding-top: 10px;
 }
 
+#user_poid_total_recette_box
+{
+    display: flex;
+    height: fit-content;
+    width: 35%;
+    justify-content: center;
+    margin-left: 30px;
+}
 
+#user_poid_total_recette
+{
+    height: fit-content;
+    font-size: 30px;
+    font-weight: 700;
+}
 
 
 
