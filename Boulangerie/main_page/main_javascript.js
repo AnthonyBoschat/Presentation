@@ -6,7 +6,8 @@
 
 const   add = document.querySelectorAll(".add"),
         minus = document.querySelectorAll(".minus"),
-        total_poid_recette_user_value = document.getElementById("user_poid_total_recette_value");
+        total_poid_recette_user_value = document.getElementById("user_poid_total_recette_value"),
+        bouton_calculer = document.getElementById("button_calcule");
 
 //////////////////////////////////////////////
 //////////////////////////////////////////////
@@ -21,6 +22,7 @@ function main()
     add_listener_pilote()
     minus_listener_pilote()
     total_recette_update_pilote()
+    bouton_calcul_pilote()
 }
 
 //////////////////////////////////////////////
@@ -42,6 +44,11 @@ function minus_listener_pilote()
 function total_recette_update_pilote()
 {
     total_recette_update_description()
+}
+
+function bouton_calcul_pilote()
+{
+    bouton_calcul_description()
 }
 
 //////////////////////////////////////////////
@@ -73,6 +80,11 @@ function total_recette_update_description()
         {
             input.addEventListener("change", update_total_poid_recette, true)
         })
+}
+
+function bouton_calcul_description()
+{
+    bouton_calculer.addEventListener("click", calcul_et_affichage, true)
 }
 
 //////////////////////////////////////////////
@@ -134,6 +146,15 @@ function supprimer_input_line(event)
     update_total_poid_recette()
 }
 
+// calculer la nouvelle recette, et afficher la boite recette final
+function calcul_et_affichage(event)
+{   // A terminer
+    let boite_à_disparaitre = document.getElementById("programme_box_button")
+    boite_à_disparaitre.style.display = "none"
+    let boite_à_apparaitre = document.getElementById("programme_box")
+    boite_à_apparaitre.style.display = "flex"
+}
+
 //////////////////////////////////////////////
 //////////////////////////////////////////////
 /* Fonctions d'update */
@@ -162,3 +183,10 @@ function update_total_poid_recette()
     // On ajoute le total dans la destination
     total_poid_recette_user_value.innerHTML = total;
 }
+
+//////////////////////////////////////////////
+//////////////////////////////////////////////
+/* Fonction utiliser dans les fonctions appliquer dans les listeners */
+//////////////////////////////////////////////
+//////////////////////////////////////////////
+

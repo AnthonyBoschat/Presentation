@@ -30,15 +30,12 @@
                             <div><i class="fa-solid fa-minus minus"></i></div>
                         </div>
                         <div class="input_box_global">
-                            <div class="title">Ma recette</div>
+                            <div class="title">Ma recette <span><span id="user_poid_total_recette_value">0</span> g</span> </div>
                             <div class="input_box" id="recette_input_box">
                                 <div class="recette_input_line input_line">
                                     <input type="text" placeholder="Farine" id="user_recette_ingredient">
                                     <input type="text" placeholder="1000 (g)" id="user_recette_poid" class="user_recette_poid">
                                 </div>
-                            </div>
-                            <div id="user_poid_total_recette_box">
-                                <div id="user_poid_total_recette"><span id="user_poid_total_recette_value">0</span> g</div>
                             </div>
                         </div>
                     </div>
@@ -64,13 +61,39 @@
                         </div>
                     </div>
                 </div>
-                
+
             </div>
 
 
 
-
-            <div id="program_box">
+            <div id="programme_box_button">
+                <button id="button_calcule">Calculer ma recette</button>
+            </div>
+            <div id="programme_box">
+                <div id="programme_box_title">Recette final <button id="button_calcule_again">Calculer à nouveau</button></div>
+                <div id="programme_box_main">
+                    <div id="programme_recette_box">
+                        <div class="programme_recette_line">
+                            <div class="programme_recette_line_name">Farine T65 <i class="fa-solid fa-arrow-right-long"></i></div>
+                            <div class="programme_recette_line_total"><span class="programme_recette_line_total_value">1000</span> g</div>
+                        </div>
+                    </div>
+                    <div id="programme_information_box">
+                        <div id="programme_coefficient_box">
+                            <div id="programme_coefficient_title">Coefficient multiplicateur</div>
+                            <div>~ <span id="programme_coefficient_value"> 2</span></div>
+                        </div>
+                        <div id="programme_poid_total_box">
+                            <div id="programme_poid_total_title">Poid total</div>
+                            <div id="programme_poid_total_value">19750 g</div>
+                        </div>
+                        <div id="programme_recap_product_box">
+                            <div class="programme_recap_product_line">
+                                Pour 10 baguette à 250g
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

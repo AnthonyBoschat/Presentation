@@ -26,6 +26,18 @@
     opacity: 0.5;
 }
 
+#button_calcule:hover
+{
+    cursor: pointer;
+    box-shadow: 4px 4px 15px black;
+}
+
+#button_calcule_again:hover
+{
+    cursor: pointer;
+    box-shadow: 4px 4px 15px black;
+}
+
 /*********/
 /* Basic */
 /*********/
@@ -34,7 +46,7 @@
 
 body
 {
-    background-color: rgba(108, 49, 19, 0.859);
+    background-color: rgba(108, 49, 19, 0.483);
     width: 100%;
     height: 100vh;
 }
@@ -120,9 +132,19 @@ header div
     font-weight: 700;
     padding-top: 5px;
     padding-bottom: 5px;
-    width: 80%;
+    width: fit-content;
     position: relative;
     top: -10px;
+    display: flex;
+    gap: 100px;
+    align-items: center;
+}
+
+.title span
+{
+    position: relative;
+    top: 3px;
+    font-size: 40px;
 }
 
 .add_minus_box
@@ -130,7 +152,7 @@ header div
     width: 5%;
     font-size: 40px;
     position: relative;
-    top: 83px;
+    top: 103px;
     display: flex;
     flex-direction: column;
     gap: 5px;
@@ -174,6 +196,7 @@ header div
     display: flex;
     height: 90%;
     flex-direction: column;
+    gap: 20px;
 }
 
 /* Box recette*/
@@ -185,11 +208,6 @@ header div
     flex-direction: column;
 }
 
-#title_box
-{
-    display: flex;
-}
-
 #recette_box_child
 {
     gap: 20px;
@@ -197,22 +215,6 @@ header div
     height: 100%;
     padding-top: 10px;
 }
-
-#user_poid_total_recette_box
-{
-    display: flex;
-    margin-top: 40px;
-    justify-content: center;
-}
-
-#user_poid_total_recette
-{
-    height: fit-content;
-    font-size: 30px;
-    font-weight: 700;
-}
-
-
 
 /* Box product */
 #product_box
@@ -240,8 +242,163 @@ header div
 
 
 /* Box du programme */
-#program_box
+/*  */
+
+#programme_box_button
 {
     width: 50%;
-    outline: 1px solid blue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
+
+#button_calcule
+{
+    font-size: 50px;
+    background: none;
+    padding: 10px;
+    box-shadow: 2px 2px 10px black;
+    border-radius: 20px;
+    background-color: rgba(142, 101, 80, 0.859);
+}
+
+
+/* */
+
+#programme_box
+{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    display: none;
+}
+
+#programme_box_title
+{
+    display: flex;
+    font-size: 60px;
+    font-weight: 700;
+    justify-content: space-between;
+}
+
+#button_calcule_again
+{
+    font-size: 30px;
+    background: none;
+    padding: 10px;
+    box-shadow: 2px 2px 10px black;
+    border-radius: 20px;
+    background-color: rgba(142, 101, 80, 0.859);
+}
+
+#programme_box_main
+{
+    margin-top: 50px;
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+
+#programme_recette_box
+{
+    height: 100%;
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+}
+
+.programme_recette_line
+{
+    display: flex;
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+    gap: 10px;
+    margin-top: 20px;
+    font-size: 35px;
+    font-weight: 700;
+    justify-content: center;
+}
+
+#programme_information_box
+{
+    outline: 4px double black;
+    height: 100%;
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+}
+
+#programme_coefficient_box
+{
+    width: 100%;
+    height: 25%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 25px;
+    gap: 20px;
+    outline: 4px double black;
+}
+
+#programme_coefficient_title
+{
+    color: rgb(123, 0, 0);
+    font-size: 25px;
+    font-weight: 700;
+}
+
+#programme_coefficient_value
+{
+    font-size: 35px;
+    font-weight: 700;
+}
+
+#programme_poid_total_box
+{
+    width: 100%;
+    height: 25%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 25px;
+    gap: 20px;
+}
+
+#programme_poid_total_title
+{
+    color: rgb(123, 0, 0);
+    font-size: 25px;
+    font-weight: 700;
+}
+
+#programme_poid_total_value
+{
+    font-size: 35px;
+    font-weight: 700;
+}
+
+#programme_recap_product_box
+{
+    width: 100%;
+    height: 50%;
+    max-height: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: auto;
+    outline: 4px double black;
+}
+
+.programme_recap_product_line
+{
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-top: 10px;
+    font-size: 25px;
+    font-weight: 700;
+}
+
