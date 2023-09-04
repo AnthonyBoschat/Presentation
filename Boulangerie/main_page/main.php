@@ -23,17 +23,14 @@
 
             <div id="user_input_box">
                 <div id="recette_box">
-                    <div id="title_box">
-                        <div class="title">Ma recette</div>
-                    </div>
-                    
-                    <div id="recette_box_child">
+                    <div class="title">Ma recette</div>
+                    <div id="recette_box_child" class="box_child">
                         <div class="add_minus_box">
                             <div><i class="fa-solid fa-plus add"></i></div>
                             <div><i class="fa-solid fa-minus minus"></i></div>
                         </div>
-                        <div class="input_box">
-                            <div class="input_line">
+                        <div class="input_box" id="recette_input_box">
+                            <div class="recette_input_line input_line">
                                 <input type="text" placeholder="Farine" id="user_recette_ingredient">
                                 <input type="text" placeholder="1000 (g)" id="user_recette_poid">
                             </div>
@@ -45,14 +42,14 @@
                 </div>
                 <div id="product_box">
                     <div class="title">Produit voulu</div>
-                    <div id="product_box_child">
+                    <div id="product_box_child" class="box_child">
                         <div class="add_minus_box">
                             <div><i class="fa-solid fa-plus add"></i></div>
                             <div><i class="fa-solid fa-minus minus"></i></div>
                         </div>
 
-                        <div class="input_box">
-                            <div class="input_line">
+                        <div class="input_box" id="product_input_box">
+                            <div class="product_input_line input_line">
                                 <input type="text" placeholder="10" id="user_product_number">
                                 <input type="text" placeholder="Baguette" id="user_product_name">
                                 <input type="text" placeholder="330 (g)" id="user_product_poid">
@@ -70,6 +67,6 @@
         </div>
     </div>
 
-
+<script src="main_javascript.js"></script>
 </body>
 </html>
