@@ -32,11 +32,11 @@
                         <div class="input_box" id="recette_input_box">
                             <div class="recette_input_line input_line">
                                 <input type="text" placeholder="Farine" id="user_recette_ingredient">
-                                <input type="text" placeholder="1000 (g)" id="user_recette_poid">
+                                <input type="text" placeholder="1000 (g)" id="user_recette_poid" class="user_recette_poid">
                             </div>
                         </div>
                         <div id="user_poid_total_recette_box">
-                            <span id="user_poid_total_recette">0 g</span>
+                            <span id="user_poid_total_recette"><span id="user_poid_total_recette_value">0</span> g</span>
                         </div>
                     </div>
                 </div>

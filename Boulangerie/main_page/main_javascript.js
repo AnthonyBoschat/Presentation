@@ -5,7 +5,8 @@
 //////////////////////////////////////////////
 
 const   add = document.querySelectorAll(".add"),
-        minus = document.querySelectorAll(".minus");
+        minus = document.querySelectorAll(".minus"),
+        total_poid_recette_user_value = document.getElementById("user_poid_total_recette_value");
 
 //////////////////////////////////////////////
 //////////////////////////////////////////////
@@ -19,6 +20,7 @@ function main()
 {
     add_listener_pilote()
     minus_listener_pilote()
+    total_recette_update_pilote()
 }
 
 //////////////////////////////////////////////
@@ -35,6 +37,11 @@ function add_listener_pilote()
 function minus_listener_pilote()
 {
     minus_listener_description()
+}
+
+function total_recette_update_pilote()
+{
+    total_recette_update_description()
 }
 
 //////////////////////////////////////////////
@@ -56,6 +63,15 @@ function minus_listener_description()
     minus.forEach(bouton_supprimer =>
         {
             bouton_supprimer.addEventListener("click", supprimer_input_line, true)
+        })
+}
+
+function total_recette_update_description()
+{
+    let input_recette_poid = document.querySelectorAll(".user_recette_poid");
+    input_recette_poid.forEach(input => 
+        {
+            input.addEventListener("change", update_total_poid_recette, true)
         })
 }
 
@@ -83,6 +99,8 @@ function cloner_input_line(event)
     let destination = similar_parent.querySelector(".input_box")
     // On ajoute le clone dans la destination
     destination.appendChild(source_clone)
+    // On refresh les listeners pour prendre en compte le nouveau clone
+    total_recette_update_pilote()
 }
 
 // minus_listener_description -> Supprimer une input
@@ -102,4 +120,45 @@ function supprimer_input_line(event)
         // On supprime le dernier élément
         liste_input_line[last_index].remove()
     }
+    // S'il ne recete qu'une seule ligne
+    else
+    {
+        // On refresh les eventuelle valeurs indiquer dans les input à rien
+        let child = liste_input_line[0].querySelectorAll("input")
+        child.forEach(input =>
+            {
+                input.value = ""
+            })
+    }
+    // On update le total de la recette
+    update_total_poid_recette()
+}
+
+//////////////////////////////////////////////
+//////////////////////////////////////////////
+/* Fonctions d'update */
+//////////////////////////////////////////////
+//////////////////////////////////////////////
+
+// Update du total poid recette coté utilisateur
+function update_total_poid_recette()
+{
+    // La liste de tout les inputs poid coté recette
+    let liste_user_recette_poid = document.querySelectorAll(".user_recette_poid")
+    // on initie le total à 0
+    let total = 0
+    // On boucle dans la liste pour ajouter les values à total
+    liste_user_recette_poid.forEach(input => 
+        {
+            if(!isNaN(parseInt(input.value)))
+            {
+                total += parseInt(input.value)
+            }
+            else
+            {
+                total += 0
+            }
+        })
+    // On ajoute le total dans la destination
+    total_poid_recette_user_value.innerHTML = total;
 }
