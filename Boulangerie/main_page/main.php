@@ -33,8 +33,8 @@
                             <div class="title">Ma recette <span><span id="user_poid_total_recette_value">0</span> g</span> </div>
                             <div class="input_box" id="recette_input_box">
                                 <div class="recette_input_line input_line">
-                                    <input type="text" placeholder="Farine" id="user_recette_ingredient">
-                                    <input type="text" placeholder="1000 (g)" id="user_recette_poid" class="user_recette_poid">
+                                    <input type="text" placeholder="Farine" id="user_recette_ingredient" class="required">
+                                    <input type="text" placeholder="1000 (g)" id="user_recette_poid" class="user_recette_poid required required_number">
                                 </div>
                             </div>
                         </div>
@@ -53,9 +53,9 @@
                             <div class="title">Produit voulu</div>
                             <div class="input_box" id="product_input_box">
                                 <div class="product_input_line input_line">
-                                    <input type="text" placeholder="10" id="user_product_number">
-                                    <input type="text" placeholder="Baguette" id="user_product_name">
-                                    <input type="text" placeholder="330 (g)" id="user_product_poid">
+                                    <input type="text" placeholder="10" id="user_product_number" class="required required_number">
+                                    <input type="text" placeholder="Baguette" id="user_product_name" class="required">
+                                    <input type="text" placeholder="330 (g)" id="user_product_poid" class="required required_number">
                                 </div>
                             </div>
                         </div>

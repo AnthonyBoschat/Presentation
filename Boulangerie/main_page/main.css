@@ -4,9 +4,29 @@
 /* Animation Class */
 /*******************/
 
+.disparition{animation: disparition 0.25s ease forwards;}
+.apparition{animation: apparition 0.25s ease forwards;}
+.error_saisi{animation: error_saisi 0.5s ease forwards;}
+
 /*************************/
 /* Animation Description */
 /*************************/
+
+@keyframes disparition
+{
+    0%{ opacity: 1;}
+    100%{opacity: 0;}
+}
+
+@keyframes apparition
+{
+    0%{opacity: 0;}
+    100%{opacity: 1;}
+}
+@keyframes error_saisi
+{
+    100%{background-color: rgba(255, 0, 0, 0.2);}
+}
 
 /*********/
 /* Hover */
@@ -268,7 +288,6 @@ header div
 #programme_box
 {
     width: 50%;
-    display: flex;
     flex-direction: column;
     display: none;
 }

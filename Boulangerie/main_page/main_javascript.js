@@ -23,6 +23,7 @@ function main()
     minus_listener_pilote()
     total_recette_update_pilote()
     bouton_calcul_pilote()
+    correction_de_saisi_pilote()
 }
 
 //////////////////////////////////////////////
@@ -49,6 +50,11 @@ function total_recette_update_pilote()
 function bouton_calcul_pilote()
 {
     bouton_calcul_description()
+}
+
+function correction_de_saisi_pilote()
+{
+    correction_de_saisi_description()
 }
 
 //////////////////////////////////////////////
@@ -87,6 +93,15 @@ function bouton_calcul_description()
     bouton_calculer.addEventListener("click", calcul_et_affichage, true)
 }
 
+function correction_de_saisi_description()
+{
+    let inputs = document.querySelectorAll("input")
+    inputs.forEach(input => 
+        {
+            input.addEventListener("change", refresh_error_saisi, true)
+        })
+}
+
 //////////////////////////////////////////////
 //////////////////////////////////////////////
 /* Fonctions appliquer dans les listeners */
@@ -103,9 +118,11 @@ function cloner_input_line(event)
     // source_clone, le clone de la source ( avec les enfant )
     let source_clone = source.cloneNode(true)
     // On réinitialise les valeurs éventuellement renseigner par l'utilisateur
-    for(child in source_clone.children)
+    for(let i = 0; i<source_clone.children.length; i++)
     {
-        source_clone.children[child].value = ""
+        source_clone.children[i].value = ""
+        // On refresh les éventuelles couleur d'erreur de saisi
+        source_clone.children[i].classList.remove("error_saisi")
     }
     // destination = l'endroit ou envoyer le clone, dans l'élément parent, l'élément clase input_box
     let destination = similar_parent.querySelector(".input_box")
@@ -113,6 +130,7 @@ function cloner_input_line(event)
     destination.appendChild(source_clone)
     // On refresh les listeners pour prendre en compte le nouveau clone
     total_recette_update_pilote()
+    correction_de_saisi_pilote()
 }
 
 // minus_listener_description -> Supprimer une input
@@ -146,13 +164,48 @@ function supprimer_input_line(event)
     update_total_poid_recette()
 }
 
-// calculer la nouvelle recette, et afficher la boite recette final
+// bouton_calcul_description -> calculer la nouvelle recette, et afficher la boite recette final
 function calcul_et_affichage(event)
-{   // A terminer
-    let boite_à_disparaitre = document.getElementById("programme_box_button")
-    boite_à_disparaitre.style.display = "none"
-    let boite_à_apparaitre = document.getElementById("programme_box")
-    boite_à_apparaitre.style.display = "flex"
+{   
+    if(input_rempli())
+    {
+        calcul_et_affichage_CALCUL()
+        calcul_et_affichage_ANIMATION()
+    }
+    
+}
+
+// correction_de_saisi_description -> Permet de supprimer la couleur rouge d'une erreur de saisi
+function refresh_error_saisi(event)
+{
+    if(event.target.classList.contains("error_saisi"))
+    {
+        event.target.classList.remove("error_saisi")
+    }
+}
+//////////////////////////////////////////////
+//////////////////////////////////////////////
+/* Fonction utiliser dans les fonctions appliquer dans les listeners */
+//////////////////////////////////////////////
+//////////////////////////////////////////////
+
+// Fonction pour lancer l'animation de disparition et d'apparition
+function calcul_et_affichage_ANIMATION()
+{
+    let vanish_box = document.getElementById("programme_box_button")
+    let appear_box = document.getElementById("programme_box")
+    vanish_box.classList.add("disparition")
+    setTimeout(() => {
+        vanish_box.style.display = "none"
+        appear_box.style.display = "flex"
+        appear_box.classList.add("apparition")
+    }, 200);
+}
+
+// Fonction pour calculer la recette
+function calcul_et_affichage_CALCUL()
+{
+
 }
 
 //////////////////////////////////////////////
@@ -186,7 +239,32 @@ function update_total_poid_recette()
 
 //////////////////////////////////////////////
 //////////////////////////////////////////////
-/* Fonction utiliser dans les fonctions appliquer dans les listeners */
+/* Fonctions diverse */
 //////////////////////////////////////////////
 //////////////////////////////////////////////
 
+// Affiche une alerte si tout les champs de sdaisie n'ont pas été rempli
+function input_rempli()
+{
+    let input = document.querySelectorAll(".required")
+    for(let i = 0; i< input.length; i++)
+    {
+        if(!input[i].value)
+        {
+            return alert("Tout les champs n'ont pas été rempli")
+        }
+    }
+    let input_number = document.querySelectorAll(".required_number")
+    for(let i = 0; i< input_number.length; i++)
+    {
+        if(isNaN(parseInt(input_number[i].value)))
+        {
+            for(let x = 0; x< input_number.length; x++)
+            {
+                input_number[x].classList.add("error_saisi")
+            }
+            return alert("Attention de bien enregistrer des nombres dans les champs attendu")
+        }
+    }
+    return true
+}
