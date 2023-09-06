@@ -30,7 +30,7 @@
                             <div><i class="fa-solid fa-minus minus"></i></div>
                         </div>
                         <div class="input_box_global">
-                            <div class="title">Ma recette <span><span id="user_poid_total_recette_value">0</span> g</span> </div>
+                            <div class="title">Ma recette <span><span id="user_poid_total_recette_value"></span> g</span> </div>
                             <div class="input_box" id="recette_input_box">
                                 <div class="recette_input_line input_line">
                                     <input type="text" placeholder="Farine" id="user_recette_ingredient" class="required">
@@ -53,9 +53,9 @@
                             <div class="title">Produit voulu</div>
                             <div class="input_box" id="product_input_box">
                                 <div class="product_input_line input_line">
-                                    <input type="text" placeholder="10" id="user_product_number" class="required required_number">
-                                    <input type="text" placeholder="Baguette" id="user_product_name" class="required">
-                                    <input type="text" placeholder="330 (g)" id="user_product_poid" class="required required_number">
+                                    <input type="text" placeholder="10" class="user_product_number required required_number">
+                                    <input type="text" placeholder="Baguette" class="user_product_name required">
+                                    <input type="text" placeholder="330 (g)" class="user_product_poid required required_number">
                                 </div>
                             </div>
                         </div>
@@ -81,11 +81,11 @@
                     <div id="programme_information_box">
                         <div id="programme_coefficient_box">
                             <div id="programme_coefficient_title">Coefficient multiplicateur</div>
-                            <div>~ <span id="programme_coefficient_value"> 2</span></div>
+                            <div>~ <span id="programme_coefficient_value"></span></div>
                         </div>
                         <div id="programme_poid_total_box">
                             <div id="programme_poid_total_title">Poid total</div>
-                            <div id="programme_poid_total_value">19750 g</div>
+                            <div id="programme_poid_total_value"></div>
                         </div>
                         <div id="programme_recap_product_box">
                             <div class="programme_recap_product_line">

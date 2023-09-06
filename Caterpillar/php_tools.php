@@ -1,5 +1,5 @@
 <?php
-
+require "../../global_tools.php";
 function controle_button_clic($x)
 {
     // Si l'utilisateur clique sur le bouton X
@@ -29,7 +29,7 @@ function controle_button_clic($x)
                 $PDO = null;
 
                 // On se connecte à PDO grâce à la fonction
-                $PDO = connection_pdo($PDO, $DB_DSN, $DB_USER, $DB_PASS, $options);
+                $PDO = connection_pdo_caterpillar($PDO, $DB_DSN, $DB_USER, $DB_PASS, $options);
 
                 // on return les informations
                 $information = array(
@@ -45,7 +45,7 @@ function controle_button_clic($x)
 }
 
 // fonction pour se connecter à la base de donnée
-function connection_pdo($x, ...$y)
+function connection_pdo_caterpillar($x, ...$y)
 {
     try
     {

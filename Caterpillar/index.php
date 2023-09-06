@@ -1,7 +1,6 @@
 <?php
 // On défini les fichier nécessaire
 require "php_tools.php";
-require "../../global_tools.php";
 // On initialise une Session
 init_session();
 

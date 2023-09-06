@@ -205,7 +205,12 @@ function calcul_et_affichage_ANIMATION()
 // Fonction pour calculer la recette
 function calcul_et_affichage_CALCUL()
 {
-
+    // Calcul, affiche, et renvoi le total de la recette attendu
+    let poid_total = recette_voulu_CALCUL_TOTAL()
+    // Calcul, affiche, et renvoi le coefficient multiplicateur
+    let coefficient_multiplicateur = parseFloat(recette_voulu_CALCUL_COEF(poid_total))
+    console.log(poid_total)
+    console.log(coefficient_multiplicateur)
 }
 
 //////////////////////////////////////////////
@@ -224,9 +229,9 @@ function update_total_poid_recette()
     // On boucle dans la liste pour ajouter les values à total
     liste_user_recette_poid.forEach(input => 
         {
-            if(!isNaN(parseInt(input.value)))
+            if(!isNaN(parseFloat(input.value)))
             {
-                total += parseInt(input.value)
+                total += parseFloat(input.value)
             }
             else
             {
@@ -243,7 +248,7 @@ function update_total_poid_recette()
 //////////////////////////////////////////////
 //////////////////////////////////////////////
 
-// Affiche une alerte si tout les champs de sdaisie n'ont pas été rempli
+// Affiche une alerte si tout les champs de saisies n'ont pas été rempli
 function input_rempli()
 {
     let input = document.querySelectorAll(".required")
@@ -261,10 +266,54 @@ function input_rempli()
         {
             for(let x = 0; x< input_number.length; x++)
             {
-                input_number[x].classList.add("error_saisi")
+                if(isNaN(parseInt(input_number[x].value)))
+                {
+                   input_number[x].classList.add("error_saisi") 
+                }
             }
             return alert("Attention de bien enregistrer des nombres dans les champs attendu")
         }
     }
     return true
+}
+
+// Calcul le total de la recette voulu et l'affiche dans le destination
+function recette_voulu_CALCUL_TOTAL()
+{
+    // On initie le total à 0
+    let total = 0
+    // On récupère toutes les inputs concernant le nombre attendu par produit
+    let nombre_produit_voulu = document.querySelectorAll(".user_product_number")
+    // On récupère toutes les inputs concernant le poid attendu par produit
+    let poid_produit_voulu = document.querySelectorAll(".user_product_poid")
+
+    // On boucle pour ajouter au total ( Les indices correspondront, il y a strictement autant de nombre de produit voulu que de poid de ces produits)
+    for(let i = 0; i<nombre_produit_voulu.length; i++)
+    {
+        let poid = parseInt(poid_produit_voulu[i].value)
+        let nombre = parseInt(nombre_produit_voulu[i].value)
+        let resultat = poid * nombre
+
+        total += resultat
+    }
+
+    // On définie la destination
+    let destination = document.getElementById("programme_poid_total_value")
+    destination.innerHTML = total + " g"
+    return total
+}
+
+function recette_voulu_CALCUL_COEF(x)
+{
+    // x = le total de la recette attendu
+    // On va récupérer le poid total de la recette saisi par l'utilisateur
+    let poid_total_recette_user = document.getElementById("user_poid_total_recette_value")
+    // on effectuer le calcul du coefficient avec ces deux totaux, en augmentant le coeficient de 0.01 pour la pesé
+    let coefficient_mutliplicateur = (x / parseFloat(poid_total_recette_user.innerHTML) + 0.01)
+    // On définie la destination
+    let destination = document.getElementById("programme_coefficient_value")
+    // On envoie dans la destination
+    destination.innerHTML = coefficient_mutliplicateur.toFixed(2)
+    // On retourne le resultat
+    return coefficient_mutliplicateur.toFixed(2)
 }

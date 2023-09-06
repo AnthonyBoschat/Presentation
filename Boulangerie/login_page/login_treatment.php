@@ -66,6 +66,5 @@ if($controle_connection == true)
 {
     $_SESSION["user_name"] = $user_name;
     $_SESSION["ID"] =  recuperation_ID($PDO, $_SESSION["user_name"]);
-    echo "controle";
     header("Location: ../main_page/main.php");
 }
