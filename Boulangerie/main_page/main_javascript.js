@@ -278,6 +278,8 @@ function save_recette()
         )
     }
 
+    console.log(datas)
+
     // L'objet datas est pret à etre envoyer, on effectue une requete XML pour l'envoyer au fichier save_recette_treatment.php
     
 }

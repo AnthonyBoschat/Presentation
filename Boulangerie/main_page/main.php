@@ -30,11 +30,23 @@
                             <div><i class="fa-solid fa-minus minus"></i></div>
                         </div>
                         <div class="input_box_global">
-                            <div class="title"><input type="text" placeholder="Nom de la recette" id="name_recette"> <span id="user_poid_total_recette_value">0 g</span></div>
+                            <div class="title"><input type="text" placeholder="Nom de la recette" id="name_recette" value="Pain blanc"> <span id="user_poid_total_recette_value">0 g</span></div>
                             <div class="input_box" id="recette_input_box">
                                 <div class="recette_input_line input_line">
-                                    <input type="text" placeholder="Farine" id="user_recette_ingredient" class="required user_recette_ingredient">
-                                    <input type="text" placeholder="1000 (g)" id="user_recette_poid" class="user_recette_poid required required_number">
+                                    <input type="text" placeholder="Farine" id="user_recette_ingredient" class="required user_recette_ingredient" value="Farine">
+                                    <input type="text" placeholder="1000 (g)" id="user_recette_poid" class="user_recette_poid required required_number" value="1000">
+                                </div>
+                                <div class="recette_input_line input_line">
+                                    <input type="text" placeholder="Farine" id="user_recette_ingredient" class="required user_recette_ingredient" value="Eau">
+                                    <input type="text" placeholder="1000 (g)" id="user_recette_poid" class="user_recette_poid required required_number" value="650">
+                                </div>
+                                <div class="recette_input_line input_line">
+                                    <input type="text" placeholder="Farine" id="user_recette_ingredient" class="required user_recette_ingredient" value="Sel">
+                                    <input type="text" placeholder="1000 (g)" id="user_recette_poid" class="user_recette_poid required required_number" value="20">
+                                </div>
+                                <div class="recette_input_line input_line">
+                                    <input type="text" placeholder="Farine" id="user_recette_ingredient" class="required user_recette_ingredient" value="Levure">
+                                    <input type="text" placeholder="1000 (g)" id="user_recette_poid" class="user_recette_poid required required_number" value="10">
                                 </div>
                             </div>
                         </div>
@@ -53,9 +65,9 @@
                             <div class="title">Produit voulu</div>
                             <div class="input_box" id="product_input_box">
                                 <div class="product_input_line input_line">
-                                    <input type="text" placeholder="10" class="user_product_number required required_number">
-                                    <input type="text" placeholder="Baguette" class="user_product_name required">
-                                    <input type="text" placeholder="330 (g)" class="user_product_poid required required_number">
+                                    <input type="text" placeholder="10" class="user_product_number required required_number" value="150">
+                                    <input type="text" placeholder="Baguette" class="user_product_name required" value="Baguette">
+                                    <input type="text" placeholder="330 (g)" class="user_product_poid required required_number" value="345">
                                 </div>
                             </div>
                         </div>
