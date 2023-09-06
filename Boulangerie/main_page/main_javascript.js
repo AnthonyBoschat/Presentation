@@ -1,16 +1,5 @@
 //////////////////////////////////////////////
 //////////////////////////////////////////////
-/* Récupération du HTML */
-//////////////////////////////////////////////
-//////////////////////////////////////////////
-
-const   add = document.querySelectorAll(".add"),
-        minus = document.querySelectorAll(".minus"),
-        total_poid_recette_user_value = document.getElementById("user_poid_total_recette_value"),
-        bouton_calculer = document.getElementById("button_calcule");
-
-//////////////////////////////////////////////
-//////////////////////////////////////////////
 /* Programme principal */
 //////////////////////////////////////////////
 //////////////////////////////////////////////
@@ -23,6 +12,7 @@ function main()
     minus_listener_pilote()
     total_recette_update_pilote()
     bouton_calcul_pilote()
+    bouton_recalcul_pilote()
     correction_de_saisi_pilote()
 }
 
@@ -52,6 +42,11 @@ function bouton_calcul_pilote()
     bouton_calcul_description()
 }
 
+function bouton_recalcul_pilote()
+{
+    bouton_recalcul_description()
+}
+
 function correction_de_saisi_pilote()
 {
     correction_de_saisi_description()
@@ -65,6 +60,8 @@ function correction_de_saisi_pilote()
 
 function add_listener_description()
 {
+    const add = document.querySelectorAll(".add");
+
     add.forEach(bouton_ajouter =>
         {
             bouton_ajouter.addEventListener("click", cloner_input_line, true)
@@ -73,6 +70,8 @@ function add_listener_description()
 
 function minus_listener_description()
 {
+    const minus = document.querySelectorAll(".minus");
+
     minus.forEach(bouton_supprimer =>
         {
             bouton_supprimer.addEventListener("click", supprimer_input_line, true)
@@ -90,7 +89,15 @@ function total_recette_update_description()
 
 function bouton_calcul_description()
 {
+    const bouton_calculer = document.getElementById("button_calcule");
     bouton_calculer.addEventListener("click", calcul_et_affichage, true)
+}
+
+function bouton_recalcul_description()
+{
+    const bouton_recalculer = document.getElementById("button_calcule_again")
+
+    bouton_recalculer.addEventListener("click", calcul_et_affichage_CALCUL, true)
 }
 
 function correction_de_saisi_description()
@@ -165,14 +172,13 @@ function supprimer_input_line(event)
 }
 
 // bouton_calcul_description -> calculer la nouvelle recette, et afficher la boite recette final
-function calcul_et_affichage(event)
+function calcul_et_affichage()
 {   
     if(input_rempli())
     {
         calcul_et_affichage_CALCUL()
         calcul_et_affichage_ANIMATION()
     }
-    
 }
 
 // correction_de_saisi_description -> Permet de supprimer la couleur rouge d'une erreur de saisi
@@ -205,12 +211,19 @@ function calcul_et_affichage_ANIMATION()
 // Fonction pour calculer la recette
 function calcul_et_affichage_CALCUL()
 {
-    // Calcul, affiche, et renvoi le total de la recette attendu
-    let poid_total = recette_voulu_CALCUL_TOTAL()
-    // Calcul, affiche, et renvoi le coefficient multiplicateur
-    let coefficient_multiplicateur = parseFloat(recette_voulu_CALCUL_COEF(poid_total))
-    console.log(poid_total)
-    console.log(coefficient_multiplicateur)
+    // On reverifie les champs saisi pour le bouton recalcule
+    if(input_rempli())
+    {
+        // Calcul, affiche, et renvoi le total de la recette attendu
+        let poid_total = recette_voulu_CALCUL_TOTAL()
+        // Calcul, affiche, et renvoi le coefficient multiplicateur
+        let coefficient_multiplicateur = parseFloat(recette_voulu_CALCUL_COEF(poid_total))
+        // Calcul, affiche la recette final
+        recette_voulu_CALCUL_RECETTE(coefficient_multiplicateur)
+        // Affiche le recap des produits voulu
+        recette_voulu_AFFICH_RECAP() 
+    }
+    
 }
 
 //////////////////////////////////////////////
@@ -222,6 +235,7 @@ function calcul_et_affichage_CALCUL()
 // Update du total poid recette coté utilisateur
 function update_total_poid_recette()
 {
+    const total_poid_recette_user_value = document.getElementById("user_poid_total_recette_value");
     // La liste de tout les inputs poid coté recette
     let liste_user_recette_poid = document.querySelectorAll(".user_recette_poid")
     // on initie le total à 0
@@ -229,7 +243,7 @@ function update_total_poid_recette()
     // On boucle dans la liste pour ajouter les values à total
     liste_user_recette_poid.forEach(input => 
         {
-            if(!isNaN(parseFloat(input.value)))
+            if(/^\d+(\.\d+)?$/.test(input.value))
             {
                 total += parseFloat(input.value)
             }
@@ -239,7 +253,7 @@ function update_total_poid_recette()
             }
         })
     // On ajoute le total dans la destination
-    total_poid_recette_user_value.innerHTML = total;
+    total_poid_recette_user_value.innerHTML = total + " g";
 }
 
 //////////////////////////////////////////////
@@ -251,24 +265,35 @@ function update_total_poid_recette()
 // Affiche une alerte si tout les champs de saisies n'ont pas été rempli
 function input_rempli()
 {
-    let input = document.querySelectorAll(".required")
-    for(let i = 0; i< input.length; i++)
+    // On supprime les ligne d'input totalement vide ( donc inutile )
+    suppression_input_line_vide()
+    // On verifie si les inputs sont soit vide, soit les inputs ou des nombres son attendu, sont biend es nombres
+    let inputs = document.querySelectorAll(".required")
+    for(let i = 0; i< inputs.length; i++)
     {
-        if(!input[i].value)
+        if(!inputs[i].value)
         {
+            for(let x = 0; x<inputs.length; x++)
+            {
+                if(!inputs[x].value)
+                {
+                    inputs[x].classList.add("error_saisi")
+                }
+            }
             return alert("Tout les champs n'ont pas été rempli")
         }
     }
-    let input_number = document.querySelectorAll(".required_number")
-    for(let i = 0; i< input_number.length; i++)
+    let inputs_number = document.querySelectorAll(".required_number")
+    for(let i = 0; i< inputs_number.length; i++)
     {
-        if(isNaN(parseInt(input_number[i].value)))
+        // Si la chaine contient autre chose que des chiffres
+        if(/^\d+(\.\d+)?$/.test(inputs_number[i].value) === false)
         {
-            for(let x = 0; x< input_number.length; x++)
+            for(let x = 0; x< inputs_number.length; x++)
             {
-                if(isNaN(parseInt(input_number[x].value)))
+                if(/^\d+$/.test(inputs_number[x].value) === false)
                 {
-                   input_number[x].classList.add("error_saisi") 
+                   inputs_number[x].classList.add("error_saisi") 
                 }
             }
             return alert("Attention de bien enregistrer des nombres dans les champs attendu")
@@ -276,8 +301,7 @@ function input_rempli()
     }
     return true
 }
-
-// Calcul le total de la recette voulu et l'affiche dans le destination
+// Calcul le total de la recette voulu et l'affiche dans le destination, renvoi le total
 function recette_voulu_CALCUL_TOTAL()
 {
     // On initie le total à 0
@@ -302,18 +326,126 @@ function recette_voulu_CALCUL_TOTAL()
     destination.innerHTML = total + " g"
     return total
 }
-
-function recette_voulu_CALCUL_COEF(x)
+// Calcul le coefficient multiplicateur et l'affiche dans la destination, renvoi le coefficient
+function recette_voulu_CALCUL_COEF(poid_total)
 {
     // x = le total de la recette attendu
     // On va récupérer le poid total de la recette saisi par l'utilisateur
     let poid_total_recette_user = document.getElementById("user_poid_total_recette_value")
     // on effectuer le calcul du coefficient avec ces deux totaux, en augmentant le coeficient de 0.01 pour la pesé
-    let coefficient_mutliplicateur = (x / parseFloat(poid_total_recette_user.innerHTML) + 0.01)
+    let coefficient_mutliplicateur = (poid_total / parseFloat(poid_total_recette_user.innerHTML) + 0.01)
     // On définie la destination
     let destination = document.getElementById("programme_coefficient_value")
     // On envoie dans la destination
     destination.innerHTML = coefficient_mutliplicateur.toFixed(2)
     // On retourne le resultat
     return coefficient_mutliplicateur.toFixed(2)
+}
+// Calcul grâce au coefficient et affiche la recette dans la destination
+function recette_voulu_CALCUL_RECETTE(coefficient_multiplicateur)
+{
+    // On récupère toutes les inputs recette coté user
+    let ingredients = document.querySelectorAll(".user_recette_ingredient")
+    let poids = document.querySelectorAll(".user_recette_poid")
+
+    // On définie la destination
+    let destination = document.getElementById("programme_recette_box")
+    // On reset la destination ( pour le recalcul )
+    destination.innerHTML = ""
+
+    // On boucle dans toutes nos inputs récupérer
+    for(let i = 0; i< ingredients.length; i++)
+    {
+        // On multiplie le poid par le coefficient multiplicateur
+        let poid = parseFloat(poids[i].value) * coefficient_multiplicateur
+
+        // On créé un template repli des informations d'inputs
+        let template = `<div class="programme_recette_line_name">${ingredients[i].value} <i class="fa-solid fa-arrow-right-long"></i></div>
+                        <div class="programme_recette_line_total"><span class="programme_recette_line_total_value">${parseInt(poid)} g</span></div>`
+        
+        // On créé un nouvel élément html
+        let nouvel_element = document.createElement("div")
+        // On lui définie une classe
+        nouvel_element.classList.add("programme_recette_line")
+        // On insère le template dans ce nouvel élément
+        nouvel_element.innerHTML = template
+        // L'élément est prêt, on l'envoie dans la destination
+        destination.appendChild(nouvel_element)
+    }
+
+
+}
+// Affiche le recap des produits voulu dans le destination
+function recette_voulu_AFFICH_RECAP()
+{
+    // On définie la destination
+    let destination = document.getElementById("programme_recap_product_box")
+    // On reset le recap ( pour le recalcul )
+    destination.innerHTML = ""
+    // On récupère les inputs produit_voulu
+    let nombres = document.querySelectorAll(".user_product_number")
+    let noms = document.querySelectorAll(".user_product_name")
+    let poids = document.querySelectorAll(".user_product_poid")
+    // On boucle dans ces éléments
+    for(let i = 0; i< nombres.length; i++)
+    {
+        // On créé un nouvel élément
+        let nouvel_element = document.createElement("div")
+        // On lui définie sa classe
+        nouvel_element.classList.add("programme_recap_product_line")
+        // On créé un template
+        let template = `Pour ${nombres[i].value} ${noms[i].value} à ${poids[i].value} g`
+        // On insère le template dans le nouvel élément
+        nouvel_element.innerHTML = template
+        // On envoi le nouvel élément dans la destination
+        destination.appendChild(nouvel_element)
+    }
+}
+// Supprime les ligne d'inputs qui sont totalement vide
+function suppression_input_line_vide()
+{
+    // On récupère les deux gros élément parent
+    let all_input_line_recette = document.querySelectorAll(".recette_input_line")
+    let nombre_line_recette = all_input_line_recette.length
+    all_input_line_recette.forEach(input => 
+        {
+            let inputs = input.querySelectorAll("input")
+            let controle = true
+            inputs.forEach(line =>
+                {
+                    if(line.value)
+                    {
+                        controle = false
+                    }
+                })
+            if(controle == true)
+            {
+                if(nombre_line_recette > 1)
+                {
+                    input.parentNode.removeChild(input)
+                }
+            }
+        })
+    
+    let all_input_line_product = document.querySelectorAll(".product_input_line")
+    let nombre_line_product = all_input_line_product.length
+    all_input_line_product.forEach(input => 
+        {
+            let inputs = input.querySelectorAll("input")
+            let controle = true
+            inputs.forEach(line =>
+                {
+                    if(line.value)
+                    {
+                        controle = false
+                    }
+                })
+            if(controle == true)
+            {
+                if(nombre_line_product > 1)
+                {
+                    input.parentNode.removeChild(input)
+                }
+            }
+        })
 }

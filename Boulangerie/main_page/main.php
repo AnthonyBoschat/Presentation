@@ -30,10 +30,10 @@
                             <div><i class="fa-solid fa-minus minus"></i></div>
                         </div>
                         <div class="input_box_global">
-                            <div class="title">Ma recette <span><span id="user_poid_total_recette_value"></span> g</span> </div>
+                            <div class="title"><input type="text" placeholder="Nom de la recette"> <span id="user_poid_total_recette_value">0 g</span></div>
                             <div class="input_box" id="recette_input_box">
                                 <div class="recette_input_line input_line">
-                                    <input type="text" placeholder="Farine" id="user_recette_ingredient" class="required">
+                                    <input type="text" placeholder="Farine" id="user_recette_ingredient" class="required user_recette_ingredient">
                                     <input type="text" placeholder="1000 (g)" id="user_recette_poid" class="user_recette_poid required required_number">
                                 </div>
                             </div>
@@ -73,10 +73,6 @@
                 <div id="programme_box_title">Recette final <button id="button_calcule_again">Calculer à nouveau</button></div>
                 <div id="programme_box_main">
                     <div id="programme_recette_box">
-                        <div class="programme_recette_line">
-                            <div class="programme_recette_line_name">Farine T65 <i class="fa-solid fa-arrow-right-long"></i></div>
-                            <div class="programme_recette_line_total"><span class="programme_recette_line_total_value">1000</span> g</div>
-                        </div>
                     </div>
                     <div id="programme_information_box">
                         <div id="programme_coefficient_box">
@@ -88,9 +84,6 @@
                             <div id="programme_poid_total_value"></div>
                         </div>
                         <div id="programme_recap_product_box">
-                            <div class="programme_recap_product_line">
-                                Pour 10 baguette à 250g
-                            </div>
                         </div>
                     </div>
                 </div>
