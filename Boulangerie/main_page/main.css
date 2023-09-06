@@ -55,7 +55,7 @@
     box-shadow: 4px 4px 15px black;
 }
 
-#button_calcule_again:hover
+#programme_box_header button:hover
 {
     cursor: pointer;
     box-shadow: 4px 4px 15px black;
@@ -131,7 +131,7 @@ header div
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 92%;
+    height: 80%;
 }
 
 #main_box_child
@@ -139,6 +139,7 @@ header div
     width: 90%;
     height: 90%;
     display: flex;
+    outline: 1px solid black;
 }
 
 /* Box de l'utilisateur */
@@ -284,7 +285,7 @@ header div
 #programme_box_button
 {
     width: 50%;
-    display: flex;
+    display: none;
     justify-content: center;
     align-items: center;
 }
@@ -306,20 +307,22 @@ header div
 {
     width: 50%;
     flex-direction: column;
-    display: none;
+    display: flex;
 }
 
-#programme_box_title
+#programme_box_header
 {
     display: flex;
     font-size: 60px;
     font-weight: 700;
-    justify-content: space-between;
+    gap: 5px;
+    justify-content: flex-end;
 }
 
-#button_calcule_again
+
+#programme_box_header button
 {
-    font-size: 30px;
+    font-size: 20px;
     background: none;
     padding: 10px;
     box-shadow: 2px 2px 10px black;

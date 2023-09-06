@@ -30,7 +30,7 @@
                             <div><i class="fa-solid fa-minus minus"></i></div>
                         </div>
                         <div class="input_box_global">
-                            <div class="title"><input type="text" placeholder="Nom de la recette"> <span id="user_poid_total_recette_value">0 g</span></div>
+                            <div class="title"><input type="text" placeholder="Nom de la recette" id="name_recette"> <span id="user_poid_total_recette_value">0 g</span></div>
                             <div class="input_box" id="recette_input_box">
                                 <div class="recette_input_line input_line">
                                     <input type="text" placeholder="Farine" id="user_recette_ingredient" class="required user_recette_ingredient">
@@ -70,7 +70,10 @@
                 <button id="button_calcule">Calculer ma recette</button>
             </div>
             <div id="programme_box">
-                <div id="programme_box_title">Recette final <button id="button_calcule_again">Calculer à nouveau</button></div>
+                <div id="programme_box_header">
+                    <button id="save_recette">Enregistrer ma recette</button>
+                    <button id="button_calcule_again">Calculer à nouveau</button>
+                </div>
                 <div id="programme_box_main">
                     <div id="programme_recette_box">
                     </div>

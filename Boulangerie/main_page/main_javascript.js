@@ -14,6 +14,7 @@ function main()
     bouton_calcul_pilote()
     bouton_recalcul_pilote()
     correction_de_saisi_pilote()
+    bouton_save_recette_pilote()
 }
 
 //////////////////////////////////////////////
@@ -45,6 +46,11 @@ function bouton_calcul_pilote()
 function bouton_recalcul_pilote()
 {
     bouton_recalcul_description()
+}
+
+function bouton_save_recette_pilote()
+{
+    bouton_save_recette_description()
 }
 
 function correction_de_saisi_pilote()
@@ -98,6 +104,13 @@ function bouton_recalcul_description()
     const bouton_recalculer = document.getElementById("button_calcule_again")
 
     bouton_recalculer.addEventListener("click", calcul_et_affichage_CALCUL, true)
+}
+
+function bouton_save_recette_description()
+{
+    const bouton_save_recette = document.getElementById("save_recette")
+
+    bouton_save_recette.addEventListener("click", save_recette ,true)
 }
 
 function correction_de_saisi_description()
@@ -223,6 +236,49 @@ function calcul_et_affichage_CALCUL()
         // Affiche le recap des produits voulu
         recette_voulu_AFFICH_RECAP() 
     }
+    
+}
+
+// Fonction pour enregistrer la recette dans la base de donnée
+function save_recette()
+{
+    // On verifie qu'un nom de recette a été rempli
+    let nom_recette = document.getElementById("name_recette")
+    if(!nom_recette.value)
+    {
+        nom_recette.classList.add("error_saisi")
+        return alert("Merci de saisir un nom pour la recette")
+    }
+    // On verifie ensuite que tout les inputs sont rempli, et conforme aux attentes de valeurs
+    if(!input_rempli())
+    {
+       return
+    }
+    // Quand ces conditions sont rempli, on récupère toutes les informations qui seront nécessaires pour enregistrer la recette ( Nom de la recette, ingredient, poid )
+    let nom_recette_value = nom_recette.value
+    let inputs_user_recette_ingredient = document.querySelectorAll(".user_recette_ingredient")
+    let inputs_user_recette_poid = document.querySelectorAll(".user_recette_poid")
+
+    // on initialise un object qui sera ensuite envoyer à PHP qui contiendra toutes les informations, avec déjà le nom de la recette et le tableau qui contiendra les nom d'ingrédient et quantité de la recette
+    let datas = 
+    {
+        "recette_name" : nom_recette_value,
+        "ingredient_poid" : []
+    }
+
+    // On boucle pour envoyer toute les valeurs des inputs dans les tableau
+    for(let i = 0; i< inputs_user_recette_ingredient.length; i++)
+    {
+        // Dans datas["ingredient_poid"] on push des objet contenant les valeurs pour chaques lines
+        datas["ingredient_poid"].push(
+            {
+                nom : inputs_user_recette_ingredient[i].value,
+                poid : inputs_user_recette_poid[i].value
+            }
+        )
+    }
+
+    // L'objet datas est pret à etre envoyer, on effectue une requete XML pour l'envoyer au fichier save_recette_treatment.php
     
 }
 
