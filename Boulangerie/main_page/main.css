@@ -49,7 +49,7 @@
     opacity: 0.5;
 }
 
-#button_calcule:hover
+.big_button:hover
 {
     cursor: pointer;
     box-shadow: 4px 4px 15px black;
@@ -119,7 +119,6 @@ header div
 #deconnection_button
 {
     background: none;
-    outline: none;
     border: none;
     color: white;
     font-size: 20px;
@@ -139,7 +138,6 @@ header div
     width: 90%;
     height: 90%;
     display: flex;
-    outline: 1px solid black;
 }
 
 /* Box de l'utilisateur */
@@ -202,10 +200,10 @@ header div
     display: flex;
     flex-direction: column;
     gap: 10px;
-    height: 100%;
-    max-height: 100%;
+    height: 500px;
     overflow-y: auto;
     padding-right: 5px;
+    padding-bottom: 5px;
 }
 
 .input_line
@@ -285,12 +283,14 @@ header div
 #programme_box_button
 {
     width: 50%;
-    display: none;
+    display: flex;
+    gap: 10px;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
 }
 
-#button_calcule
+.big_button
 {
     font-size: 50px;
     background: none;
@@ -307,7 +307,7 @@ header div
 {
     width: 50%;
     flex-direction: column;
-    display: flex;
+    display: none;
 }
 
 #programme_box_header

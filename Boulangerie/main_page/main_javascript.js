@@ -108,9 +108,11 @@ function bouton_recalcul_description()
 
 function bouton_save_recette_description()
 {
-    const bouton_save_recette = document.getElementById("save_recette")
-
-    bouton_save_recette.addEventListener("click", save_recette ,true)
+    const bouton_save_recette = document.querySelectorAll(".save_recette")
+    bouton_save_recette.forEach(bouton => 
+        {
+            bouton.addEventListener("click", save_recette ,true)
+        })
 }
 
 function correction_de_saisi_description()
@@ -187,7 +189,7 @@ function supprimer_input_line(event)
 // bouton_calcul_description -> calculer la nouvelle recette, et afficher la boite recette final
 function calcul_et_affichage()
 {   
-    if(input_rempli())
+    if(input_rempli_calcul())
     {
         calcul_et_affichage_CALCUL()
         calcul_et_affichage_ANIMATION()
@@ -225,7 +227,7 @@ function calcul_et_affichage_ANIMATION()
 function calcul_et_affichage_CALCUL()
 {
     // On reverifie les champs saisi pour le bouton recalcule
-    if(input_rempli())
+    if(input_rempli_calcul())
     {
         // Calcul, affiche, et renvoi le total de la recette attendu
         let poid_total = recette_voulu_CALCUL_TOTAL()
@@ -250,7 +252,7 @@ function save_recette()
         return alert("Merci de saisir un nom pour la recette")
     }
     // On verifie ensuite que tout les inputs sont rempli, et conforme aux attentes de valeurs
-    if(!input_rempli())
+    if(!input_rempli_save())
     {
        return
     }
@@ -258,7 +260,6 @@ function save_recette()
     let nom_recette_value = nom_recette.value
     let inputs_user_recette_ingredient = document.querySelectorAll(".user_recette_ingredient")
     let inputs_user_recette_poid = document.querySelectorAll(".user_recette_poid")
-
     // on initialise un object qui sera ensuite envoyer à PHP qui contiendra toutes les informations, avec déjà le nom de la recette et le tableau qui contiendra les nom d'ingrédient et quantité de la recette
     let datas = 
     {
@@ -344,13 +345,13 @@ function update_total_poid_recette()
 //////////////////////////////////////////////
 //////////////////////////////////////////////
 
-// Affiche une alerte si tout les champs de saisies n'ont pas été rempli
-function input_rempli()
+// Affiche une alerte si tout les champs de saisies nécessaire pour les calculs ont été rempli
+function input_rempli_calcul()
 {
     // On supprime les ligne d'input totalement vide ( donc inutile )
     suppression_input_line_vide()
     // On verifie si les inputs sont soit vide, soit les inputs ou des nombres son attendu, sont biend es nombres
-    let inputs = document.querySelectorAll(".required")
+    let inputs = document.querySelectorAll(".required_calcul")
     for(let i = 0; i< inputs.length; i++)
     {
         if(!inputs[i].value)
@@ -379,6 +380,29 @@ function input_rempli()
                 }
             }
             return alert("Attention de bien enregistrer des nombres dans les champs attendu")
+        }
+    }
+    return true
+}
+// Affiche une alerte si tout les champs de saisies nécessaire pour la sauvegarde ont été rempli
+function input_rempli_save()
+{
+    // On supprime les ligne d'input totalement vide ( donc inutile )
+    suppression_input_line_vide()
+    // On verifie si les inputs sont soit vide, soit les inputs ou des nombres son attendu, sont biend es nombres
+    let inputs = document.querySelectorAll(".required_save")
+    for(let i = 0; i< inputs.length; i++)
+    {
+        if(!inputs[i].value)
+        {
+            for(let x = 0; x<inputs.length; x++)
+            {
+                if(!inputs[x].value)
+                {
+                    inputs[x].classList.add("error_saisi")
+                }
+            }
+            return alert("Tout les champs n'ont pas été rempli")
         }
     }
     return true

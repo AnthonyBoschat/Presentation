@@ -1,5 +1,4 @@
 DROP TABLE user_information;
-
 CREATE TABLE IF NOT EXISTS user_information
 (
     user_id INT AUTO_INCREMENT,
@@ -10,8 +9,8 @@ CREATE TABLE IF NOT EXISTS user_information
     PRIMARY KEY(user_id)
 );
 
-DROP TABLE user_recette;
-CREATE TABLE IF NOT EXISTS user_recette
+DROP TABLE user_recette_list;
+CREATE TABLE IF NOT EXISTS user_recette_list
 (
     user_id INT,
     recette_id INT AUTO_INCREMENT,
@@ -19,7 +18,6 @@ CREATE TABLE IF NOT EXISTS user_recette
 
     PRIMARY KEY(recette_id)
 );
-
 DROP TABLE user_recette_details;
 CREATE TABLE IF NOT EXISTS user_recette_details
 (
@@ -27,15 +25,29 @@ CREATE TABLE IF NOT EXISTS user_recette_details
     ingredient_name VARCHAR(65),
     ingredient_poid VARCHAR(65)
 );
+DROP TABLE ingredients_list;
+CREATE TABLE IF NOT EXISTS ingredients_list
+(
+    ingredient_id INT AUTO_INCREMENT,
+    ingredient_name VARCHAR(65),
 
+    UNIQUE(ingredient_name),
+    PRIMARY KEY(ingredient_id)
+);
+DROP TABLE poid_list;
+CREATE TABLE IF NOT EXISTS poid_list
+(
+    poid_id INT AUTO_INCREMENT,
+    poid_value VARCHAR(65),
 
-
-
-
+    UNIQUE(poid_value),
+    PRIMARY KEY(poid_id)
+);
 
 select * from user_information;
-select * from user_recette;
+select * from user_recette_list;
 select * from user_recette_details;
+select * from ingredients_list;
 
 
 

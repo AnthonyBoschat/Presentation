@@ -30,23 +30,11 @@
                             <div><i class="fa-solid fa-minus minus"></i></div>
                         </div>
                         <div class="input_box_global">
-                            <div class="title"><input type="text" placeholder="Nom de la recette" id="name_recette" value="Pain blanc"> <span id="user_poid_total_recette_value">0 g</span></div>
+                            <div class="title"><input type="text" placeholder="Nom de la recette" id="name_recette"> <span id="user_poid_total_recette_value">0 g</span></div>
                             <div class="input_box" id="recette_input_box">
                                 <div class="recette_input_line input_line">
-                                    <input type="text" placeholder="Farine" id="user_recette_ingredient" class="required user_recette_ingredient" value="Farine">
-                                    <input type="text" placeholder="1000 (g)" id="user_recette_poid" class="user_recette_poid required required_number" value="1000">
-                                </div>
-                                <div class="recette_input_line input_line">
-                                    <input type="text" placeholder="Farine" id="user_recette_ingredient" class="required user_recette_ingredient" value="Eau">
-                                    <input type="text" placeholder="1000 (g)" id="user_recette_poid" class="user_recette_poid required required_number" value="650">
-                                </div>
-                                <div class="recette_input_line input_line">
-                                    <input type="text" placeholder="Farine" id="user_recette_ingredient" class="required user_recette_ingredient" value="Sel">
-                                    <input type="text" placeholder="1000 (g)" id="user_recette_poid" class="user_recette_poid required required_number" value="20">
-                                </div>
-                                <div class="recette_input_line input_line">
-                                    <input type="text" placeholder="Farine" id="user_recette_ingredient" class="required user_recette_ingredient" value="Levure">
-                                    <input type="text" placeholder="1000 (g)" id="user_recette_poid" class="user_recette_poid required required_number" value="10">
+                                    <input type="text" placeholder="Farine" id="user_recette_ingredient" class="required_save required_calcul user_recette_ingredient">
+                                    <input type="text" placeholder="1000 (g)" id="user_recette_poid" class="required_save user_recette_poid required_calcul required_number">
                                 </div>
                             </div>
                         </div>
@@ -65,9 +53,9 @@
                             <div class="title">Produit voulu</div>
                             <div class="input_box" id="product_input_box">
                                 <div class="product_input_line input_line">
-                                    <input type="text" placeholder="10" class="user_product_number required required_number" value="150">
-                                    <input type="text" placeholder="Baguette" class="user_product_name required" value="Baguette">
-                                    <input type="text" placeholder="330 (g)" class="user_product_poid required required_number" value="345">
+                                    <input type="text" placeholder="10" class="user_product_number required_calcul required_number">
+                                    <input type="text" placeholder="Baguette" class="user_product_name required_calcul">
+                                    <input type="text" placeholder="330 (g)" class="user_product_poid required_calcul required_number">
                                 </div>
                             </div>
                         </div>
@@ -79,11 +67,12 @@
 
 
             <div id="programme_box_button">
-                <button id="button_calcule">Calculer ma recette</button>
+                <button class="big_button save_recette">Enregistrer ma recette</button>
+                <button class="big_button" id="button_calcule">Calculer ma recette</button>
             </div>
             <div id="programme_box">
                 <div id="programme_box_header">
-                    <button id="save_recette">Enregistrer ma recette</button>
+                    <button class="save_recette">Enregistrer ma recette</button>
                     <button id="button_calcule_again">Calculer à nouveau</button>
                 </div>
                 <div id="programme_box_main">
