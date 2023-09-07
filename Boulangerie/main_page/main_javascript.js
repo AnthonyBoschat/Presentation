@@ -281,7 +281,31 @@ function save_recette()
     console.log(datas)
 
     // L'objet datas est pret à etre envoyer, on effectue une requete XML pour l'envoyer au fichier save_recette_treatment.php
-    
+
+    // On converti datas en json
+    json_datas = JSON.stringify(datas)
+
+    // query = nouvelle instance de XMLHttpRequest()
+    let query = new XMLHttpRequest()
+
+    // Methode open POST = Va chercher dans save_recette_treatment.php une information
+    query.open("POST", "save_recette_treatment.php", true)
+
+    // Je rajoute un header qui dit : ce que je t'envoie, est dans ce format ci
+    query.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
+
+    // On envoi la requete en passant datas
+    query.send("datas="+json_datas)
+
+    // Quand la requête est terminé
+    query.onload = function()
+    {
+        if(query.status === 200)
+        {
+            // On averti l'utilisateur que la recette est bien enregistrer
+            console.log(query.responseText)
+        }
+    }
 }
 
 //////////////////////////////////////////////

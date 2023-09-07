@@ -10,12 +10,32 @@ CREATE TABLE IF NOT EXISTS user_information
     PRIMARY KEY(user_id)
 );
 
+DROP TABLE user_recette;
+CREATE TABLE IF NOT EXISTS user_recette
+(
+    user_id INT,
+    recette_id INT AUTO_INCREMENT,
+    recette_name VARCHAR(65),
+
+    PRIMARY KEY(recette_id)
+);
+
+DROP TABLE user_recette_details;
+CREATE TABLE IF NOT EXISTS user_recette_details
+(
+    recette_id INT,
+    ingredient_name VARCHAR(65),
+    ingredient_poid VARCHAR(65)
+);
+
 
 
 
 
 
 select * from user_information;
+select * from user_recette;
+select * from user_recette_details;
 
 
 
@@ -24,3 +44,18 @@ VALUES
 (
     "Anthony", "sudo"
 );
+
+INSERT INTO user_recette(user_id, recette_name)
+VALUES
+(
+    1, "Pain blanc"
+);
+
+INSERT INTO user_recette_details(recette_id, ingredient_name, ingredient_poid)
+VALUES
+(
+    
+);
+
+
+
