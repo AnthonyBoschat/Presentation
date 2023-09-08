@@ -64,6 +64,11 @@ function bouton_recette_list_defil_pilote()
     bouton_recette_list_defil_description()
 }
 
+function bouton_select_recette_pilote()
+{
+    bouton_select_recette_description()
+}
+
 function correction_de_saisi_pilote()
 {
     correction_de_saisi_description()
@@ -76,7 +81,7 @@ function correction_de_saisi_pilote()
 //////////////////////////////////////////////
 function load_recette_user_description()
 {
-    loading_recette_user()
+    loading_recette_user_list()
 }
 
 function add_listener_description()
@@ -137,6 +142,15 @@ function bouton_recette_list_defil_description()
     bouton_recette_list_defil.addEventListener("click", apparition_disparition_boite_recette, true)
 }
 
+function bouton_select_recette_description()
+{
+    const recette_bouton_all = document.querySelectorAll(".my_recette_liste_line")
+    recette_bouton_all.forEach(bouton => 
+        {
+            bouton.addEventListener("click", load_recette, true)
+        })
+}
+
 function correction_de_saisi_description()
 {
     let inputs = document.querySelectorAll("input")
@@ -152,9 +166,53 @@ function correction_de_saisi_description()
 //////////////////////////////////////////////
 //////////////////////////////////////////////
 
+// bouton_select_recette_description -> Afficher la recette selectionner
+function load_recette(event)
+{
+    // On récupère le nom de la recette cliquer
+    let name_recette = event.target.innerHTML
+    // On prepare la requete AJAX pour envoyer le nom de la recette cliquer, pour qu'elle soit traiter dans le fichier load_recette.php
+    let query_post_name_recette = new XMLHttpRequest()
+    query_post_name_recette.open("POST", "load_recette.php", true)
+    query_post_name_recette.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
+    let json_name_recette = JSON.stringify(name_recette)
+    query_post_name_recette.send("data=" + json_name_recette)
+
+    query_post_name_recette.onload = function()
+    {
+        if(query_post_name_recette.status === 200)
+        {
+            let response = JSON.parse(query_post_name_recette.responseText)
+            if(response.status === true )
+            {
+                let liste_ingredients_poids = response.liste
+                // On reset les inputs
+                let destination = document.getElementById("recette_input_box")
+                destination.innerHTML = ""
+                // On a récupérer la liste des ingrédient et leurs poids, on créé une boucle pour envoyer les élément dans les inputs
+                let nombre_input_a_generer = liste_ingredients_poids.length
+                for(let i = 0; i < nombre_input_a_generer; i++)
+                {
+                    let template = `<input type="text" placeholder="Farine" id="user_recette_ingredient" class="required_save required_calcul user_recette_ingredient" value="${response.liste[i]["ingredient_name"]}">
+                                    <input type="text" placeholder="1000 (g)" id="user_recette_poid" class="required_save user_recette_poid required_calcul required_number" value="${response.liste[i]["ingredient_poid"]}">
+                                    `
+                    let new_element = document.createElement("div")
+                    new_element.classList.add("recette_input_line")
+                    new_element.classList.add("input_line")
+                    new_element.innerHTML = template
+                    destination.appendChild(new_element)
+                }
+            }
+            else if(response.status === false)
+            {
+                console.log("false")
+            }
+        }
+    }
+}
 
 // load_recette_user_description -> Charge la liste des recettes de l'utilisateur dans le menu déroulant
-function loading_recette_user()
+function loading_recette_user_list()
 {
     // On défini la destination ou envoyer les recettes
     const destination = document.getElementById("my_recette_list")
@@ -163,7 +221,7 @@ function loading_recette_user()
 
     // On récupère la liste des recettes de l'utilisateur envoyer par php par PDO
     let query_recup_list_recette = new XMLHttpRequest()
-    query_recup_list_recette.open("GET", "load_recettes.php", true)
+    query_recup_list_recette.open("GET", "load_recettes_list.php", true)
     query_recup_list_recette.send()
     // Quand on a la réponse prete de PHP
     query_recup_list_recette.onload = function () 
@@ -198,6 +256,8 @@ function loading_recette_user()
         {
             console.error("La requete a rencontrer un probleme")
         }
+        // Quand les ajouts sont fait, on applique un listener sur les recettes
+        bouton_select_recette_pilote()
     }
 
 
@@ -353,8 +413,6 @@ function save_recette()
         )
     }
 
-    console.log(datas)
-
     // L'objet datas est pret à etre envoyer, on effectue une requete XML pour l'envoyer au fichier save_recette_treatment.php
 
     // On converti datas en json
@@ -392,6 +450,16 @@ function apparition_disparition_boite_recette()
     const boite_list_recette = document.getElementById("my_recette_list")
 
     boite_list_recette.style.display = getComputedStyle(boite_list_recette).display == "flex" ? "none" : "flex";
+}
+
+// Fonction pour générer des inputs pour l'affichage de la recette
+function generate_input_line_recette()
+{
+    let source = document.querySelectorAll(".recette_input_line")[0]
+    let copy = source.cloneNode(true)
+    let destination = document.getElementById("recette_input_box")
+    destination.appendChild(copy)
+    console.log(destination)
 }
 
 //////////////////////////////////////////////

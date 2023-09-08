@@ -51,6 +51,14 @@ select * from ingredients_list;
 
 
 
+SELECT ingredients_list.ingredient_name, user_recette_details.ingredient_poid
+FROM ingredients_list, user_recette_details
+WHERE user_recette_details.ingredient_name = ingredients_list.ingredient_id
+AND
+user_recette_details.recette_id = 1;
+
+
+
 INSERT INTO user_information(user_name, user_password)
 VALUES
 (
