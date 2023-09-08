@@ -12,7 +12,14 @@
     <header>
         <div id="logo"><i class="fa-solid fa-bread-slice"></i></div>
         <div id="name_user">Utilisateur : <?= $_SESSION["user_name"] ?></div>
-        <div id="calcule_recette">Calcule de recette</div>
+        <div id="nav_option">
+            <div id="my_recette">Mes recettes<i class="fa-solid fa-caret-down"></i></div>
+            <div id="my_recette_list">
+                <div class="my_recette_liste_line">Pain blanc</div>
+                <div class="my_recette_liste_line">Chouquette</div>
+                <div class="my_recette_liste_line">Pâte à choux</div>
+            </div>
+        </div>
         <div id="deconnection">
             <form action="main_treatment.php" method="post"><input type="submit" name="deconnection" value="Se déconnecter" id="deconnection_button"></form>
         </div>

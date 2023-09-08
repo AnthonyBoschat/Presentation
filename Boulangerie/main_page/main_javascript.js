@@ -13,8 +13,9 @@ function main()
     total_recette_update_pilote()
     bouton_calcul_pilote()
     bouton_recalcul_pilote()
-    correction_de_saisi_pilote()
     bouton_save_recette_pilote()
+    bouton_recette_list_defil_pilote()
+    correction_de_saisi_pilote()
 }
 
 //////////////////////////////////////////////
@@ -51,6 +52,11 @@ function bouton_recalcul_pilote()
 function bouton_save_recette_pilote()
 {
     bouton_save_recette_description()
+}
+
+function bouton_recette_list_defil_pilote()
+{
+    bouton_recette_list_defil_description()
 }
 
 function correction_de_saisi_pilote()
@@ -113,6 +119,13 @@ function bouton_save_recette_description()
         {
             bouton.addEventListener("click", save_recette ,true)
         })
+}
+
+function bouton_recette_list_defil_description()
+{
+    const bouton_recette_list_defil = document.getElementById("my_recette")
+
+    bouton_recette_list_defil.addEventListener("click", apparition_disparition_boite_recette, true)
 }
 
 function correction_de_saisi_description()
@@ -307,6 +320,14 @@ function save_recette()
             console.log(query.responseText)
         }
     }
+}
+
+// Fonction pour faire apparaitre ou disparaitre la liste des recettes utilisateurs
+function apparition_disparition_boite_recette()
+{
+    const boite_list_recette = document.getElementById("my_recette_list")
+
+    boite_list_recette.style.display = getComputedStyle(boite_list_recette).display == "flex" ? "none" : "flex";
 }
 
 //////////////////////////////////////////////
