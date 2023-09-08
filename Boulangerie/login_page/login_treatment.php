@@ -60,6 +60,10 @@ if($informations = verification_champ_saisi_rempli())
         }
     }
 }
+else
+{
+    header("Location: login.php?erreur_saisi");
+}
 
 // On défini des variables de SESSION si l'utilisateur est parvenu à se connecter
 if($controle_connection == true)

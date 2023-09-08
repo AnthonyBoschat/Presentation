@@ -8,6 +8,7 @@ main()
 
 function main()
 {
+    load_recette_user_pilote()
     add_listener_pilote()
     minus_listener_pilote()
     total_recette_update_pilote()
@@ -23,6 +24,10 @@ function main()
 /* Application des pilotes listeners */
 //////////////////////////////////////////////
 //////////////////////////////////////////////
+function load_recette_user_pilote()
+{
+    load_recette_user_description()
+}
 
 function add_listener_pilote()
 {
@@ -69,6 +74,10 @@ function correction_de_saisi_pilote()
 /* Description des listeners */
 //////////////////////////////////////////////
 //////////////////////////////////////////////
+function load_recette_user_description()
+{
+    loading_recette_user()
+}
 
 function add_listener_description()
 {
@@ -142,6 +151,58 @@ function correction_de_saisi_description()
 /* Fonctions appliquer dans les listeners */
 //////////////////////////////////////////////
 //////////////////////////////////////////////
+
+
+// load_recette_user_description -> Charge la liste des recettes de l'utilisateur dans le menu déroulant
+function loading_recette_user()
+{
+    // On défini la destination ou envoyer les recettes
+    const destination = document.getElementById("my_recette_list")
+    // On clear la destination
+    destination.innerHTML = "";
+
+    // On récupère la liste des recettes de l'utilisateur envoyer par php par PDO
+    let query_recup_list_recette = new XMLHttpRequest()
+    query_recup_list_recette.open("GET", "load_recettes.php", true)
+    query_recup_list_recette.send()
+    // Quand on a la réponse prete de PHP
+    query_recup_list_recette.onload = function () 
+    {
+        if(query_recup_list_recette.status === 200)
+        {   
+            let lists = JSON.parse(query_recup_list_recette.responseText)
+            // On verifie le status de la réponse
+            if(lists.status === true)
+            {
+                // A ce moment là, lists.liste est un array qui contient le nom des recettes de l'utilisateur, on boucle pour envoyer ces informations dans la destination
+                for(let i = 0; i< lists.liste.length; i++)
+                {
+                    let name_recette = lists.liste[i].recette_name
+                    let new_element = document.createElement("div")
+                    new_element.classList.add("my_recette_liste_line")
+                    new_element.innerHTML = name_recette
+                    destination.appendChild(new_element)
+                }
+
+            }
+            else if(lists.status === false)
+            {
+                // C'est que l'utilisateur n'a encore aucune recette d'enregistrer, on ajoute un message pour le signaler dans la destination
+                let new_element = document.createElement("div")
+                new_element.classList.add("my_recette_liste_line_empty")
+                new_element.innerHTML = "( Aucune recette )"
+                destination.appendChild(new_element)
+            }
+        }
+        else
+        {
+            console.error("La requete a rencontrer un probleme")
+        }
+    }
+
+
+
+}
 
 // add_listener_description -> Cloner une input
 function cloner_input_line(event)
@@ -320,6 +381,9 @@ function save_recette()
             console.log(query.responseText)
         }
     }
+
+    // A la fin, on relance le chargement de la liste de recette, pour la mettre à jour
+    load_recette_user_pilote()
 }
 
 // Fonction pour faire apparaitre ou disparaitre la liste des recettes utilisateurs

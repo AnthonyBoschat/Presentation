@@ -17,6 +17,10 @@
         <div id="error_box">
             Le nom d'utilisateur ou le mot de passe est incorrect
         </div>
+    <?php elseif(isset($_GET["erreur_saisi"])): ?>
+        <div id="error_box">
+            Tout les champs de saisies n'ont pas été rempli
+        </div>
     <?php endif; ?>
     
     <main>

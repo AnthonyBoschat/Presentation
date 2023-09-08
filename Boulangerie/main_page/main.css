@@ -479,3 +479,11 @@ header div
     font-weight: 700;
 }
 
+/* Special */
+
+.my_recette_liste_line_empty
+{
+    opacity: 0.7;
+    font-size: 20px;
+    cursor: default;
+}
