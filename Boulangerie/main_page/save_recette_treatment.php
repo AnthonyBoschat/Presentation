@@ -1,6 +1,7 @@
 <?php
+
 session_start();
-require "main_function";
+require "main_function.php";
 // Si la requete d'envoie coté js est passer et la variable est déclarer
 if(isset($_POST["datas"]))
 {
@@ -89,6 +90,7 @@ if(isset($_POST["datas"]))
         }
         $response["status"] = true;
     }
+    // Si la requête renvoie une information, Une recette existe pour cet utilisateur, on renvoie une demande de confirmation de mise à jour à l'utilisateur
     else
     {
         // A placer la mise à jour de la recette

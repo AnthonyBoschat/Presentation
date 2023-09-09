@@ -445,12 +445,28 @@ function save_recette()
         {
             // On averti l'utilisateur que la recette est bien enregistrer
             let response = JSON.parse(query.responseText)
-            if(response.status === true){console.log("La recette a été sauvegarder")}
+            if(response.status === true){console.log("La recette a été enregistrer")}
             else if(response.status === false){console.log("Errur lors du traitement de la requête")}
             else if(response.status === "update")
             {
                 let question = window.confirm(`La recette ${nom_recette.value} existe déjà, la mettre à jour ?`)
-                if(question){console.log("La requête a été mise à jour")}
+                if(question)
+                {
+
+                    let query_update = new XMLHttpRequest()
+                    query_update.open("POST", "update_recette_treatment.php", true)
+                    query_update.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
+                    query_update.send("datas="+json_datas)
+                    query_update.onload = function()
+                    {
+                        if(query_update.status === 200)
+                        {
+                            let response = JSON.parse(query_update.responseText)
+                            if(response.status === true){console.log("La recette a été mis à jour")}
+                            else if(response.status === false){console.log("Problème lors de lamise à jour de la recette coté PHP")}
+                        }
+                    }
+                }
                 else{console.log("Annulation de l'enregistrement de la recette")}
             }
         }
