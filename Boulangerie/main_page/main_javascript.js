@@ -427,42 +427,49 @@ function save_recette()
     json_datas = JSON.stringify(datas)
 
     // query = nouvelle instance de XMLHttpRequest()
-    let query = new XMLHttpRequest()
+    let query_save = new XMLHttpRequest()
 
     // Methode open POST = Va chercher dans save_recette_treatment.php une information
-    query.open("POST", "save_recette_treatment.php", true)
+    query_save.open("POST", "save_recette_treatment.php", true)
 
     // Je rajoute un header qui dit : ce que je t'envoie, est dans ce format ci
-    query.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
+    query_save.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
 
     // On envoi la requete en passant datas
-    query.send("datas="+json_datas)
+    query_save.send("datas="+json_datas)
 
     // Quand la requête est terminé
-    query.onload = function()
+    query_save.onload = function()
     {
-        if(query.status === 200)
+        if(query_save.status === 200)
         {
             // On averti l'utilisateur que la recette est bien enregistrer
-            let response = JSON.parse(query.responseText)
+            let response = JSON.parse(query_save.responseText)
             if(response.status === true){console.log("La recette a été enregistrer")}
             else if(response.status === false){console.log("Errur lors du traitement de la requête")}
+            // Si la recette existe
             else if(response.status === "update")
             {
                 let question = window.confirm(`La recette ${nom_recette.value} existe déjà, la mettre à jour ?`)
+                // Et qu'elle souhaite etre enregistrer, on supprime l'ancienne, et on relance l'enregistrement de la nouvelle
                 if(question)
                 {
 
                     let query_update = new XMLHttpRequest()
-                    query_update.open("POST", "update_recette_treatment.php", true)
+                    query_update.open("POST", "delete_save_recette_treatment.php", true)
                     query_update.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
                     query_update.send("datas="+json_datas)
                     query_update.onload = function()
                     {
                         if(query_update.status === 200)
                         {
-                            let response = JSON.parse(query_update.responseText)
-                            if(response.status === true){console.log("La recette a été mis à jour")}
+                            let response = JSON.parse(query_update.response)
+                            // Si la requete a été effectuer, le detail de la recette a été supprimer, et la requete a été enregistrer
+                            if(response.status === true)
+                            {
+                                
+                                console.log("La recette a été mis à jour")
+                            }
                             else if(response.status === false){console.log("Problème lors de lamise à jour de la recette coté PHP")}
                         }
                     }
