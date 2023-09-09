@@ -171,6 +171,10 @@ function load_recette(event)
 {
     // On récupère le nom de la recette cliquer
     let name_recette = event.target.innerHTML
+    // destination = l'input pour le nom de la recette
+    let destination = document.getElementById("name_recette")
+    // On change sa valeur pour le nom de la recette
+    destination.value = name_recette
     // On prepare la requete AJAX pour envoyer le nom de la recette cliquer, pour qu'elle soit traiter dans le fichier load_recette.php
     let query_post_name_recette = new XMLHttpRequest()
     query_post_name_recette.open("POST", "load_recette.php", true)
@@ -201,6 +205,10 @@ function load_recette(event)
                     new_element.classList.add("input_line")
                     new_element.innerHTML = template
                     destination.appendChild(new_element)
+                    // On réactualise les listener pour les changement de valeur des inputs, pour mettre à jour le total de la recette
+                    total_recette_update_pilote()
+                    // On effectue le calcule avec les poids d'ingredient charger
+                    update_total_poid_recette()
                 }
             }
             else if(response.status === false)
@@ -436,7 +444,15 @@ function save_recette()
         if(query.status === 200)
         {
             // On averti l'utilisateur que la recette est bien enregistrer
-            console.log(query.responseText)
+            let response = JSON.parse(query.responseText)
+            if(response.status === true){console.log("La recette a été sauvegarder")}
+            else if(response.status === false){console.log("Errur lors du traitement de la requête")}
+            else if(response.status === "update")
+            {
+                let question = window.confirm(`La recette ${nom_recette.value} existe déjà, la mettre à jour ?`)
+                if(question){console.log("La requête a été mise à jour")}
+                else{console.log("Annulation de l'enregistrement de la recette")}
+            }
         }
     }
 

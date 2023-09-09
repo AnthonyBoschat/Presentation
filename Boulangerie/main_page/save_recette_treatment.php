@@ -1,6 +1,6 @@
 <?php
 session_start();
-require "../../../global_tools.php";
+require "main_function";
 // Si la requete d'envoie coté js est passer et la variable est déclarer
 if(isset($_POST["datas"]))
 {
@@ -87,14 +87,17 @@ if(isset($_POST["datas"]))
             $query_save_line->bindParam("ingredient_poid", $ingredient_tableau[$i]->poid);
             $query_save_line->execute();
         }
-        echo "Recette sauvegardé";
+        $response["status"] = true;
     }
     else
     {
-        echo "Une recette existe déjà avec ce nom";
+        // A placer la mise à jour de la recette
+        $response["status"] = "update";
     }
 }
 else
 {
-    echo "La requête a rencontrer un problème";
+    $response["status"] = false;
 }
+
+echo json_encode($response);

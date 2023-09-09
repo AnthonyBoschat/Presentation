@@ -1,5 +1,5 @@
 <?php
-require "../../../global_tools.php";
+require "main_function.php";
 session_start();
 
 if(isset($_POST["data"]))

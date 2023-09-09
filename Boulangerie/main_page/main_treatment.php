@@ -1,6 +1,5 @@
 <?php
-
-require "../login_page/login_function.php";
+require "main_function.php";
 // On continue la session de l'utilisateur
 session_start();
 // Si l'utilisateur veut se deconnecter

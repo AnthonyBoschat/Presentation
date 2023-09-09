@@ -1,5 +1,5 @@
 <?php
-require "../../../global_tools.php";
+require "main_function.php";
 session_start();
 
 //On initialise $response ( on peut s'en passer )
