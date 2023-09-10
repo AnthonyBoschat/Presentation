@@ -137,9 +137,7 @@ function bouton_save_recette_description()
 
 function bouton_recette_list_defil_description()
 {
-    const bouton_recette_list_defil = document.getElementById("my_recette")
-
-    bouton_recette_list_defil.addEventListener("click", apparition_disparition_boite_recette, true)
+    document.addEventListener("click", apparition_disparition_boite_recette, true)
 }
 
 function bouton_select_recette_description()
@@ -159,7 +157,6 @@ function correction_de_saisi_description()
             input.addEventListener("change", refresh_error_saisi, true)
         })
 }
-
 //////////////////////////////////////////////
 //////////////////////////////////////////////
 /* Fonctions appliquer dans les listeners */
@@ -484,11 +481,21 @@ function save_recette()
 }
 
 // Fonction pour faire apparaitre ou disparaitre la liste des recettes utilisateurs
-function apparition_disparition_boite_recette()
+function apparition_disparition_boite_recette(event)
 {
-    const boite_list_recette = document.getElementById("my_recette_list")
-
-    boite_list_recette.style.display = getComputedStyle(boite_list_recette).display == "flex" ? "none" : "flex";
+    let element_a_modifier = document.getElementById("my_recette_list")
+    let bouton = document.getElementById("my_recette")
+    let nav_bar = document.getElementById("nav_option")
+    // Si l'utilisateur clique sur le bouton
+    if(bouton.contains(event.target))
+    {
+        element_a_modifier.style.display = getComputedStyle(element_a_modifier).display == "none" ? "flex" : "none"
+        return
+    }
+    else if(!nav_option.contains(event.target))
+    {
+        element_a_modifier.style.display = "none"
+    }
 }
 
 // Fonction pour générer des inputs pour l'affichage de la recette
