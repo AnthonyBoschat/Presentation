@@ -21,9 +21,10 @@
         </div>
     </header>
 
-    <div id="main_box">
-        <div id="main_box_child">
+    <div id="main_box" style="outline: 2px solid red;">
 
+
+        <div id="main_box_child" style="outline: 1px solid black;">
             <div id="user_input_box">
 
                 <div id="recette_box">

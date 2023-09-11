@@ -10,8 +10,9 @@ if(isset($_POST["datas"]))
     // A ce stade, $datas est similaire au datas de javascript
     // On va avoir besoin de l'id du nom de la recette pour continuer la requete de suppression, on la récupère
     $PDO = connection_PDO("boulangerie");
-    $query_recup_recette_id = $PDO->prepare("SELECT recette_id FROM user_recette_list WHERE recette_name = :recette_name");
+    $query_recup_recette_id = $PDO->prepare("SELECT recette_id FROM user_recette_list WHERE recette_name = :recette_name AND user_id = :user_id");
     $query_recup_recette_id->bindParam(":recette_name", $datas->recette_name);
+    $query_recup_recette_id->bindParam(":user_id", $_SESSION["ID"]);
     $query_recup_recette_id->execute();
     // La requete renvoie forcément quelque chose, le nom de la recette est forcément existante dans la base de odnnée, ça a été verifier par save_recette_treatment response.status = update
     $recette_id = $query_recup_recette_id->fetch(PDO::FETCH_ASSOC)["recette_id"];

@@ -229,6 +229,7 @@ header div
     display: flex;
     flex-direction: column;
     gap: 5px;
+    height: fit-content;
 }
 
 .input_box

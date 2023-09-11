@@ -11,8 +11,9 @@ if(isset($_POST["data"]))
     // On se connecte à PDO
     $PDO = connection_PDO("boulangerie");
 
-    $query_recup_ID = $PDO->prepare("SELECT recette_id FROM user_recette_list WHERE recette_name = :recette_name");
+    $query_recup_ID = $PDO->prepare("SELECT recette_id FROM user_recette_list WHERE recette_name = :recette_name AND user_id = :user_id");
     $query_recup_ID->bindParam(":recette_name", $recette_name);
+    $query_recup_ID->bindParam(":user_id", $_SESSION["ID"]);
     $query_recup_ID->execute();
     $recette_id = $query_recup_ID->fetch(PDO::FETCH_ASSOC)["recette_id"];
     // On a récupérer l'id du nom de la recette, maintenant, on doit récupérer la liste des ingrédient et leurs poids avec une requête complexe
