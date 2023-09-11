@@ -1,5 +1,11 @@
 //////////////////////////////////////////////
 //////////////////////////////////////////////
+/* Variable d'initialisation */
+//////////////////////////////////////////////
+//////////////////////////////////////////////
+
+//////////////////////////////////////////////
+//////////////////////////////////////////////
 /* Programme principal */
 //////////////////////////////////////////////
 //////////////////////////////////////////////
@@ -16,6 +22,7 @@ function main()
     bouton_recalcul_pilote()
     bouton_save_recette_pilote()
     bouton_recette_list_defil_pilote()
+    bouton_delete_recette_pilote()
     correction_de_saisi_pilote()
 }
 
@@ -67,6 +74,11 @@ function bouton_recette_list_defil_pilote()
 function bouton_select_recette_pilote()
 {
     bouton_select_recette_description()
+}
+
+function bouton_delete_recette_pilote()
+{
+    bouton_delete_recette_description()
 }
 
 function correction_de_saisi_pilote()
@@ -149,6 +161,15 @@ function bouton_select_recette_description()
         })
 }
 
+function bouton_delete_recette_description()
+{
+    const boutons_delete = document.querySelectorAll(".delete_recette")
+    boutons_delete.forEach(bouton => 
+        {
+            bouton.addEventListener("click", delete_recette, true)
+        })
+}
+
 function correction_de_saisi_description()
 {
     let inputs = document.querySelectorAll("input")
@@ -174,7 +195,7 @@ function load_recette(event)
     destination.value = name_recette
     // On prepare la requete AJAX pour envoyer le nom de la recette cliquer, pour qu'elle soit traiter dans le fichier load_recette.php
     let query_post_name_recette = new XMLHttpRequest()
-    query_post_name_recette.open("POST", "load_recette.php", true)
+    query_post_name_recette.open("POST", "load_recette_treatment.php", true)
     query_post_name_recette.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
     let json_name_recette = JSON.stringify(name_recette)
     query_post_name_recette.send("data=" + json_name_recette)
@@ -212,6 +233,7 @@ function load_recette(event)
             {
                 console.log("false")
             }
+            change_clickable_button(".delete_recette", true)
         }
     }
 }
@@ -226,7 +248,7 @@ function loading_recette_user_list()
 
     // On récupère la liste des recettes de l'utilisateur envoyer par php par PDO
     let query_recup_list_recette = new XMLHttpRequest()
-    query_recup_list_recette.open("GET", "load_recettes_list.php", true)
+    query_recup_list_recette.open("GET", "load_recettes_list_treatment.php", true)
     query_recup_list_recette.send()
     // Quand on a la réponse prete de PHP
     query_recup_list_recette.onload = function () 
@@ -343,6 +365,37 @@ function refresh_error_saisi(event)
         event.target.classList.remove("error_saisi")
     }
 }
+
+// bouton_delete_recette_description -> Supprime une recette de la base de donnée
+function delete_recette()
+{
+    // On récupère le nom de la recette actuelle
+    let name_recette = document.getElementById("name_recette").value
+
+    // On envoie cette information à PHP pour effectuer les requête adéquate
+    let query_post_name_recette = new XMLHttpRequest()
+    query_post_name_recette.open("POST", "delete_recette_treatment.php")
+    query_post_name_recette.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
+    let json_name_recette = JSON.stringify(name_recette)
+    query_post_name_recette.send("datas="+json_name_recette)
+
+    query_post_name_recette.onload = function()
+    {
+        if(query_post_name_recette.status === 200)
+        {
+            let response = JSON.parse(query_post_name_recette.responseText)
+            if(response.status === true)
+            {
+                console.log("True")
+            }
+            else if(response.status === false)
+            {
+                console.log("False")
+            }
+        }
+    }
+    
+}
 //////////////////////////////////////////////
 //////////////////////////////////////////////
 /* Fonction utiliser dans les fonctions appliquer dans les listeners */
@@ -453,7 +506,7 @@ function save_recette()
                 {
 
                     let query_update = new XMLHttpRequest()
-                    query_update.open("POST", "delete_save_recette_treatment.php", true)
+                    query_update.open("POST", "update_recette_treatment.php", true)
                     query_update.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
                     query_update.send("datas="+json_datas)
                     query_update.onload = function()
@@ -753,4 +806,28 @@ function suppression_input_line_vide()
                 }
             }
         })
+}
+// Rend un bouton grisé cliquable
+function change_clickable_button(button, bool)
+{
+    let boutons = document.querySelectorAll(button)
+    if(bool === true)
+    {
+        boutons.forEach(bouton => 
+            {
+                bouton.style.opacity = 1
+                bouton.style.pointerEvents = "auto"
+                bouton.classList.add("button_hover_true")
+            })
+    }
+    else if(bool = false)
+    {
+        boutons.forEach(bouton => 
+            {
+                bouton.style.opacity = 0.5
+                bouton.style.pointerEvents = "none"
+                bouton.classList.remove("button_hover_true")
+            })
+    }
+    
 }

@@ -21,10 +21,11 @@
         </div>
     </header>
 
-    <div id="main_box" style="outline: 2px solid red;">
+    <div>
 
-
-        <div id="main_box_child" style="outline: 1px solid black;">
+    </div>
+    <div id="main_box">
+        <div id="main_box_child">
             <div id="user_input_box">
 
                 <div id="recette_box">
@@ -57,9 +58,9 @@
                             <div class="title">Produit voulu</div>
                             <div class="input_box" id="product_input_box">
                                 <div class="product_input_line input_line">
-                                    <input type="text" placeholder="10" class="user_product_number required_calcul required_number">
-                                    <input type="text" placeholder="Baguette" class="user_product_name required_calcul">
-                                    <input type="text" placeholder="330 (g)" class="user_product_poid required_calcul required_number">
+                                    <input type="text" placeholder="10" class="user_product_number required_calcul required_number" value="10">
+                                    <input type="text" placeholder="Baguette" class="user_product_name required_calcul" value="Baguette">
+                                    <input type="text" placeholder="330 (g)" class="user_product_poid required_calcul required_number" value="330">
                                 </div>
                             </div>
                         </div>
@@ -71,13 +72,15 @@
 
 
             <div id="programme_box_button">
-                <button class="big_button save_recette">Enregistrer ma recette</button>
-                <button class="big_button" id="button_calcule">Calculer ma recette</button>
+                <button class="big_button save_recette button_hover_true">Enregistrer ma recette</button>
+                <button class="big_button button_hover_true" id="button_calcule">Calculer ma recette</button>
+                <button class="big_button delete_recette button_hover_false">Supprimer ma recette</button>
             </div>
             <div id="programme_box">
                 <div id="programme_box_header">
-                    <button class="save_recette">Enregistrer ma recette</button>
-                    <button id="button_calcule_again">Calculer à nouveau</button>
+                    <button id="button_calcule_again" class="button_hover_true">Calculer à nouveau</button>
+                    <button class="save_recette button_hover_true">Enregistrer ma recette</button>
+                    <button class="delete_recette">Supprimer ma recette</button>
                 </div>
                 <div id="programme_box_main">
                     <div id="programme_recette_box">
