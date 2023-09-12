@@ -34,7 +34,7 @@
 /*********/
 /* Hover */
 /*********/
-#my_recette:hover
+.option:hover
 {
     cursor: pointer;
     opacity: 0.8;
@@ -115,7 +115,7 @@ header div
     padding-left: 30px;
 }
 
-#my_recette
+.option
 {
     font-size: 20px;
     display: flex;
@@ -491,4 +491,5 @@ header div
 .pointer_event_none
 {
     pointer-events:none;
+    opacity: 0.7;
 }

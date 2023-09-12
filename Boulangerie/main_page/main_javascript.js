@@ -18,12 +18,14 @@ function main()
     add_listener_pilote()
     minus_listener_pilote()
     total_recette_update_pilote()
+    correction_de_saisi_pilote()
     bouton_calcul_pilote()
     bouton_recalcul_pilote()
     bouton_save_recette_pilote()
     bouton_recette_list_defil_pilote()
     bouton_delete_recette_pilote()
-    correction_de_saisi_pilote()
+    bouton_modify_recette_pilote()
+    bouton_new_recette_pilote()
 }
 
 //////////////////////////////////////////////
@@ -49,6 +51,11 @@ function minus_listener_pilote()
 function total_recette_update_pilote()
 {
     total_recette_update_description()
+}
+
+function correction_de_saisi_pilote()
+{
+    correction_de_saisi_description()
 }
 
 function bouton_calcul_pilote()
@@ -81,9 +88,14 @@ function bouton_delete_recette_pilote()
     bouton_delete_recette_description()
 }
 
-function correction_de_saisi_pilote()
+function bouton_modify_recette_pilote()
 {
-    correction_de_saisi_description()
+    bouton_modify_recette_description()
+}
+
+function bouton_new_recette_pilote()
+{
+    bouton_new_recette_description()
 }
 
 //////////////////////////////////////////////
@@ -122,6 +134,15 @@ function total_recette_update_description()
     input_recette_poid.forEach(input => 
         {
             input.addEventListener("change", update_total_poid_recette, true)
+        })
+}
+
+function correction_de_saisi_description()
+{
+    let inputs = document.querySelectorAll("input")
+    inputs.forEach(input => 
+        {
+            input.addEventListener("change", refresh_error_saisi, true)
         })
 }
 
@@ -170,13 +191,19 @@ function bouton_delete_recette_description()
         })
 }
 
-function correction_de_saisi_description()
+function bouton_modify_recette_description()
 {
-    let inputs = document.querySelectorAll("input")
-    inputs.forEach(input => 
+    let boutons = document.querySelectorAll(".modify_recette")
+    boutons.forEach(bouton => 
         {
-            input.addEventListener("change", refresh_error_saisi, true)
+            bouton.addEventListener("click", make_editable_input_true, true)
         })
+}
+
+function bouton_new_recette_description()
+{
+    let bouton = document.querySelector("#new_recette")
+    bouton.addEventListener("click", load_new_recette, true)
 }
 //////////////////////////////////////////////
 //////////////////////////////////////////////
@@ -403,6 +430,10 @@ function delete_recette()
                     update_total_poid_recette()
                     // On remet le bouton de suppression en gris
                     change_clickable_button(".delete_recette", false)
+                    // On remet le bouton de modification en gris
+                    change_clickable_button(".modify_recette", false)
+                    // On remet tout les inputs en editable
+                    make_editable_input(true)
                     // On remet l'écran du progrmame par défaut
                     reset_programme_box_display()
 
@@ -425,6 +456,51 @@ function delete_recette()
 
     
 }
+
+// bouton_modify_recette_description -> Controle du comportement de make_editable_input
+function make_editable_input_true()
+{
+    make_editable_input(true)
+}
+
+function make_editable_input_false()
+{
+    make_editable_input(false)
+}
+
+//  bouton_modify_recette_description -> Rend modifiable la recette en retirant la classe .pointer_event_none
+function make_editable_input(bool)
+{   
+    if(bool === true)
+    {
+        let inputs_need_editable = document.querySelectorAll(".pointer_event_none")
+        inputs_need_editable.forEach(input => 
+            {
+                input.classList.remove("pointer_event_none")
+            })
+    }
+    else if(bool === false)
+    {
+        let inputs_need_no_editable = document.querySelectorAll(".recette_input_line")
+        inputs_need_no_editable.forEach(input => 
+            {
+                input.classList.add("pointer_event_none")
+            })
+        let title = document.querySelector("#name_recette")
+        title.classList.add("pointer_event_none")
+    }
+}
+
+// bouton_new_recette_description -> Proposer l'ecriture d'une nouvelle recette
+function load_new_recette()
+{
+    reset_inputs_virgin()
+    update_total_poid_recette()
+    change_clickable_button(".delete_recette", false)
+    change_clickable_button(".modify_recette", false)
+    make_editable_input_true()
+}
+
 //////////////////////////////////////////////
 //////////////////////////////////////////////
 /* Fonction utiliser dans les fonctions appliquer dans les listeners */
@@ -560,6 +636,9 @@ function save_recette()
 
     // A la fin, on relance le chargement de la liste de recette, pour la mettre à jour
     load_recette_user_pilote()
+    // On rend les inputs non cliquable
+    make_editable_input_false()
+
 }
 
 // Fonction pour faire apparaitre ou disparaitre la liste des recettes utilisateurs

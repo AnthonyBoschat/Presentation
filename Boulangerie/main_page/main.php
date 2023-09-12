@@ -13,7 +13,8 @@
         <div id="logo"><i class="fa-solid fa-bread-slice"></i></div>
         <div id="name_user">Utilisateur : <?= $_SESSION["user_name"] ?></div>
         <div id="nav_option">
-            <div id="my_recette">Mes recettes<i class="fa-solid fa-caret-down"></i></div>
+            <div class="option" id="new_recette">Nouvelle recette</div>
+            <div class="option" id="my_recette">Mes recettes<i class="fa-solid fa-caret-down"></i></div>
             <div id="my_recette_list"></div>
         </div>
         <div id="deconnection">
