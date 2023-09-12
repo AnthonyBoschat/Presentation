@@ -193,6 +193,8 @@ function load_recette(event)
     let destination = document.getElementById("name_recette")
     // On change sa valeur pour le nom de la recette
     destination.value = name_recette
+    // On rend le bouton indisponible
+    destination.classList.add("pointer_event_none")
     // On prepare la requete AJAX pour envoyer le nom de la recette cliquer, pour qu'elle soit traiter dans le fichier load_recette.php
     let query_post_name_recette = new XMLHttpRequest()
     query_post_name_recette.open("POST", "load_recette_treatment.php", true)
@@ -215,12 +217,13 @@ function load_recette(event)
                 let nombre_input_a_generer = liste_ingredients_poids.length
                 for(let i = 0; i < nombre_input_a_generer; i++)
                 {
-                    let template = `<input type="text" placeholder="Farine" id="user_recette_ingredient" class="required_save required_calcul user_recette_ingredient" value="${response.liste[i]["ingredient_name"]}">
-                                    <input type="text" placeholder="1000 (g)" id="user_recette_poid" class="required_save user_recette_poid required_calcul required_number" value="${response.liste[i]["ingredient_poid"]}">
+                    let template = `<input type="text" placeholder="Farine" class="required_save required_calcul user_recette_ingredient" value="${response.liste[i]["ingredient_name"]}">
+                                    <input type="text" placeholder="1000 (g)" class="required_save user_recette_poid required_calcul required_number" value="${response.liste[i]["ingredient_poid"]}">
                                     `
                     let new_element = document.createElement("div")
                     new_element.classList.add("recette_input_line")
                     new_element.classList.add("input_line")
+                    new_element.classList.add("pointer_event_none")
                     new_element.innerHTML = template
                     destination.appendChild(new_element)
                     // On réactualise les listener pour les changement de valeur des inputs, pour mettre à jour le total de la recette
@@ -372,28 +375,53 @@ function delete_recette()
     // On récupère le nom de la recette actuelle
     let name_recette = document.getElementById("name_recette").value
 
-    // On envoie cette information à PHP pour effectuer les requête adéquate
-    let query_post_name_recette = new XMLHttpRequest()
-    query_post_name_recette.open("POST", "delete_recette_treatment.php")
-    query_post_name_recette.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
-    let json_name_recette = JSON.stringify(name_recette)
-    query_post_name_recette.send("datas="+json_name_recette)
-
-    query_post_name_recette.onload = function()
+    let confirm = window.confirm("Supprimer la recette : " + name_recette + " ?")
+    if(confirm)
     {
-        if(query_post_name_recette.status === 200)
+        // On envoie cette information à PHP pour effectuer les requête adéquate de suppression de recette
+        let query_post_name_recette = new XMLHttpRequest()
+        query_post_name_recette.open("POST", "delete_recette_treatment.php")
+        query_post_name_recette.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
+        let json_name_recette = JSON.stringify(name_recette)
+        query_post_name_recette.send("datas="+json_name_recette)
+
+        query_post_name_recette.onload = function()
         {
-            let response = JSON.parse(query_post_name_recette.responseText)
-            if(response.status === true)
+            if(query_post_name_recette.status === 200)
             {
-                console.log("True")
-            }
-            else if(response.status === false)
-            {
-                console.log("False")
+                let response = JSON.parse(query_post_name_recette.responseText)
+                if(response.status === true)
+                {
+                    // A ce stade, les recettes ont été supprimer de la base de donnée, on reset la liste des recette de l'utilisateur : 
+                    load_recette_user_pilote()
+                    // On reset les inputs en vierge
+                    reset_inputs_virgin()
+                    // On applique un listener sur l'input
+                    total_recette_update_pilote()
+                    // On met à jour le poid de la recette
+                    update_total_poid_recette()
+                    // On remet le bouton de suppression en gris
+                    change_clickable_button(".delete_recette", false)
+                    // On remet l'écran du progrmame par défaut
+                    reset_programme_box_display()
+
+                    window.alert("La recette \"" + name_recette + "\" a été correctement supprimer ")
+                }
+                else if(response.status === false)
+                {
+                    window.alert("La recette \"" + name_recette + "\" n'a pas été trouver dans la base de donnée et n'a pas pu être supprimer")
+                }
             }
         }
+        
     }
+    else
+    {
+        return
+    }
+
+    
+
     
 }
 //////////////////////////////////////////////
@@ -820,7 +848,7 @@ function change_clickable_button(button, bool)
                 bouton.classList.add("button_hover_true")
             })
     }
-    else if(bool = false)
+    else if(bool === false)
     {
         boutons.forEach(bouton => 
             {
@@ -830,4 +858,36 @@ function change_clickable_button(button, bool)
             })
     }
     
+}
+// Permet de revenir aux inputs vierge d'origine de la recette coté user
+function reset_inputs_virgin()
+{
+    let destination = document.getElementById("recette_input_box")
+    destination.innerHTML = ""
+    let template = `<input type="text" placeholder="Farine" class="required_save required_calcul user_recette_ingredient">
+    <input type="text" placeholder="1000 (g)" class="required_save user_recette_poid required_calcul required_number">`
+
+    let nouvel_element = document.createElement("div")
+    // On lui définie une classe
+    nouvel_element.classList.add("recette_input_line")
+    nouvel_element.classList.add("input_line")
+    nouvel_element.innerHTML = template
+    destination.appendChild(nouvel_element)
+
+    let title = document.getElementById("name_recette")
+    title.value = ""
+}
+// Permet de remettre par défaut le programme display 
+function reset_programme_box_display()
+{
+    let vanish_box = document.getElementById("programme_box")
+    let appear_box = document.getElementById("programme_box_button")
+    vanish_box.classList = ""
+    appear_box.classList = ""
+    vanish_box.classList.add("disparition")
+    setTimeout(() => {
+        vanish_box.style.display = "none"
+        appear_box.style.display = "flex"
+        appear_box.classList.add("apparition")
+    }, 200);
 }
