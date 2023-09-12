@@ -74,13 +74,14 @@
             <div id="programme_box_button">
                 <button class="big_button save_recette button_hover_true">Enregistrer ma recette</button>
                 <button class="big_button button_hover_true" id="button_calcule">Calculer ma recette</button>
-                <button class="big_button unavailable_button pointer_event_none">Modifier ma recette</button>
+                <button class="big_button unavailable_button modify_recette">Modifier ma recette</button>
                 <button class="big_button delete_recette unavailable_button">Supprimer ma recette</button>
             </div>
             <div id="programme_box">
                 <div id="programme_box_header">
                     <button id="button_calcule_again" class="button_hover_true">Calculer à nouveau</button>
                     <button class="save_recette button_hover_true">Enregistrer ma recette</button>
+                    <button class="unavailable_button modify_recette">Modifier ma recette</button>
                     <button class="delete_recette unavailable_button">Supprimer ma recette</button>
                 </div>
                 <div id="programme_box_main">

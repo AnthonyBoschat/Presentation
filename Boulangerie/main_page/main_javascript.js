@@ -237,6 +237,7 @@ function load_recette(event)
                 console.log("false")
             }
             change_clickable_button(".delete_recette", true)
+            change_clickable_button(".modify_recette", true)
         }
     }
 }
