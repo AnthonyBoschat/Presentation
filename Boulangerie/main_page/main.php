@@ -59,9 +59,9 @@
                             <div class="title">Produit voulu</div>
                             <div class="input_box" id="product_input_box">
                                 <div class="product_input_line input_line">
-                                    <input type="text" placeholder="10" class="user_product_number required_calcul required_number" value="10">
-                                    <input type="text" placeholder="Baguette" class="user_product_name required_calcul" value="Baguette">
-                                    <input type="text" placeholder="330 (g)" class="user_product_poid required_calcul required_number" value="330">
+                                    <input type="text" placeholder="10" class="user_product_number required_calcul required_number">
+                                    <input type="text" placeholder="Baguette" class="user_product_name required_calcul">
+                                    <input type="text" placeholder="330 (g)" class="user_product_poid required_calcul required_number">
                                 </div>
                             </div>
                         </div>

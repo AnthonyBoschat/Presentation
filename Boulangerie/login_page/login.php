@@ -28,7 +28,7 @@
             <div id="saisi_box">
                 <div>
                     <div class="texte">Nom d'utilisateur :</div>
-                    <input type="text" class="input" name="name">
+                    <input type="text" class="input" name="name" autocomplete="off">
                 </div>
                 <div>
                     <div class="texte">Mot de passe :</div>

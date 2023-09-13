@@ -205,6 +205,15 @@ function bouton_new_recette_description()
     let bouton = document.querySelector("#new_recette")
     bouton.addEventListener("click", load_new_recette, true)
 }
+
+
+
+
+
+
+
+
+
 //////////////////////////////////////////////
 //////////////////////////////////////////////
 /* Fonctions appliquer dans les listeners */
@@ -214,6 +223,8 @@ function bouton_new_recette_description()
 // bouton_select_recette_description -> Afficher la recette selectionner
 function load_recette(event)
 {
+    // On refresh les éventuelles erreurs de saisi signaler
+    refresh_error_saisi_all()
     // On récupère le nom de la recette cliquer
     let name_recette = event.target.innerHTML
     // destination = l'input pour le nom de la recette
@@ -494,12 +505,22 @@ function make_editable_input(bool)
 // bouton_new_recette_description -> Proposer l'ecriture d'une nouvelle recette
 function load_new_recette()
 {
+    refresh_error_saisi_all()
     reset_inputs_virgin()
     update_total_poid_recette()
     change_clickable_button(".delete_recette", false)
     change_clickable_button(".modify_recette", false)
     make_editable_input_true()
 }
+
+
+
+
+
+
+
+
+
 
 //////////////////////////////////////////////
 //////////////////////////////////////////////
@@ -600,8 +621,8 @@ function save_recette()
         {
             // On averti l'utilisateur que la recette est bien enregistrer
             let response = JSON.parse(query_save.responseText)
-            if(response.status === true){console.log("La recette a été enregistrer")}
-            else if(response.status === false){console.log("Errur lors du traitement de la requête")}
+            if(response.status === true){window.alert("La recette a été enregistrer")}
+            else if(response.status === false){window.alert("Erreur lors de l'enregistrement de la recette")}
             // Si la recette existe
             else if(response.status === "update")
             {
@@ -623,9 +644,9 @@ function save_recette()
                             if(response.status === true)
                             {
                                 
-                                console.log("La recette a été mis à jour")
+                                window.alert("La recette a été mis à jour")
                             }
-                            else if(response.status === false){console.log("Problème lors de lamise à jour de la recette coté PHP")}
+                            else if(response.status === false){window.alert("Erreur lors de la mise à jour de la recette")}
                         }
                     }
                 }
@@ -638,7 +659,6 @@ function save_recette()
     load_recette_user_pilote()
     // On rend les inputs non cliquable
     make_editable_input_false()
-
 }
 
 // Fonction pour faire apparaitre ou disparaitre la liste des recettes utilisateurs
@@ -668,6 +688,11 @@ function generate_input_line_recette()
     destination.appendChild(copy)
     console.log(destination)
 }
+
+
+
+
+
 
 //////////////////////////////////////////////
 //////////////////////////////////////////////
@@ -699,17 +724,21 @@ function update_total_poid_recette()
     total_poid_recette_user_value.innerHTML = total + " g";
 }
 
+
+
+
+
+
+
 //////////////////////////////////////////////
 //////////////////////////////////////////////
 /* Fonctions diverse */
 //////////////////////////////////////////////
 //////////////////////////////////////////////
 
-// Affiche une alerte si tout les champs de saisies nécessaire pour les calculs ont été rempli
+// Affiche une alerte si tout les champs de saisies nécessaire pour les calculs n'ont pas été rempli
 function input_rempli_calcul()
 {
-    // On supprime les ligne d'input totalement vide ( donc inutile )
-    suppression_input_line_vide()
     // On verifie si les inputs sont soit vide, soit les inputs ou des nombres son attendu, sont biend es nombres
     let inputs = document.querySelectorAll(".required_calcul")
     for(let i = 0; i< inputs.length; i++)
@@ -742,6 +771,8 @@ function input_rempli_calcul()
             return alert("Attention de bien enregistrer des nombres dans les champs attendu")
         }
     }
+    // On supprime les ligne d'input totalement vide ( donc inutile )
+    suppression_input_line_vide()
     return true
 }
 // Affiche une alerte si tout les champs de saisies nécessaire pour la sauvegarde ont été rempli
@@ -889,6 +920,7 @@ function suppression_input_line_vide()
                 if(nombre_line_recette > 1)
                 {
                     input.parentNode.removeChild(input)
+                    nombre_line_recette -= 1
                 }
             }
         })
@@ -970,4 +1002,13 @@ function reset_programme_box_display()
         appear_box.style.display = "flex"
         appear_box.classList.add("apparition")
     }, 200);
+}
+// Permet de refresh toute les couleur rouge d'erreur de saisi
+function refresh_error_saisi_all()
+{
+    let error_saisi_inputs = document.querySelectorAll(".error_saisi")
+    error_saisi_inputs.forEach(input => 
+        {
+            input.classList.remove("error_saisi")
+        })
 }
