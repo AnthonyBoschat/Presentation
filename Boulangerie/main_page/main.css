@@ -34,6 +34,23 @@
 /*********/
 /* Hover */
 /*********/
+
+/* Boite de confirmation */
+#confirm_button_yes:hover
+{
+    background-color: rgba(137, 196, 255, 0.719);
+    box-shadow: 0px 0px 10px rgba(175, 212, 250, 0.817);
+    cursor: pointer;
+}
+
+#confirm_button_no:hover
+{
+    background-color: rgba(204, 93, 93, 0.851);
+    box-shadow: 0px 0px 10px rgba(187, 30, 30, 0.866);
+    cursor: pointer;
+}
+
+/**/
 .option:hover
 {
     cursor: pointer;
@@ -68,6 +85,73 @@
 /*********/
 /* Basic */
 /*********/
+
+/* Boite de confirmation */
+#overlay
+{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    background-color: rgba(0, 0, 0, 0.289);
+}
+
+.hidden
+{
+    display: none;
+}
+
+#confirm_box
+{
+    width: 400px;
+    position: fixed;
+    background-color: rgb(0, 0, 0);
+    left: 50%;
+    transform: translate(-50%);
+    top: 10%;
+    display: flex;
+    flex-direction: column;
+    z-index: 1001;
+    padding: 20px;
+    font-size: 25px;
+    color: white;
+    border-radius: 20px;
+    gap: 20px;
+
+    box-shadow: 0px 0px 20px rgb(81, 81, 81);
+}
+
+#confirm_button_box
+{
+    display: flex;
+    justify-content: flex-end;
+    gap: 5px;
+}
+
+#confirm_button_box button
+{
+    padding: 5px;
+    font-size: 20px;
+    border-radius: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+#confirm_button_yes
+{
+    border: none;
+    background-color: rgba(130, 157, 184, 0.719);
+}
+
+#confirm_button_no
+{
+    border: none;
+    background-color: rgba(252, 156, 156, 0.566);
+}
+
+
 
 /* Menu de navigation */
 body
@@ -310,7 +394,7 @@ header div
 
 
 /* Box du programme */
-/*  */
+/* Big_button */
 
 #programme_box_button
 {
@@ -339,7 +423,7 @@ header div
 }
 
 
-/* */
+/* After calcul */
 
 #programme_box
 {

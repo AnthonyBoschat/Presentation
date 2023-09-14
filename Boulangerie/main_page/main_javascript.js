@@ -1016,3 +1016,55 @@ function refresh_error_saisi_all()
             input.classList.remove("error_saisi")
         })
 }
+// Permet de générer la boite de confirmation et de renvoyer le resultat
+function confirm(bool, message = false, clic_response = false)
+{
+    // On créé les gestionnaires d'écoutes
+    function gestionnaire_clic_yes()
+    {
+        overlay.classList.add("hidden")
+        clic_response(true)
+    }
+
+    function gestionnaire_clic_no()
+    {
+        overlay.classList.add("hidden")
+        clic_response(false)
+    }
+
+
+    let overlay = document.querySelector("#overlay")
+    // Si on veut faire apparaitre la boite
+    if(bool === true)
+    {
+        // On fait apparaitre la boite de confirmation en supprimant la classe hidden de l'overlay
+        overlay.classList.remove("hidden")
+        // On indique le message
+        let zone_de_texte = document.querySelector("#confirm_text")
+        zone_de_texte.innerHTML = message
+        // On applique des listener sur les bouton oui / non
+        let bouton_yes = document.querySelector("#confirm_button_yes")
+        let bouton_no = document.querySelector("#confirm_button_no")
+        // On gère ce qu'il se passe en cas d'activation de tel ou tel bouton
+        bouton_yes.addEventListener("click", gestionnaire_clic_yes, true)
+        bouton_no.addEventListener("click", gestionnaire_clic_no, true)
+    }
+    // Si on veut faire disparaitre la boite
+    else if(bool === false)
+    {
+        overlay.classList.add("hidden")
+    }
+}
+
+confirm(true, "Mettre à jour ?", function(clic_response)
+{
+    if(clic_response)
+    {
+        console.log("ok")
+    }
+    else if(!clic_response)
+    {
+        console.log("not ok")
+    }
+})
+

@@ -9,6 +9,20 @@
     <title>Bienvenue</title>
 </head>
 <body>
+    <!-- Boite de confirmation -->
+    <div id="overlay" class="hidden">
+        <div id="confirm_box">
+            <div id="confirm_text">
+                Mettre à jour la recette ?
+            </div>
+            <div id="confirm_button_box">
+                <button id="confirm_button_yes">Oui</button>
+                <button id="confirm_button_no">Non</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Menu de navigation -->
     <header>
         <div id="logo"><i class="fa-solid fa-bread-slice"></i></div>
         <div id="name_user">Utilisateur : <?= $_SESSION["user_name"] ?></div>
@@ -22,13 +36,11 @@
         </div>
     </header>
 
-    <div>
-
-    </div>
+    <!-- Main -->
     <div id="main_box">
         <div id="main_box_child">
-            <div id="user_input_box">
 
+            <div id="user_input_box">
                 <div id="recette_box">
                     <div id="recette_box_child" class="box_child">
                         <div class="add_minus_box">
@@ -105,6 +117,7 @@
         </div>
     </div>
 
+    <!-- Script -->
 <script src="main_javascript.js"></script>
 </body>
 </html>
