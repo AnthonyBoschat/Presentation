@@ -10,14 +10,26 @@
 </head>
 <body>
     <!-- Boite de confirmation -->
-    <div id="overlay" class="hidden">
-        <div id="confirm_box">
+    <div id="confirm_overlay" class="hidden overlay">
+        <div class="confirm_box">
             <div id="confirm_text">
                 Mettre à jour la recette ?
             </div>
-            <div id="confirm_button_box">
+            <div class="confirm_button_box">
                 <button id="confirm_button_yes">Oui</button>
                 <button id="confirm_button_no">Non</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Boite d'alerte -->
+    <div id="alert_overlay" class="hidden overlay">
+        <div class="confirm_box">
+            <div id="alert_text">
+                Mettre à jour la recette ?
+            </div>
+            <div class="confirm_button_box">
+                <button id="alert_button_ok">Ok</button>
             </div>
         </div>
     </div>
@@ -51,8 +63,8 @@
                             <div class="title"><input type="text" placeholder="Nom de la recette" id="name_recette"> <span id="user_poid_total_recette_value">0 g</span></div>
                             <div class="input_box" id="recette_input_box">
                                 <div class="recette_input_line input_line">
-                                    <input type="text" placeholder="Farine" class="required_save required_calcul user_recette_ingredient">
-                                    <input type="text" placeholder="1000 (g)" class="required_save user_recette_poid required_calcul required_number">
+                                    <input type="text" placeholder="Ingrédient" class="required_save required_calcul user_recette_ingredient">
+                                    <input type="number" placeholder="Poid (en gramme)" class="required_save user_recette_poid required_calcul required_number">
                                 </div>
                             </div>
                         </div>
@@ -71,9 +83,9 @@
                             <div class="title">Produit voulu</div>
                             <div class="input_box" id="product_input_box">
                                 <div class="product_input_line input_line">
-                                    <input type="text" placeholder="10" class="user_product_number required_calcul required_number">
+                                    <input type="number" placeholder="10" class="user_product_number required_calcul required_number">
                                     <input type="text" placeholder="Baguette" class="user_product_name required_calcul">
-                                    <input type="text" placeholder="330 (g)" class="user_product_poid required_calcul required_number">
+                                    <input type="number" placeholder="330 (g)" class="user_product_poid required_calcul required_number">
                                 </div>
                             </div>
                         </div>

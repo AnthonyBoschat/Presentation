@@ -414,58 +414,55 @@ function delete_recette()
     // On récupère le nom de la recette actuelle
     let name_recette = document.getElementById("name_recette").value
 
-    let confirm = window.confirm("Supprimer la recette : " + name_recette + " ?")
-    if(confirm)
+    confirm_box(true, `Supprimer la recette : ${name_recette} ?`, function(clic_response)
     {
-        // On envoie cette information à PHP pour effectuer les requête adéquate de suppression de recette
-        let query_post_name_recette = new XMLHttpRequest()
-        query_post_name_recette.open("POST", "delete_recette_treatment.php")
-        query_post_name_recette.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
-        let json_name_recette = JSON.stringify(name_recette)
-        query_post_name_recette.send("datas="+json_name_recette)
-
-        query_post_name_recette.onload = function()
+        if(clic_response)
         {
-            if(query_post_name_recette.status === 200)
-            {
-                let response = JSON.parse(query_post_name_recette.responseText)
-                if(response.status === true)
-                {
-                    // A ce stade, les recettes ont été supprimer de la base de donnée, on reset la liste des recette de l'utilisateur : 
-                    load_recette_user_pilote()
-                    // On reset les inputs en vierge
-                    reset_inputs_virgin()
-                    // On applique un listener sur l'input
-                    total_recette_update_pilote()
-                    // On met à jour le poid de la recette
-                    update_total_poid_recette()
-                    // On remet le bouton de suppression en gris
-                    change_clickable_button(".delete_recette", false)
-                    // On remet le bouton de modification en gris
-                    change_clickable_button(".modify_recette", false)
-                    // On remet tout les inputs en editable
-                    make_editable_input(true)
-                    // On remet l'écran du progrmame par défaut
-                    reset_programme_box_display()
+            // On envoie cette information à PHP pour effectuer les requête adéquate de suppression de recette
+            let query_post_name_recette = new XMLHttpRequest()
+            query_post_name_recette.open("POST", "delete_recette_treatment.php")
+            query_post_name_recette.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
+            let json_name_recette = JSON.stringify(name_recette)
+            query_post_name_recette.send("datas="+json_name_recette)
 
-                    window.alert("La recette \"" + name_recette + "\" a été correctement supprimer ")
-                }
-                else if(response.status === false)
+            query_post_name_recette.onload = function()
+            {
+                if(query_post_name_recette.status === 200)
                 {
-                    window.alert("La recette \"" + name_recette + "\" n'a pas été trouver dans la base de donnée et n'a pas pu être supprimer")
+                    let response = JSON.parse(query_post_name_recette.responseText)
+                    if(response.status === true)
+                    {
+                        // A ce stade, les recettes ont été supprimer de la base de donnée, on reset la liste des recette de l'utilisateur : 
+                        load_recette_user_pilote()
+                        // On reset les inputs en vierge
+                        reset_inputs_virgin()
+                        // On applique un listener sur l'input
+                        total_recette_update_pilote()
+                        // On met à jour le poid de la recette
+                        update_total_poid_recette()
+                        // On remet le bouton de suppression en gris
+                        change_clickable_button(".delete_recette", false)
+                        // On remet le bouton de modification en gris
+                        change_clickable_button(".modify_recette", false)
+                        // On remet tout les inputs en editable
+                        make_editable_input(true)
+                        // On remet l'écran du progrmame par défaut
+                        reset_programme_box_display()
+
+                        alert_box("La recette \"" + name_recette + "\" a été correctement supprimer ")
+                    }
+                    else if(response.status === false)
+                    {
+                        alert_box("La recette \"" + name_recette + "\" n'a pas été trouver dans la base de donnée et n'a pas pu être supprimer")
+                    }
                 }
             }
         }
-        
-    }
-    else
-    {
-        return
-    }
-
-    
-
-    
+        else
+        {
+            return
+        }
+    })
 }
 
 // bouton_modify_recette_description -> Controle du comportement de make_editable_input
@@ -622,36 +619,39 @@ function save_recette()
         {
             // On averti l'utilisateur que la recette est bien enregistrer
             let response = JSON.parse(query_save.responseText)
-            if(response.status === true){window.alert("La recette a été enregistrer")}
-            else if(response.status === false){window.alert("Erreur lors de l'enregistrement de la recette")}
+            if(response.status === true){alert_box("La recette a été enregistrer")}
+            else if(response.status === false){alert_box("Erreur lors de l'enregistrement de la recette")}
             // Si la recette existe
             else if(response.status === "update")
             {
-                let question = window.confirm(`La recette ${nom_recette.value} existe déjà, la mettre à jour ?`)
-                // Et qu'elle souhaite etre enregistrer, on supprime l'ancienne, et on relance l'enregistrement de la nouvelle
-                if(question)
+                confirm_box(true, `La recette ${nom_recette.value} existe déjà, la mettre à jour ?`, function(clic_response)
                 {
-
-                    let query_update = new XMLHttpRequest()
-                    query_update.open("POST", "update_recette_treatment.php", true)
-                    query_update.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
-                    query_update.send("datas="+json_datas)
-                    query_update.onload = function()
+                    if(clic_response)
                     {
-                        if(query_update.status === 200)
+                        let query_update = new XMLHttpRequest()
+                        query_update.open("POST", "update_recette_treatment.php", true)
+                        query_update.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
+                        query_update.send("datas="+json_datas)
+                        query_update.onload = function()
                         {
-                            let response = JSON.parse(query_update.response)
-                            // Si la requete a été effectuer, le detail de la recette a été supprimer, et la requete a été enregistrer
-                            if(response.status === true)
+                            if(query_update.status === 200)
                             {
-                                
-                                window.alert("La recette a été mis à jour")
+                                let response = JSON.parse(query_update.response)
+                                // Si la requete a été effectuer, le detail de la recette a été supprimer, et la requete a été enregistrer
+                                if(response.status === true)
+                                {
+                                    
+                                    alert_box("La recette a été mis à jour")
+                                }
+                                else if(response.status === false){alert_box("Erreur lors de la mise à jour de la recette")}
                             }
-                            else if(response.status === false){window.alert("Erreur lors de la mise à jour de la recette")}
                         }
                     }
-                }
-                else{console.log("Annulation de l'enregistrement de la recette")}
+                    else
+                    {
+                        return
+                    }
+                })
             }
         }
     }
@@ -1016,24 +1016,39 @@ function refresh_error_saisi_all()
             input.classList.remove("error_saisi")
         })
 }
-// Permet de générer la boite de confirmation et de renvoyer le resultat
-function confirm(bool, message = false, clic_response = false)
+// Permet de générer la boite de confirmation et de gérer le resultat du clique
+function confirm_box(bool, message = null, clic_response = null)
 {
+    // On selectionne les boutons oui / non
+    let bouton_yes = document.querySelector("#confirm_button_yes")
+    let bouton_no = document.querySelector("#confirm_button_no")
+
+    // On selectionne l'overlay
+    let overlay = document.querySelector("#confirm_overlay")
+
     // On créé les gestionnaires d'écoutes
     function gestionnaire_clic_yes()
     {
+        // On supprime les listeners
+        bouton_yes.removeEventListener("click", gestionnaire_clic_yes, true);
+        bouton_no.removeEventListener("click", gestionnaire_clic_no, true);
+        // On cache l'overlay
         overlay.classList.add("hidden")
+        // On appelle la fonction de callback
         clic_response(true)
     }
 
     function gestionnaire_clic_no()
     {
+        // On supprime les listeners
+        bouton_yes.removeEventListener("click", gestionnaire_clic_yes, true);
+        bouton_no.removeEventListener("click", gestionnaire_clic_no, true);
+        // On cache l'overlay
         overlay.classList.add("hidden")
+        // On appelle la fonction de callback
         clic_response(false)
     }
-
-
-    let overlay = document.querySelector("#overlay")
+    
     // Si on veut faire apparaitre la boite
     if(bool === true)
     {
@@ -1042,19 +1057,47 @@ function confirm(bool, message = false, clic_response = false)
         // On indique le message
         let zone_de_texte = document.querySelector("#confirm_text")
         zone_de_texte.innerHTML = message
-        // On applique des listener sur les bouton oui / non
-        let bouton_yes = document.querySelector("#confirm_button_yes")
-        let bouton_no = document.querySelector("#confirm_button_no")
-        // On gère ce qu'il se passe en cas d'activation de tel ou tel bouton
+        // On indique quelle gestionnaire d'écoute utilisé selon la bouton cliquer
         bouton_yes.addEventListener("click", gestionnaire_clic_yes, true)
         bouton_no.addEventListener("click", gestionnaire_clic_no, true)
     }
+
     // Si on veut faire disparaitre la boite
     else if(bool === false)
     {
         overlay.classList.add("hidden")
     }
 }
+
+// Permet de générer une boite d'alerte
+function alert_box(message)
+{
+    // On selectionne le bouton, l'overlay de l'alert, et la zone de texte de l'alerte
+    let bouton_ok = document.querySelector("#alert_button_ok")
+    let overlay = document.querySelector("#alert_overlay")
+    let zone_de_texte = document.querySelector("#alert_text")
+
+    // On définie un gestionnaire d'écoute
+    function gestionnaire_clic_ok()
+    {
+        // On supprime le listener
+        bouton_ok.removeEventListener("click", gestionnaire_clic_ok, true)
+        overlay.classList.add("hidden")
+    }
+
+    // On injecte le message
+    zone_de_texte.innerHTML = message
+    // On rend visible l'overlay en retirant la classe hidden
+    overlay.classList.remove("hidden")
+    // On applique un listener sur le bouton
+    bouton_ok.addEventListener("click", gestionnaire_clic_ok, true)
+}
+
+
+// Exemple d'utilisation de confirm
+
+// Ouvrir une boite de confirmation
+/*
 
 confirm(true, "Mettre à jour ?", function(clic_response)
 {
@@ -1067,4 +1110,12 @@ confirm(true, "Mettre à jour ?", function(clic_response)
         console.log("not ok")
     }
 })
+
+*/
+// Femer une boite de confirmation
+/*
+
+confirm(false)
+
+*/
 
