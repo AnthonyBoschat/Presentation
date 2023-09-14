@@ -511,6 +511,7 @@ function load_new_recette()
     change_clickable_button(".delete_recette", false)
     change_clickable_button(".modify_recette", false)
     make_editable_input_true()
+    reset_programme_box_display()
 }
 
 
@@ -994,14 +995,17 @@ function reset_programme_box_display()
 {
     let vanish_box = document.getElementById("programme_box")
     let appear_box = document.getElementById("programme_box_button")
-    vanish_box.classList = ""
-    appear_box.classList = ""
-    vanish_box.classList.add("disparition")
-    setTimeout(() => {
-        vanish_box.style.display = "none"
-        appear_box.style.display = "flex"
-        appear_box.classList.add("apparition")
-    }, 200);
+    if(appear_box.classList.contains("disparition"))
+    {
+        vanish_box.classList = ""
+        appear_box.classList = ""
+        vanish_box.classList.add("disparition")
+        setTimeout(() => {
+            vanish_box.style.display = "none"
+            appear_box.style.display = "flex"
+            appear_box.classList.add("apparition")
+        }, 200);
+    }
 }
 // Permet de refresh toute les couleur rouge d'erreur de saisi
 function refresh_error_saisi_all()
