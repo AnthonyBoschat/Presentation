@@ -64,7 +64,7 @@
                             <div class="input_box" id="recette_input_box">
                                 <div class="recette_input_line input_line">
                                     <input type="text" placeholder="Ingrédient" class="required_save required_calcul user_recette_ingredient">
-                                    <input type="number" placeholder="Poid (en gramme)" class="required_save user_recette_poid required_calcul required_number">
+                                    <input type="number" placeholder="Poid (gramme)" class="required_save user_recette_poid required_calcul required_number">
                                 </div>
                             </div>
                         </div>

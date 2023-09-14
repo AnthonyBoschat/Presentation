@@ -977,8 +977,8 @@ function reset_inputs_virgin()
 {
     let destination = document.getElementById("recette_input_box")
     destination.innerHTML = ""
-    let template = `<input type="text" placeholder="Farine" class="required_save required_calcul user_recette_ingredient">
-    <input type="text" placeholder="1000 (g)" class="required_save user_recette_poid required_calcul required_number">`
+    let template = `<input type="text" placeholder="Ingredient" class="required_save required_calcul user_recette_ingredient">
+    <input type="number" placeholder="Poid (gramme)" class="required_save user_recette_poid required_calcul required_number">`
 
     let nouvel_element = document.createElement("div")
     // On lui définie une classe
