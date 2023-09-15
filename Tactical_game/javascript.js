@@ -1,8 +1,7 @@
 //////////////////////////////////////////////
 /* Variable d'initialisation */
 //////////////////////////////////////////////
-let controle_soldier_focus = false,
-    soldier_on_move = null
+let soldier_selected_control = false
 //////////////////////////////////////////////
 /* Main */
 //////////////////////////////////////////////
@@ -11,40 +10,20 @@ main()
 
 function main()
 {
-    move_soldier_pilote()
+    select_soldier_pilote()
 }
 
 //////////////////////////////////////////////
 /* Pilote des listeners */
 //////////////////////////////////////////////
-function clic_soldier_focus_pilote()
+function select_soldier_pilote()
 {
-    clic_soldier_focus_description()
-}
-
-function move_soldier_pilote()
-{
-    move_soldier_description()
-}
-
-//////////////////////////////////////////////
-/* Description des listeners */
-//////////////////////////////////////////////
-function clic_soldier_focus_description()
-{
+    // On récupère tout les soldats
     let soldiers = document.querySelectorAll(".soldier")
+    // On leurs appliquent à tous un listener en cas de clique
     soldiers.forEach(soldier => 
         {
-            soldier.addEventListener("click", focus_on_soldier, true)
-        })
-}
-
-function move_soldier_description()
-{
-    let soldiers = document.querySelectorAll(".soldier")
-    soldiers.forEach(soldier => 
-        {
-            soldier.addEventListener("mousedown", move_soldier, true)
+            soldier.addEventListener("click", soldier_selected)
         })
 }
 
@@ -52,87 +31,57 @@ function move_soldier_description()
 /* Fonction des listeners */
 //////////////////////////////////////////////
 
-// clic_soldier_focus_description -> Donne le focus au soldat cliquer
-function focus_on_soldier(event)
-{   
-    if(controle_soldier_focus === false)
-    {
-        if(event.target.classList.contains("focus"))
-        {
-            event.target.classList.remove("focus")
-            controle_soldier_focus = false
-        }
-        else
-        {
-            event.target.classList.add("focus")
-            controle_soldier_focus = true
-        }
-    }
-    else if(controle_soldier_focus === true)
-    {
-        if(event.target.classList.contains("focus"))
-        {
-            event.target.classList.remove("focus")
-            controle_soldier_focus = false
-        }
-        else
-        {
-            let soldiers_on_focus = document.querySelector(".focus")
-            soldiers_on_focus.classList.remove("focus")
-            event.target.classList.add("focus")
-            controle_soldier_focus = true
-        }
-    }
-    
-    
-}
-
-// clic_soldier_focus_description -> Permet de déplacer le soldat
-function move_soldier(event)
+// select_soldier_pilote -> Quand un soldat est selectionner
+function soldier_selected(event)
 {
-    // On identifie le soldat en train d'etre déplacer
-    soldier_on_move = event.target
-    // On lui donne un zindex superieur aux autres soldat
-    soldier_on_move.style.zIndex = "1000"
-    // On indique que le clic souris est toujours enfoncer
-    let mouse_down = true
+    // On récupère tout ce qu'on a à récupérer
+    let soldier = event.target
 
-    // On calcule la différence entre la position de la souris et la position du soldat
-    let offsetX = event.clientX - soldier_on_move.getBoundingClientRect().left 
-    let offsetY = event.clientY - soldier_on_move.getBoundingClientRect().top
-
-    // On écoute l'évènement de mousemove sur le document entier
-    document.addEventListener("mousemove", mouse_is_move)
-    // On écoute l'évènement de mousup sur le document entier
-    document.addEventListener("mouseup", mouse_is_up)
-
-    // On définie ces fonctions
-    function mouse_is_move(event)
+    // Si un soldat n'est pas déjà selectionner
+    if(soldier_selected_control === false)
     {
-        // Si la souris est toujours enfoncer
-        if(mouse_down)
+        // On passe le controle à true, un soldat est selectionner
+        soldier_selected_control = true
+        // On affiche les boutons d'options
+        let buttons_hidden = document.querySelectorAll(".hidden")
+        buttons_hidden.forEach(button => 
+            {
+                button.classList.remove("hidden")
+            })
+
+        // On retire les hover de selection au passage de la souris
+        let soldiers_can_be_selected = document.querySelectorAll(".soldier")
+        soldiers_can_be_selected.forEach(soldier => 
+            {
+                soldier.classList.remove("can_be_selected_hover")
+            })
+
+        // On met le focus sur le soldat
+        soldier.classList.add("selected")
+    }
+    // Si un soldat est selectionner
+    else if(soldier_selected_control === true)
+    {
+        // Et qu'on clique sur le soldat selectionner
+        if(soldier.classList.contains("selected"))
         {
-            // Calcule la nouvelle position du soldat
-            let x = event.clientX - offsetX
-            let y = event.clientY - offsetY
-
-            // Deplace le soldat à cette position
-            soldier_on_move.style.left = x + "px"
-            soldier_on_move.style.top = y + "px"
+            // On lui retire sa classe selected
+            soldier.classList.remove("selected")
+            // On passe le controle à false
+            soldier_selected_control = false
+            // On cache les boutons d'actions
+            let buttons = document.querySelectorAll("button")
+            buttons.forEach(button => 
+                {
+                    button.classList.add("hidden")
+                })
+            // On remet les hover de selection au passage de la souris
+            let soldiers_can_be_selected = document.querySelectorAll(".soldier")
+            soldiers_can_be_selected.forEach(soldier => 
+                {
+                    soldier.classList.add("can_be_selected_hover")
+                })
         }
-        
     }
-
-    function mouse_is_up()
-    {
-        // On indique que la souris est relever
-        mouse_down = false
-        // On reset le z-index
-        soldier_on_move.style.zIndex = "auto"
-        // On indique que plus aucun soldat n'est actuellement en mouvement
-        soldier_on_move = null
-        // On retire les listeners
-        document.removeEventListener("mousemove", mouse_is_move)
-        document.removeEventListener("mouseup", mouse_is_up)
-    }
+    
 }

@@ -9,11 +9,16 @@
 </head>
 <body>
 
-    <div id="main">
-        <div class="soldier blue"></div>
-        <div class="soldier red"></div>
+    <div id="box_action">
+        <button class="hidden">Déplacer</button>
+        <button class="hidden">Attaquer</button>
     </div>
-    
+
+    <div id="box_battleground">
+        <div class="soldier blue can_be_selected_hover"></div>
+        <div class="soldier red can_be_selected_hover"></div>
+    </div>
+
 <script src="javascript.js"></script>
 </body>
 </html>
