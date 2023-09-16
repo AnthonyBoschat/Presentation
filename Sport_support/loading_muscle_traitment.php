@@ -1,5 +1,4 @@
 <?php
-require "../../global_tools.php";
 
 if(isset($_POST["query"]))
 {

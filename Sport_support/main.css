@@ -30,6 +30,10 @@
     border-radius: 40px;
     cursor: pointer;
 }
+.new_exercice
+{
+    cursor: pointer;
+}
 /*********/
 /* Basic */
 /*********/
@@ -82,7 +86,7 @@ body{
     width: 100%;
     max-width: 100%;
     height: 100%;
-    margin-top: 20px;
+    margin-top: 50px;
 }
 
 .exercice_name
