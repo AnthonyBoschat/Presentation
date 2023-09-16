@@ -33,8 +33,6 @@ DROP TABLE IF EXISTS exercice_memory;
 CREATE TABLE exercice_memory
 (
     exercice_id smallint(6),
-    poid smallint(6),
-    repetition smallint(6),
     controle boolean
 );
 
@@ -46,9 +44,6 @@ VALUES
 ("Jambes"),
 ("Epaule / Abdo");
 
-INSERT INTO exercice(muscle_id, exercice_name)
-VALUES
-(1, "Développer coucher haltère")
 
 
 select * from muscle;

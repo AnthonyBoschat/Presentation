@@ -1,7 +1,7 @@
 //////////////////////////////////////////////
-/* Récupération du HTML */
+/* Variable d'initialisation */
 //////////////////////////////////////////////
-
+let old_exercice_name = null;
 //////////////////////////////////////////////
 /* Main */
 //////////////////////////////////////////////
@@ -9,14 +9,25 @@ main()
 
 function main()
 {
+    capture_old_exercice_name_pilote()
     loading_muscle_pilote()
     new_exerice_pilote()
     update_muscle_in_database_pilote()
     update_exercice_name_in_database_pilote()
+    update_poid_in_database_pilote()
 }
 //////////////////////////////////////////////
 /* Pilote */
 //////////////////////////////////////////////
+function capture_old_exercice_name_pilote()
+{
+    let all_exercice_name = document.querySelectorAll(".exercice_name")
+    all_exercice_name.forEach(exercice => 
+        {
+            exercice.removeEventListener("focus", capture_old_exercice_name)
+            exercice.addEventListener("focus", capture_old_exercice_name)
+        })
+}
 
 function loading_muscle_pilote()
 {
@@ -53,9 +64,27 @@ function update_exercice_name_in_database_pilote()
         })
 }
 
+function update_poid_in_database_pilote()
+{
+    let champs_value_poid = document.querySelectorAll(".poid_value")
+    champs_value_poid.forEach(champ => 
+        {
+            // On retire tout les listener éventuelle sur ces éléments
+            champ.removeEventListener("blur", update_value_poid_in_database)
+            // On les rajoutes tous
+            champ.addEventListener("blur", update_value_poid_in_database)
+        })
+}
+
 //////////////////////////////////////////////
 /* Fonction des pilotes */
 //////////////////////////////////////////////
+
+//capture_old_name_exercice_pilote -> Permet de sauvegarder le nom de l'exercice avant sa modification
+function capture_old_exercice_name(event)
+{
+    old_exercice_name = event.target.innerHTML
+}
 
 // loading_muscle_pilote -> Charge les muscles présent dans la base de donnée "muscle"
 function loading_muscle_from_database()
@@ -94,6 +123,8 @@ function create_new_exercice(event)
     let parent_element = event.target.closest(".day")
     // on définie la destination dans l'élément parent
     let destination = parent_element.querySelector(".workout")
+    // On récupère le groupe musculaire concerné
+    let groupe_musculaire = parent_element.querySelector(".muscle_name").innerHTML
     // On créé deux nouvels élément
     let new_element_1 = document.createElement("div")
     let new_element_2 = document.createElement("div")
@@ -124,8 +155,38 @@ function create_new_exercice(event)
     destination.appendChild(new_element_1)
     destination.appendChild(new_element_2)
 
+    // On applique le listener de capture d'ancien nom d'exercice avant modification
+    capture_old_exercice_name_pilote()
     // On réinitialise les listeners d'update de nom, et value, pour prendre en compte le nouvel élément
     update_exercice_name_in_database_pilote()
+    update_poid_in_database_pilote()
+    // On initialisa maintenant toute les base de donnée
+    // On créé un objet
+    let object = {}
+    // On rempli l'objet
+    object.groupe_musculaire = groupe_musculaire
+    // On converti en JSON l'objet
+    let object_JSON = JSON.stringify(object)
+    // On injecte dans la base de donnée le template vierge d'un nouvel exercice
+    let query = XMLrequest("new_exercice", "routeur.php", true, object_JSON);
+
+    query.onload = function()
+    {
+        if(query.status === 200)
+        {
+            let response = JSON.parse(query.responseText)
+            {
+                if(response.status === true)
+                {
+                    console.log("Une nouvelle recette a été initialiser")
+                }
+                else if(response.status === false)
+                {
+                    console.log("Problème lors du traitement de la requête")
+                }
+            }
+        }
+    }
 }
 
 // update_muscle_in_database_pilote -> Met à jours la base de donnée lorsque l'utilisateur change le nom d'un muscle
@@ -142,7 +203,6 @@ function update_muscle_in_database()
         }
         else
         {
-            console.log("controle")
             all_muscle_name[i].innerHTML = "(non renseigné)"
             tableau_muscle_name.push(all_muscle_name[i].innerHTML)
         }
@@ -157,11 +217,7 @@ function update_muscle_in_database()
         {
             let response = JSON.parse(query.responseText)
             {
-                if(response.status === true)
-                {
-                    console.log("Groupe musculaire mise à jour")
-                }
-                else if(response.status === false)
+                if(response.status === false)
                 {
                     console.log("Problème lors de la reception de data")
                 }
@@ -174,8 +230,7 @@ function update_muscle_in_database()
 function update_exercice_name_in_database(event)
 {
     // On initialise un objet
-    let object = {
-    }
+    let object = {}
     // On récupère le nom du groupe musculaire concerner
     let parent = event.target.closest(".day")
     let groupe_musculaire = parent.querySelector(".muscle_name").innerHTML
@@ -184,7 +239,7 @@ function update_exercice_name_in_database(event)
     // On stock ça dans un objet
     object.exercice_name = exercice_name
     object.groupe_musculaire = groupe_musculaire
-    console.log(object)
+    object.old_exercice_name = old_exercice_name
     // On converti
     let object_JSON = JSON.stringify(object)
     // On envoie l'information au routeur
@@ -202,13 +257,49 @@ function update_exercice_name_in_database(event)
                 }
                 else if(response.status === false)
                 {
-                    console.log("Problème lors de la reception de data")
+                    console.log("Problème lors du traitement de la requête")
                 }
             }
         }
     }
 }
 
+// update_poid_in_database_pilote -> Met à jour la valeur de poid dans la base de donnée pour cet exercice
+function update_value_poid_in_database(event)
+{
+    // On initialise un objet
+    let object = {}
+    // On récupère le nom de l'exercice concerner
+    let parent = event.target.closest(".day")
+    let exercice_name = parent.querySelector(".exercice_name").innerHTML
+    // On récupère le poid
+    let poid = event.target.innerHTML
+    // On stock ça dans l'objet
+    object.exercice_name = exercice_name
+    object.poid = poid
+    // On converti
+    let object_JSON = JSON.stringify(object)
+    // On envoie l'information au routeur
+    let query = XMLrequest("update_poid", "routeur.php", true, object_JSON)
+
+    query.onload = function()
+    {
+        if(query.status === 200)
+        {
+            let response = JSON.parse(query.responseText)
+            {
+                if(response.status === true)
+                {
+                    console.log("Le poid a été mis à jour")
+                }
+                else if(response.status === false)
+                {
+                    console.log("Problème lors du traitement de la requête")
+                }
+            }
+        }
+    }
+}
 
 //////////////////////////////////////////////
 /* Fonctino de requête XML */

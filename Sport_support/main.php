@@ -12,6 +12,7 @@
     <div class="day grey">
         <div class="muscle" ><span class="muscle_name" contenteditable="true"></span> <i class="fa-regular fa-file-lines new_exercice"></i></div>
         <div class="workout">
+            
         </div>
     </div>
 
