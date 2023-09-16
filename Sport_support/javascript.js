@@ -40,10 +40,7 @@ function loading_muscle_from_database()
     // On récupère toutes les destination
     let muscles_destinations = document.querySelectorAll(".muscle_name")
     // On Envoie une requête au fichier routeur php
-    let query = new XMLHttpRequest()
-    query.open("POST", "routeur.php", true)
-    query.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
-    query.send("query=load_recette")
+    let query = XMLrequest("load_muscle", "routeur.php", false)
     // Quand on a la réponse du routeur
     query.onload = function ()
     {
@@ -67,8 +64,59 @@ function loading_muscle_from_database()
     }
 }
 
+// update_muscle_in_database_pilote -> Met à jours la base de donnée lorsque l'utilisateur change le nom d'un muscle
 function update_muscle_in_database(event)
 {
-    console.log("controle")
-    console.log(event.target)
+    // On récupère dans un tableau, le nom de tout les muscles dans le document
+    let tableau_muscle_name = []
+    let all_muscle_name = document.querySelectorAll(".muscle_name")
+    for(let i = 0; i<all_muscle_name.length; i++)
+    {
+        tableau_muscle_name.push(all_muscle_name[i].innerHTML)
+    }
+    // stringify tableau ?
+    // On envoie le tableau au routeur
+    let query = XMLrequest("update_muscle", "routeur.php", true, tableau_muscle_name)
+    console.log(tableau_muscle_name)
+    query.onload = function()
+    {
+        if(query.status === 200)
+        {
+            let response = JSON.parse(query.responseText)
+            {
+                if(response.status === true)
+                {
+                    console.log(response)
+                }
+            }
+        }
+    }
+}
+
+//////////////////////////////////////////////
+/* Fonctino de requête XML */
+//////////////////////////////////////////////
+function XMLrequest(identification, destination, bool, data = null)
+{
+    if(bool === false)
+    {
+        let XML_request = new XMLHttpRequest()
+        XML_request.open("POST", destination, true)
+        XML_request.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
+        XML_request.send(`query=${identification}`)
+        return XML_request
+    }
+    else if(bool === true)
+    {
+        if(data != null)
+        {
+            let XML_request = new XMLHttpRequest()
+            XML_request.open("POST", destination, true)
+            XML_request.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
+            XML_request.send(`query=${identification}&data=${data}`)
+            return XML_request
+        }
+        
+    }
+    
 }
