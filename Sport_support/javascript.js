@@ -12,9 +12,7 @@ function main()
     capture_old_exercice_name_pilote()
     loading_muscle_pilote()
     new_exerice_pilote()
-    update_muscle_in_database_pilote()
-    update_exercice_name_in_database_pilote()
-    update_poid_in_database_pilote()
+    update_in_database_pilote()
 }
 //////////////////////////////////////////////
 /* Pilote */
@@ -43,46 +41,37 @@ function new_exerice_pilote()
         })
 }
 
-function update_muscle_in_database_pilote()
+function update_in_database_pilote()
 {
     let champs_muscle = document.querySelectorAll(".muscle_name")
     champs_muscle.forEach(champ => 
         {
-            champ.addEventListener("blur", update_muscle_in_database)
+            champ.addEventListener("blur", update_value_in_database)
         })
-}
 
-function update_exercice_name_in_database_pilote()
-{
     let champs_exercices_name = document.querySelectorAll(".exercice_name")
     champs_exercices_name.forEach(champ => 
         {
             // On retire tout les listener éventuelle sur ces éléments
-            champ.removeEventListener("blur", update_exercice_name_in_database)
+            champ.removeEventListener("blur", update_value_in_database)
             // On les rajoutes tous
-            champ.addEventListener("blur", update_exercice_name_in_database)
+            champ.addEventListener("blur", update_value_in_database)
         })
-}
-
-function update_poid_in_database_pilote()
-{
+    
     let champs_value_poid = document.querySelectorAll(".poid_value")
     champs_value_poid.forEach(champ => 
         {
             // On retire tout les listener éventuelle sur ces éléments
-            champ.removeEventListener("blur", update_value_poid_in_database)
+            champ.removeEventListener("blur", update_value_in_database)
             // On les rajoutes tous
-            champ.addEventListener("blur", update_value_poid_in_database)
+            champ.addEventListener("blur", update_value_in_database)
         })
-}
-
-function update_repos_in_databse_pilote()
-{
+    
     let champs_value_repos = document.querySelectorAll(".repos_value")
     champs_value_repos.forEach(champ => 
         {
-            champ.removeEventListener("blur", update_value_repos_in_database)
-            champ.addEventListener("blur", update_value_repos_in_database)
+            champ.removeEventListener("blur", update_value_in_database)
+            champ.addEventListener("blur", update_value_in_database)
         })
 }
 
@@ -173,7 +162,7 @@ function create_new_exercice(event)
 
                         let template_element_2 = `
                         <div class="box_description">
-                            <div class="repetition">4 X <span class="repetition_value" contenteditable="true">0</span></div>
+                            <div class="repetition">4 X <span class="repetition_value">10</span></div>
                             <div class="poid"><span class="poid_value" contenteditable="true">0</span> Kg</div>
                             <div class="repos"><span class="repos_value" contenteditable="true">0</span> min</div>
                         </div>
@@ -192,9 +181,7 @@ function create_new_exercice(event)
                         // On applique le listener de capture d'ancien nom d'exercice avant modification
                         capture_old_exercice_name_pilote()
                         // On réinitialise les listeners d'update de nom, et value, pour prendre en compte le nouvel élément
-                        update_exercice_name_in_database_pilote()
-                        update_poid_in_database_pilote()
-                        update_repos_in_databse_pilote()
+                        update_in_database_pilote()
                         console.log("Une nouvelle recette a été initialiser")
                     }
                     else if(response.status === false)
@@ -207,153 +194,151 @@ function create_new_exercice(event)
     }
 }
 
-// update_muscle_in_database_pilote -> Met à jours la base de donnée lorsque l'utilisateur change le nom d'un muscle
-function update_muscle_in_database()
+function update_value_in_database(event)
 {
-    // On récupère dans un tableau, le nom de tout les muscles dans le document
-    let tableau_muscle_name = []
-    let all_muscle_name = document.querySelectorAll(".muscle_name")
-    for(let i = 0; i<all_muscle_name.length; i++)
+    let classes = event.target.classList
+    if(classes.contains("muscle_name"))
     {
-        if(all_muscle_name[i].innerHTML != "")
+        // On récupère dans un tableau, le nom de tout les muscles dans le document
+        let tableau_muscle_name = []
+        let all_muscle_name = document.querySelectorAll(".muscle_name")
+        for(let i = 0; i<all_muscle_name.length; i++)
         {
-            tableau_muscle_name.push(all_muscle_name[i].innerHTML)
-        }
-        else
-        {
-            all_muscle_name[i].innerHTML = "(non renseigné)"
-            tableau_muscle_name.push(all_muscle_name[i].innerHTML)
-        }
-    }
-    // On converti le tableau
-    let tableau_muscle_name_JSON = JSON.stringify(tableau_muscle_name)
-    // On envoie le tableau au routeur
-    let query = XMLrequest("update_muscle", "routeur.php", true, tableau_muscle_name_JSON)
-    query.onload = function()
-    {
-        if(query.status === 200)
-        {
-            let response = JSON.parse(query.responseText)
+            if(all_muscle_name[i].innerHTML != "")
             {
-                if(response.status === false)
+                tableau_muscle_name.push(all_muscle_name[i].innerHTML)
+            }
+            else
+            {
+                all_muscle_name[i].innerHTML = "(non renseigné)"
+                tableau_muscle_name.push(all_muscle_name[i].innerHTML)
+            }
+        }
+        // On converti le tableau
+        let tableau_muscle_name_JSON = JSON.stringify(tableau_muscle_name)
+        // On envoie le tableau au routeur
+        let query = XMLrequest("update_muscle", "routeur.php", true, tableau_muscle_name_JSON)
+        query.onload = function()
+        {
+            if(query.status === 200)
+            {
+                let response = JSON.parse(query.responseText)
                 {
-                    console.log("Problème lors de la reception de data")
+                    if(response.status === false)
+                    {
+                        console.log("Problème lors de la reception de data")
+                    }
                 }
             }
         }
     }
-}
-
-// update_exercice_name_in_database_pilote -> Met à jour le nom de l'exerice dans la base de donnée
-function update_exercice_name_in_database(event)
-{
-    // On initialise un objet
-    let object = {}
-    // On récupère le nom du groupe musculaire concerner
-    let parent = event.target.closest(".day")
-    let groupe_musculaire = parent.querySelector(".muscle_name").innerHTML
-    // On récupère le innerHTML du champ en cour de modification
-    let exercice_name = event.target.innerHTML
-    // On stock ça dans un objet
-    object.exercice_name = exercice_name
-    object.groupe_musculaire = groupe_musculaire
-    object.old_exercice_name = old_exercice_name
-    // On converti
-    let object_JSON = JSON.stringify(object)
-    // On envoie l'information au routeur
-    let query = XMLrequest("update_exercice_name", "routeur.php", true, object_JSON)
-
-    query.onload = function()
+    else if(classes.contains("exercice_name"))
     {
-        if(query.status === 200)
+        // On initialise un objet
+        let object = {}
+        // On récupère le nom du groupe musculaire concerner
+        let parent = event.target.closest(".day")
+        let groupe_musculaire = parent.querySelector(".muscle_name").innerHTML
+        // On récupère le innerHTML du champ en cour de modification
+        let exercice_name = event.target.innerHTML
+        // On stock ça dans un objet
+        object.exercice_name = exercice_name
+        object.groupe_musculaire = groupe_musculaire
+        object.old_exercice_name = old_exercice_name
+        // On converti
+        let object_JSON = JSON.stringify(object)
+        // On envoie l'information au routeur
+        let query = XMLrequest("update_exercice_name", "routeur.php", true, object_JSON)
+
+        query.onload = function()
         {
-            let response = JSON.parse(query.responseText)
+            if(query.status === 200)
             {
-                if(response.status === true)
+                let response = JSON.parse(query.responseText)
                 {
-                    console.log("Nom de l'exercice mise à jour")
-                }
-                else if(response.status === false)
-                {
-                    console.log("Problème lors du traitement de la requête")
+                    if(response.status === true)
+                    {
+                        console.log("Nom de l'exercice mise à jour")
+                    }
+                    else if(response.status === false)
+                    {
+                        console.log("Problème lors du traitement de la requête")
+                    }
                 }
             }
         }
     }
-}
-
-// update_poid_in_database_pilote -> Met à jour la valeur de poid dans la base de donnée pour cet exercice
-function update_value_poid_in_database(event)
-{
-    // On initialise un objet
-    let object = {}
-    // On récupère le nom de l'exercice concerner
-    let parent = event.target.closest(".box_description_check")
-    let parent_previous = parent.previousElementSibling
-    let exercice_name = parent_previous.querySelector(".exercice_name").innerHTML
-    
-    // On récupère le poid
-    let poid = event.target.innerHTML
-    // On stock ça dans l'objet
-    object.exercice_name = exercice_name
-    object.poid = poid
-    // On converti
-    let object_JSON = JSON.stringify(object)
-    // On envoie l'information au routeur
-    let query = XMLrequest("update_poid", "routeur.php", true, object_JSON)
-
-    query.onload = function()
+    else if(classes.contains("poid_value"))
     {
-        if(query.status === 200)
+        // On initialise un objet
+        let object = {}
+        // On récupère le nom de l'exercice concerner
+        let parent = event.target.closest(".box_description_check")
+        let parent_previous = parent.previousElementSibling
+        let exercice_name = parent_previous.querySelector(".exercice_name").innerHTML
+        
+        // On récupère le poid
+        let poid = event.target.innerHTML
+        // On stock ça dans l'objet
+        object.exercice_name = exercice_name
+        object.poid = poid
+        // On converti
+        let object_JSON = JSON.stringify(object)
+        // On envoie l'information au routeur
+        let query = XMLrequest("update_poid", "routeur.php", true, object_JSON)
+
+        query.onload = function()
         {
-            let response = JSON.parse(query.responseText)
+            if(query.status === 200)
             {
-                if(response.status === true)
+                let response = JSON.parse(query.responseText)
                 {
-                    console.log("Le poid a été mis à jour")
-                }
-                else if(response.status === false)
-                {
-                    console.log("Problème lors du traitement de la requête")
+                    if(response.status === true)
+                    {
+                        console.log("Le poid a été mis à jour")
+                    }
+                    else if(response.status === false)
+                    {
+                        console.log("Problème lors du traitement de la requête")
+                    }
                 }
             }
         }
     }
-}
-
-function update_value_repos_in_database(event)
-{
-    // On initialise un objet
-    let object = {}
-    // On récupère le nom de l'exercice concerner
-    let parent = event.target.closest(".box_description_check")
-    let parent_previous = parent.previousElementSibling
-    let exercice_name = parent_previous.querySelector(".exercice_name").innerHTML
-
-    // On récupère le repos
-    let repos = event.target.innerHTML
-
-    // On stock ça dans l'objet
-    object.exercice_name = exercice_name
-    object.repos = repos
-    // On converti
-    let object_JSON = JSON.stringify(object)
-    // On envoie l'information au routeur
-    let query = XMLrequest("update_repos", "routeur.php", true, object_JSON)
-
-    query.onload = function()
+    else if(classes.contains("repos_value"))
     {
-        if(query.status === 200)
+        // On initialise un objet
+        let object = {}
+        // On récupère le nom de l'exercice concerner
+        let parent = event.target.closest(".box_description_check")
+        let parent_previous = parent.previousElementSibling
+        let exercice_name = parent_previous.querySelector(".exercice_name").innerHTML
+
+        // On récupère le repos
+        let repos = event.target.innerHTML
+
+        // On stock ça dans l'objet
+        object.exercice_name = exercice_name
+        object.repos = repos
+        // On converti
+        let object_JSON = JSON.stringify(object)
+        // On envoie l'information au routeur
+        let query = XMLrequest("update_repos", "routeur.php", true, object_JSON)
+
+        query.onload = function()
         {
-            let response = JSON.parse(query.responseText)
+            if(query.status === 200)
             {
-                if(response.status === true)
+                let response = JSON.parse(query.responseText)
                 {
-                    console.log("Le repos a été mis à jour")
-                }
-                else if(response.status === false)
-                {
-                    console.log("Problème lors du traitement de la requête")
+                    if(response.status === true)
+                    {
+                        console.log("Le repos a été mis à jour")
+                    }
+                    else if(response.status === false)
+                    {
+                        console.log("Problème lors du traitement de la requête")
+                    }
                 }
             }
         }
@@ -361,7 +346,7 @@ function update_value_repos_in_database(event)
 }
 
 //////////////////////////////////////////////
-/* Fonctino de requête XML */
+/* Fonction de requête XML */
 //////////////////////////////////////////////
 function XMLrequest(identification, destination, bool, data = null)
 {
