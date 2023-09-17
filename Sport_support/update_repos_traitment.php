@@ -1,12 +1,11 @@
 <?php
-
 if(isset($_POST["data"]))
 {
     // On récupère l'objet
     $object = json_decode($_POST["data"]);
     // On récupère le nom de l'exercice et le poid
     $exercice_name = $object->exercice_name;
-    $poid = $object->poid;
+    $repos = $object->repos;
     // On se connecte à PDO
     $PDO = connection_PDO("musculation");
     // On récupère l'id de l'exercice
@@ -25,10 +24,10 @@ if(isset($_POST["data"]))
         $ID = $answer->exercice_id;
         // On update le champ correspondant à l'ID de l'exercice
         $query_update_poid = $PDO -> prepare("  UPDATE exercice_detail
-                                                SET poid = :poid
+                                                SET repos = :repos
                                                 WHERE exercice_id = :exercice_id");
 
-        $query_update_poid->bindValue(":poid", $poid);
+        $query_update_poid->bindValue(":repos", $repos);
         $query_update_poid->bindValue(":exercice_id", $ID);
         $query_update_poid->execute();
         $response["status"] = true;

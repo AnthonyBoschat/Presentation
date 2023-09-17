@@ -154,3 +154,5 @@ body{
 /***********/
 
 .grey{background-color: rgb(254, 234, 234);}
+.grey_dark{background-color: rgba(135, 134, 134, 0.66);}
+.grey_light{background-color: rgba(128, 128, 128, 0.211);}

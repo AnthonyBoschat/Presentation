@@ -76,6 +76,16 @@ function update_poid_in_database_pilote()
         })
 }
 
+function update_repos_in_databse_pilote()
+{
+    let champs_value_repos = document.querySelectorAll(".repos_value")
+    champs_value_repos.forEach(champ => 
+        {
+            champ.removeEventListener("blur", update_value_repos_in_database)
+            champ.addEventListener("blur", update_value_repos_in_database)
+        })
+}
+
 //////////////////////////////////////////////
 /* Fonction des pilotes */
 //////////////////////////////////////////////
@@ -119,70 +129,78 @@ function loading_muscle_from_database()
 // new_exercice_pilote -> Charge un nouvel exercice vierge
 function create_new_exercice(event)
 {
-    // on cherche l'élément parent day le plus proche
-    let parent_element = event.target.closest(".day")
-    // on définie la destination dans l'élément parent
-    let destination = parent_element.querySelector(".workout")
-    // On récupère le groupe musculaire concerné
-    let groupe_musculaire = parent_element.querySelector(".muscle_name").innerHTML
-    // On créé deux nouvels élément
-    let new_element_1 = document.createElement("div")
-    let new_element_2 = document.createElement("div")
-    // On leurs donne une classe
-    new_element_1.classList.add("exercice_control")
-    new_element_2.classList.add("box_description_check")
-    // On créé les templates de leurs enfants
-    let template_element_1 = `
-    <div class="exercice_name" contenteditable="true">Exercice</div>
-    <div class="exercice_view"><i class="fa-regular fa-eye"></i></div>
-    `
-
-    let template_element_2 = `
-    <div class="box_description">
-        <div class="repetition">4 X <span class="repetition_value" contenteditable="true">0</span></div>
-        <div class="poid"><span class="poid_value" contenteditable="true">0</span> Kg</div>
-        <div class="repos"><span class="repos_value" contenteditable="true">0</span> min</div>
-    </div>
-    <div class="box_check">
-        <div class="check hover_green"><i class="fa-solid fa-check"></i></div>
-        <div class="check hover_red"><i class="fa-solid fa-xmark"></i></div>
-    </div>
-    `
-    // On assemble les éléments
-    new_element_1.innerHTML = template_element_1
-    new_element_2.innerHTML = template_element_2
-    // On envoie les éléments dans la destination
-    destination.appendChild(new_element_1)
-    destination.appendChild(new_element_2)
-
-    // On applique le listener de capture d'ancien nom d'exercice avant modification
-    capture_old_exercice_name_pilote()
-    // On réinitialise les listeners d'update de nom, et value, pour prendre en compte le nouvel élément
-    update_exercice_name_in_database_pilote()
-    update_poid_in_database_pilote()
-    // On initialisa maintenant toute les base de donnée
-    // On créé un objet
-    let object = {}
-    // On rempli l'objet
-    object.groupe_musculaire = groupe_musculaire
-    // On converti en JSON l'objet
-    let object_JSON = JSON.stringify(object)
-    // On injecte dans la base de donnée le template vierge d'un nouvel exercice
-    let query = XMLrequest("new_exercice", "routeur.php", true, object_JSON);
-
-    query.onload = function()
+    // On demande le nom de l'exercice
+    let exercice_name = window.prompt("Nom de l'exercice ?")
+    if(exercice_name)
     {
-        if(query.status === 200)
+        // on cherche l'élément parent day le plus proche
+        let parent_element = event.target.closest(".day")
+        // on définie la destination dans l'élément parent
+        let destination = parent_element.querySelector(".workout")
+        // On récupère le groupe musculaire concerné
+        let groupe_musculaire = parent_element.querySelector(".muscle_name").innerHTML
+
+        // On initialisa maintenant toute les base de donnée
+        // On créé un objet
+        let object = {}
+        // On rempli l'objet
+        object.groupe_musculaire = groupe_musculaire
+        object.exercice_name = exercice_name
+        // On converti en JSON l'objet
+        let object_JSON = JSON.stringify(object)
+        // On injecte dans la base de donnée le template vierge d'un nouvel exercice
+        let query = XMLrequest("new_exercice", "routeur.php", true, object_JSON);
+
+        query.onload = function()
         {
-            let response = JSON.parse(query.responseText)
+            if(query.status === 200)
             {
-                if(response.status === true)
+                let response = JSON.parse(query.responseText)
                 {
-                    console.log("Une nouvelle recette a été initialiser")
-                }
-                else if(response.status === false)
-                {
-                    console.log("Problème lors du traitement de la requête")
+                    if(response.status === true)
+                    {
+                        // On créé deux nouvels élément
+                        let new_element_1 = document.createElement("div")
+                        let new_element_2 = document.createElement("div")
+                        // On leurs donne une classe
+                        new_element_1.classList.add("exercice_control", "grey_dark")
+                        new_element_2.classList.add("box_description_check", "grey_light")
+                        // On créé les templates de leurs enfants
+                        let template_element_1 = `
+                        <div class="exercice_name" contenteditable="true">${exercice_name}</div>
+                        <div class="exercice_view"><i class="fa-regular fa-eye"></i></div>
+                        `
+
+                        let template_element_2 = `
+                        <div class="box_description">
+                            <div class="repetition">4 X <span class="repetition_value" contenteditable="true">0</span></div>
+                            <div class="poid"><span class="poid_value" contenteditable="true">0</span> Kg</div>
+                            <div class="repos"><span class="repos_value" contenteditable="true">0</span> min</div>
+                        </div>
+                        <div class="box_check">
+                            <div class="check hover_green"><i class="fa-solid fa-check"></i></div>
+                            <div class="check hover_red"><i class="fa-solid fa-xmark"></i></div>
+                        </div>
+                        `
+                        // On assemble les éléments
+                        new_element_1.innerHTML = template_element_1
+                        new_element_2.innerHTML = template_element_2
+                        // On envoie les éléments dans la destination
+                        destination.appendChild(new_element_1)
+                        destination.appendChild(new_element_2)
+
+                        // On applique le listener de capture d'ancien nom d'exercice avant modification
+                        capture_old_exercice_name_pilote()
+                        // On réinitialise les listeners d'update de nom, et value, pour prendre en compte le nouvel élément
+                        update_exercice_name_in_database_pilote()
+                        update_poid_in_database_pilote()
+                        update_repos_in_databse_pilote()
+                        console.log("Une nouvelle recette a été initialiser")
+                    }
+                    else if(response.status === false)
+                    {
+                        window.alert("Ce nom d'exercice existe déjà")
+                    }
                 }
             }
         }
@@ -270,8 +288,10 @@ function update_value_poid_in_database(event)
     // On initialise un objet
     let object = {}
     // On récupère le nom de l'exercice concerner
-    let parent = event.target.closest(".day")
-    let exercice_name = parent.querySelector(".exercice_name").innerHTML
+    let parent = event.target.closest(".box_description_check")
+    let parent_previous = parent.previousElementSibling
+    let exercice_name = parent_previous.querySelector(".exercice_name").innerHTML
+    
     // On récupère le poid
     let poid = event.target.innerHTML
     // On stock ça dans l'objet
@@ -291,6 +311,45 @@ function update_value_poid_in_database(event)
                 if(response.status === true)
                 {
                     console.log("Le poid a été mis à jour")
+                }
+                else if(response.status === false)
+                {
+                    console.log("Problème lors du traitement de la requête")
+                }
+            }
+        }
+    }
+}
+
+function update_value_repos_in_database(event)
+{
+    // On initialise un objet
+    let object = {}
+    // On récupère le nom de l'exercice concerner
+    let parent = event.target.closest(".box_description_check")
+    let parent_previous = parent.previousElementSibling
+    let exercice_name = parent_previous.querySelector(".exercice_name").innerHTML
+
+    // On récupère le repos
+    let repos = event.target.innerHTML
+
+    // On stock ça dans l'objet
+    object.exercice_name = exercice_name
+    object.repos = repos
+    // On converti
+    let object_JSON = JSON.stringify(object)
+    // On envoie l'information au routeur
+    let query = XMLrequest("update_repos", "routeur.php", true, object_JSON)
+
+    query.onload = function()
+    {
+        if(query.status === 200)
+        {
+            let response = JSON.parse(query.responseText)
+            {
+                if(response.status === true)
+                {
+                    console.log("Le repos a été mis à jour")
                 }
                 else if(response.status === false)
                 {

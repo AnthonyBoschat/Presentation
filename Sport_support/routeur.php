@@ -25,6 +25,10 @@ if(isset($_POST["query"]))
         case "update_poid":
             require "update_poid_traitment.php";
             break;
+
+        case "update_repos":
+            require "update_repos_traitment.php";
+            break;
     }
 }
 

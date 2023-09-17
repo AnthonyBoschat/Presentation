@@ -16,6 +16,7 @@ if(isset($_POST["data"]))
     $query_get_id -> execute();
     $ID_muscle = $query_get_id->fetch(PDO::FETCH_OBJ)->muscle_id;
 
+    // Verifier par rapport au poid
     // Il faut faire le distinguo entre, quand on modifie une table vierge, et quand on modifie un exercice déjà enregistrer
     // On verifie donc dans la table si un exercice porte le nom de $old_exercice_name ( que c'etait une recette déjà enregistrer auparavant )
     $query_verif_exercice = $PDO -> prepare("   SELECT exercice_id

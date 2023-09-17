@@ -26,13 +26,8 @@ CREATE TABLE exercice_detail
 (
     exercice_id smallint(6),
     poid smallint(6),
-    repetition smallint(6)
-);
-
-DROP TABLE IF EXISTS exercice_memory;
-CREATE TABLE exercice_memory
-(
-    exercice_id smallint(6),
+    repetition smallint(6),
+    repos smallint(6),
     controle boolean
 );
 
@@ -49,5 +44,4 @@ VALUES
 select * from muscle;
 select * from exercice;
 select * from exercice_detail;
-select * from exercice_memory;
 
