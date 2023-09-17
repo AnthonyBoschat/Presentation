@@ -45,3 +45,18 @@ select * from muscle;
 select * from exercice;
 select * from exercice_detail;
 
+
+
+SELECT muscle.muscle_name, exercice.exercice_name, exercice_detail.poid, exercice_detail.repetition, exercice_detail.repos
+FROM exercice
+INNER JOIN exercice_detail
+ON exercice_detail.exercice_id = 2
+AND exercice.exercice_id = 2
+INNER JOIN muscle
+ON exercice.muscle_id = muscle.muscle_id;
+
+
+
+
+
+

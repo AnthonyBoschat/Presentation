@@ -13,6 +13,7 @@ function main()
     loading_muscle_pilote()
     new_exerice_pilote()
     update_in_database_pilote()
+    loading_workout_all_pilote()
 }
 //////////////////////////////////////////////
 /* Pilote */
@@ -75,6 +76,11 @@ function update_in_database_pilote()
         })
 }
 
+function loading_workout_all_pilote()
+{
+    loading_workout_all()
+}
+
 //////////////////////////////////////////////
 /* Fonction des pilotes */
 //////////////////////////////////////////////
@@ -91,7 +97,7 @@ function loading_muscle_from_database()
     // On récupère toutes les destination
     let muscles_destinations = document.querySelectorAll(".muscle_name")
     // On Envoie une requête au fichier routeur php
-    let query = XMLrequest("load_muscle", "routeur.php", false)
+    let query = XMLrequest("POST","load_muscle", "routeur.php", false)
     // Quand on a la réponse du routeur
     query.onload = function ()
     {
@@ -138,7 +144,7 @@ function create_new_exercice(event)
         // On converti en JSON l'objet
         let object_JSON = JSON.stringify(object)
         // On injecte dans la base de donnée le template vierge d'un nouvel exercice
-        let query = XMLrequest("new_exercice", "routeur.php", true, object_JSON);
+        let query = XMLrequest("POST","new_exercice", "routeur.php", true, object_JSON);
 
         query.onload = function()
         {
@@ -194,6 +200,7 @@ function create_new_exercice(event)
     }
 }
 
+// Sert à modifier une information dans la base de donnée
 function update_value_in_database(event)
 {
     let classes = event.target.classList
@@ -217,7 +224,7 @@ function update_value_in_database(event)
         // On converti le tableau
         let tableau_muscle_name_JSON = JSON.stringify(tableau_muscle_name)
         // On envoie le tableau au routeur
-        let query = XMLrequest("update_muscle", "routeur.php", true, tableau_muscle_name_JSON)
+        let query = XMLrequest("POST","update_muscle", "routeur.php", true, tableau_muscle_name_JSON)
         query.onload = function()
         {
             if(query.status === 200)
@@ -248,7 +255,7 @@ function update_value_in_database(event)
         // On converti
         let object_JSON = JSON.stringify(object)
         // On envoie l'information au routeur
-        let query = XMLrequest("update_exercice_name", "routeur.php", true, object_JSON)
+        let query = XMLrequest("POST","update_exercice_name", "routeur.php", true, object_JSON)
 
         query.onload = function()
         {
@@ -285,7 +292,7 @@ function update_value_in_database(event)
         // On converti
         let object_JSON = JSON.stringify(object)
         // On envoie l'information au routeur
-        let query = XMLrequest("update_poid", "routeur.php", true, object_JSON)
+        let query = XMLrequest("POST","update_poid", "routeur.php", true, object_JSON)
 
         query.onload = function()
         {
@@ -323,37 +330,109 @@ function update_value_in_database(event)
         // On converti
         let object_JSON = JSON.stringify(object)
         // On envoie l'information au routeur
-        let query = XMLrequest("update_repos", "routeur.php", true, object_JSON)
+        let query = XMLrequest("POST","update_repos", "routeur.php", true, object_JSON)
 
         query.onload = function()
         {
             if(query.status === 200)
             {
                 let response = JSON.parse(query.responseText)
+                if(response.status === true)
                 {
-                    if(response.status === true)
-                    {
-                        console.log("Le repos a été mis à jour")
-                    }
-                    else if(response.status === false)
-                    {
-                        console.log("Problème lors du traitement de la requête")
-                    }
+                    console.log("Le repos a été mis à jour")
+                }
+                else if(response.status === false)
+                {
+                    console.log("Problème lors du traitement de la requête")
                 }
             }
         }
     }
 }
 
+// Récupère et affiche tout les exercice éxistant dans la base de donnée
+function loading_workout_all()
+{
+    // On créé une requête pour récupérer les exercices et leurs descriptions présent dans la base de donnée
+    let query = XMLrequest("POST","load_all_workout", "routeur.php", false)
+
+    query.onload = function ()
+    {
+        if(query.status === 200)
+        {
+            let response = JSON.parse(query.responseText)
+            if(response.status === true)
+            {
+                console.log("Les exercices ont été chargé")
+                // on stock l'objet
+                let object = response.data
+                // On récupère tout les champs de groupe musculaire
+                let muscles_list = document.querySelectorAll(".muscle_name")
+                // On boucle dans l'object retourner par php
+                for(index in object)
+                {
+                    muscles_list.forEach(muscle => 
+                        {
+                            if(muscle.innerHTML == object[index].muscle_name)
+                            {
+                                let groupe_musculaire = muscle
+                                let parent = groupe_musculaire.closest(".day")
+                                let destination = parent.querySelector(".workout")
+
+                                // On créé deux nouvels élément
+                                let new_element_1 = document.createElement("div")
+                                let new_element_2 = document.createElement("div")
+                                // On leurs donne une classe
+                                new_element_1.classList.add("exercice_control", "grey_dark")
+                                new_element_2.classList.add("box_description_check", "grey_light")
+                                // On créé les templates de leurs enfants
+                                let template_element_1 = `
+                                <div class="exercice_name" contenteditable="true">${object[index].exercice_name}</div>
+                                <div class="exercice_view"><i class="fa-regular fa-eye"></i></div>
+                                `
+
+                                let template_element_2 = `
+                                <div class="box_description">
+                                    <div class="repetition">4 X <span class="repetition_value">${object[index].repetition}</span></div>
+                                    <div class="poid"><span class="poid_value" contenteditable="true">${object[index].poid}</span> Kg</div>
+                                    <div class="repos"><span class="repos_value" contenteditable="true">${object[index].repos}</span> min</div>
+                                </div>
+                                <div class="box_check">
+                                    <div class="check hover_green"><i class="fa-solid fa-check"></i></div>
+                                    <div class="check hover_red"><i class="fa-solid fa-xmark"></i></div>
+                                </div>
+                                `
+                                // On assemble les éléments
+                                new_element_1.innerHTML = template_element_1
+                                new_element_2.innerHTML = template_element_2
+                                // On envoie les éléments dans la destination
+                                destination.appendChild(new_element_1)
+                                destination.appendChild(new_element_2)
+
+                                // On applique le listener de capture d'ancien nom d'exercice avant modification
+                                capture_old_exercice_name_pilote()
+                                // On réinitialise les listeners d'update de nom, et value, pour prendre en compte le nouvel élément
+                                update_in_database_pilote()
+                            }
+                        })
+                }
+            }
+            else if(response.status === false)
+            {
+                console.log("Aucun exercice d'enregistrer dans la base de donnée")
+            }
+        }
+    }
+}
 //////////////////////////////////////////////
 /* Fonction de requête XML */
 //////////////////////////////////////////////
-function XMLrequest(identification, destination, bool, data = null)
+function XMLrequest(post_get,identification, destination, bool, data = null)
 {
     if(bool === false)
     {
         let XML_request = new XMLHttpRequest()
-        XML_request.open("POST", destination, true)
+        XML_request.open(post_get, destination, true)
         XML_request.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
         XML_request.send(`query=${identification}`)
         return XML_request

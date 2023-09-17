@@ -29,6 +29,9 @@ if(isset($_POST["query"]))
         case "update_repos":
             require "php_traitment/update_repos_traitment.php";
             break;
+
+        case "load_all_workout":
+            require "php_traitment/load_all_workout_traitment.php";
+            break;
     }
 }
-
