@@ -25,9 +25,9 @@ DROP TABLE IF EXISTS exercice_detail;
 CREATE TABLE exercice_detail
 (
     exercice_id smallint(6),
-    poid smallint(6),
+    poid float,
     repetition smallint(6),
-    repos smallint(6),
+    repos varchar(6),
     controle boolean
 );
 

@@ -40,7 +40,7 @@
         </div>
     </div>
 
-
+    <script src="../../global_tools.js"></script>
     <script src="javascript.js"></script>
 </body>
 </html>

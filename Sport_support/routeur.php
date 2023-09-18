@@ -33,5 +33,9 @@ if(isset($_POST["query"]))
         case "load_all_workout":
             require "php_traitment/load_all_workout_traitment.php";
             break;
+
+        case "delete_exercice":
+            require "php_traitment/delete_exercice_traitment.php";
+            break;
     }
 }

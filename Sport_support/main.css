@@ -11,7 +11,7 @@
 /*********/
 /* Hover */
 /*********/
-.exercice_view i:hover
+.exercice_delete i:hover
 {
     cursor: pointer;
 }
@@ -98,7 +98,7 @@ body{
     max-width: 80%;
 }
 
-.exercice_view
+.exercice_delete
 {
     width: 20%;
     max-width: 20%;
