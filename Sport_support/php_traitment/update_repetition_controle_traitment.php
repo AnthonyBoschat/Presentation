@@ -85,6 +85,14 @@ if(isset($_POST["data"]))
             break;
     }
 
+    // On passe le validate à 1
+    $query_update_validate = $PDO->prepare("UPDATE exercice_detail
+                                            SET validate = 1
+                                            WHERE exercice_id = :exercice_id");
+    $query_update_validate->bindvalue(":exercice_id", $exercice_id);
+    $query_update_validate->execute();
+
+    // On signale la réussite des opérations
     $response["status"] = true;
 }
 

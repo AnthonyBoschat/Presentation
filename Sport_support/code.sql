@@ -16,7 +16,7 @@ CREATE TABLE exercice
 (
     muscle_id smallint(6),
     exercice_id smallint(6) AUTO_INCREMENT,
-    exercice_name varchar(30),
+    exercice_name varchar(100),
 
     PRIMARY KEY(exercice_id)
 );
@@ -28,7 +28,8 @@ CREATE TABLE exercice_detail
     poid float,
     repetition smallint(6),
     repos varchar(6),
-    controle boolean
+    controle boolean,
+    validate boolean
 );
 
 INSERT INTO muscle(muscle_name)

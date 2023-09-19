@@ -1,3 +1,5 @@
+// Interet de new exercice si load_workout_all ?
+
 //////////////////////////////////////////////
 /* Variable d'initialisation */
 //////////////////////////////////////////////
@@ -9,9 +11,9 @@ main()
 
 function main()
 {
-    capture_old_exercice_name_pilote()
     loading_muscle_pilote()
     loading_workout_all_pilote()
+    capture_old_exercice_name_pilote()
     new_exerice_pilote()
     update_in_database_pilote()
 }
@@ -74,6 +76,20 @@ function update_in_database_pilote()
             champ.removeEventListener("blur", update_value_in_database)
             champ.addEventListener("blur", update_value_in_database)
         })
+
+    let buttons_delete = document.querySelectorAll(".fa-trash")
+    buttons_delete.forEach(button => 
+        {
+            button.removeEventListener("click", update_value_in_database)
+            button.addEventListener("click", update_value_in_database)
+        })
+
+    let validation_buttons = document.querySelectorAll(".check")
+    validation_buttons.forEach(bouton => 
+        {
+            bouton.removeEventListener("click",update_value_in_database)
+            bouton.addEventListener("click",update_value_in_database)
+        })
 }
 
 function loading_workout_all_pilote()
@@ -88,16 +104,6 @@ function delete_exercice_in_database_pilote()
         {
             button.removeEventListener("click", update_value_in_database)
             button.addEventListener("click", update_value_in_database)
-        })
-}
-
-function validation_exercice_pilote()
-{
-    let validation_buttons = document.querySelectorAll(".check")
-    validation_buttons.forEach(bouton => 
-        {
-            bouton.removeEventListener("click",update_value_in_database)
-            bouton.addEventListener("click",update_value_in_database)
         })
 }
 
@@ -150,8 +156,6 @@ function create_new_exercice(event)
     {
         // on cherche l'élément parent day le plus proche
         let parent_element = event.target.closest(".day")
-        // on définie la destination dans l'élément parent
-        let destination = parent_element.querySelector(".workout")
         // On récupère le groupe musculaire concerné
         let groupe_musculaire = parent_element.querySelector(".muscle_name").innerHTML
 
@@ -174,43 +178,8 @@ function create_new_exercice(event)
                 {
                     if(response.status === true)
                     {
-                        // On créé deux nouvels élément
-                        let new_element_1 = document.createElement("div")
-                        let new_element_2 = document.createElement("div")
-                        // On leurs donne une classe
-                        new_element_1.classList.add("exercice_control", "grey_dark")
-                        new_element_2.classList.add("box_description_check", "grey_light")
-                        // On créé les templates de leurs enfants
-                        let template_element_1 = `
-                        <div class="exercice_name" contenteditable="true">${exercice_name}</div>
-                        <div class="exercice_delete"><i class="fa-solid fa-trash"></i></div>
-                        `
-
-                        let template_element_2 = `
-                        <div class="box_description">
-                            <div class="repetition">4 X <span class="repetition_value">10</span></div>
-                            <div class="poid"><span class="poid_value" contenteditable="true">0</span> Kg</div>
-                            <div class="repos"><span class="repos_value" contenteditable="true">0</span> min</div>
-                        </div>
-                        <div class="box_check">
-                            <div class="check_box hover_green"><i class="check fa-solid fa-check"></i></div>
-                            <div class="check_box hover_red"><i class="check fa-solid fa-xmark"></i></div>
-                        </div>
-                        `
-                        // On assemble les éléments
-                        new_element_1.innerHTML = template_element_1
-                        new_element_2.innerHTML = template_element_2
-                        // On envoie les éléments dans la destination
-                        destination.appendChild(new_element_1)
-                        destination.appendChild(new_element_2)
-
-                        // On applique le listener de capture d'ancien nom d'exercice avant modification
-                        capture_old_exercice_name_pilote()
-                        // On réinitialise les listeners d'update de nom, et value, pour prendre en compte le nouvel élément
-                        update_in_database_pilote()
-                        delete_exercice_in_database_pilote()
+                        // On charge toute la page
                         loading_workout_all()
-                        validation_exercice_pilote()
                         console.log("Un nouvel exercice a été initialiser")
                     }
                     else if(response.status === false)
@@ -379,8 +348,9 @@ function update_value_in_database(event)
             // On initialise un objet
             let object = {}
             // On récupère le nom de l'exercice
-            let parent = event.target.closest(".day")
+            let parent = event.target.closest(".exercice_control")
             let exercice_name = parent.querySelector(".exercice_name").innerHTML
+            console.log(exercice_name)
             // On stock dans l'objet
             object.exercice_name = exercice_name
             // On converti en JSON
@@ -449,9 +419,27 @@ function update_value_in_database(event)
     }
     else if(classes.contains("check_invalid"))
     {
-        // Injecter une classe dans la boite de l'exercice pour rendre visible le fait que l'exercice a été fait cette semaine
-        // classe de opacity pourquoi pas
-        console.log("L'exercice n'a pas été réussi")
+        // On envoie le nom de l'exercice pour simplement modifier son validate
+        let object = {}
+        // On récupère le nom de l'exercice
+        let parent = event.target.closest(".box_description_check")
+        let parent_previous = parent.previousElementSibling
+        let exercice_name = parent_previous.querySelector(".exercice_name").innerHTML
+        // On rempli l'objet
+        object.exercice_name = exercice_name
+        // On converti l'objet
+        let object_JSON = JSON.stringify(object)
+        // On envoi l'objet au routeur
+        let query = XMLrequest("POST", "invalid_exercice", "routeur.php", true, object_JSON)
+
+        query.onload = function ()
+        {
+            if(query.status === 200)
+            {
+                loading_workout_all()
+            }
+        }
+        
     }
 }
 
@@ -491,8 +479,16 @@ function loading_workout_all()
                             let new_element_1 = document.createElement("div")
                             let new_element_2 = document.createElement("div")
                             // On leurs donne une classe
-                            new_element_1.classList.add("exercice_control", "grey_dark")
-                            new_element_2.classList.add("box_description_check", "grey_light")
+                            if(object[index].validate === 1)
+                            {
+                                new_element_1.classList.add("exercice_control", "grey_dark", "validate")
+                                new_element_2.classList.add("box_description_check", "grey_light", "validate")
+                            }
+                            else if(object[index].validate === 0)
+                            {
+                                new_element_1.classList.add("exercice_control", "grey_dark")
+                                new_element_2.classList.add("box_description_check", "grey_light")
+                            }
                             // On créé les templates de leurs enfants
                             let template_element_1 = `
                             <div class="exercice_name" contenteditable="true">${object[index].exercice_name}</div>
@@ -516,17 +512,69 @@ function loading_workout_all()
                             // On envoie les éléments dans la destination
                             destination.appendChild(new_element_1)
                             destination.appendChild(new_element_2)
-
-                            // On applique le listener de capture d'ancien nom d'exercice avant modification
-                            capture_old_exercice_name_pilote()
-                            // On réinitialise les listeners d'update de nom, et value, pour prendre en compte le nouvel élément
-                            update_in_database_pilote()
                         }
                     })
             }
-            console.log("Les exercices ont été chargé")
-            delete_exercice_in_database_pilote()
-            validation_exercice_pilote()
+
+            // On applique le listener de capture d'ancien nom d'exercice avant modification
+            capture_old_exercice_name_pilote()
+            // On réinitialise tout les listeners de changement d'information dans la base de donnée
+            update_in_database_pilote()
+            // On verifie si tout les exercices d'une journée ont été réalisé
+            verification_workout_day()
+            // On verifie si la semaine est terminer
+            verification_workout_week()
         }
+    }
+}
+
+function verification_workout_day()
+{
+    let days = document.querySelectorAll(".workout")
+    days.forEach(day => 
+        {
+            if(day.innerHTML != "")
+            {
+                let exercices_of_day = day.querySelectorAll(".exercice_control")
+                let controle = true
+                exercices_of_day.forEach(exercice => 
+                    {
+                        if(!exercice.classList.contains("validate"))
+                        {
+                            controle = false
+                        }
+                    })
+
+                if(controle === true)
+                {
+                    let groupe_musculaire_of_the_day = day.previousElementSibling
+                    groupe_musculaire_of_the_day.classList.add("validate")
+                }
+            }
+            
+        })
+}
+
+function verification_workout_week()
+{
+    // On verifie si tout les groupes musculaire ont la classe validate
+    let groupes_musculaire = document.querySelectorAll(".muscle")
+    let controle = true
+    groupes_musculaire.forEach(groupe_musculaire => 
+        {
+            if(!groupe_musculaire.classList.contains("validate"))
+            {
+                controle = false
+            }
+        })
+    // S'ils les possèdent tous, on réinitialise tout les validate de la base de donnée, et les classes
+    if(controle === true)
+    {
+        let element_with_validate_classe = document.querySelectorAll(".validate")
+        element_with_validate_classe.forEach(element => 
+            {
+                XMLrequest("POST", "reset_validate", "routeur.php", false)
+                element.classList.remove("validate")
+            })
     }
 }

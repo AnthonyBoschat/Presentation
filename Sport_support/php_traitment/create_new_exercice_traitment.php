@@ -34,13 +34,14 @@ if(isset($_POST["data"]))
     $answer = $query_recup_id_exercice->fetchAll(PDO::FETCH_OBJ);
     $ID = end($answer)->exercice_id;
     // On initialise exercice_detail
-    $query_init_exerciceDetail_table = $PDO -> prepare("INSERT INTO exercice_detail(exercice_id, poid, repetition, repos, controle)
-                                                        VALUES(:exercice_id, :poid, :repetition, :repos, :controle)");
+    $query_init_exerciceDetail_table = $PDO -> prepare("INSERT INTO exercice_detail(exercice_id, poid, repetition, repos, controle, validate)
+                                                        VALUES(:exercice_id, :poid, :repetition, :repos, :controle, :validate)");
     $query_init_exerciceDetail_table->bindValue(":exercice_id", $ID);
     $query_init_exerciceDetail_table->bindValue(":poid", 0);
     $query_init_exerciceDetail_table->bindValue(":repetition", 10);
     $query_init_exerciceDetail_table->bindValue(":repos", 0);
     $query_init_exerciceDetail_table->bindValue(":controle", 0);
+    $query_init_exerciceDetail_table->bindValue(":validate", 0);
     $query_init_exerciceDetail_table->execute();
 
     $response["status"] = true;

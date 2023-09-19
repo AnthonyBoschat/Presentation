@@ -12,7 +12,7 @@ if($ALL_ID)
     for($i = 0; $i<count($ALL_ID); $i++)
     {
         // On effectue une requete avec deux jointures pour récupérer tout ce dont nous avons besoin
-        $query_recup_detail_exercice_x = $PDO->prepare("SELECT muscle.muscle_name, exercice.exercice_name, exercice_detail.poid, exercice_detail.repetition, exercice_detail.repos
+        $query_recup_detail_exercice_x = $PDO->prepare("SELECT muscle.muscle_name, exercice.exercice_name, exercice_detail.poid, exercice_detail.repetition, exercice_detail.repos, exercice_detail.validate
                                                         FROM exercice
                                                         INNER JOIN exercice_detail
                                                         ON exercice_detail.exercice_id = :exercice_ID

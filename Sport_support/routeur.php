@@ -44,5 +44,13 @@ if(isset($_POST["query"]))
         case "update_repetition_controle":
             require "php_traitment/update_repetition_controle_traitment.php";
             break;
+
+        case "invalid_exercice":
+            require "php_traitment/update_validate_for_invalid_exercice.php";
+            break;
+        
+        case "reset_validate":
+            require "php_traitment/reset_validate_traitment.php";
+            break;
     }
 }
