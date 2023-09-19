@@ -576,5 +576,6 @@ function verification_workout_week()
                 XMLrequest("POST", "reset_validate", "routeur.php", false)
                 element.classList.remove("validate")
             })
+        window.alert("Félicitation pour avoir terminer cette semaine !")
     }
 }
