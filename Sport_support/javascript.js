@@ -392,30 +392,36 @@ function update_value_in_database(event)
         let exercice_name = parent_previous.querySelector(".exercice_name").innerHTML
         let poid = parent.querySelector(".poid_value").innerHTML
         let repetition = parent.querySelector(".repetition_value").innerHTML
-        // On rempli l'objet
-        object.exercice_name = exercice_name
-        object.poid = poid
-        object.repetition = repetition
-        // On converti l'objet
-        let object_JSON = JSON.stringify(object)
-        // On envoi l'objet au routeur
-        let query = XMLrequest("POST", "update_repetition_controle", "routeur.php", true, object_JSON)
-
-        query.onload = function()
+        // On demande la confirmation de la réussite
+        let confirmation = window.confirm(`L'exercice ${exercice_name} a été réussi ?`)
+        if(confirmation)
         {
-            if(query.status === 200)
+            // On rempli l'objet
+            object.exercice_name = exercice_name
+            object.poid = poid
+            object.repetition = repetition
+            // On converti l'objet
+            let object_JSON = JSON.stringify(object)
+            // On envoi l'objet au routeur
+            let query = XMLrequest("POST", "update_repetition_controle", "routeur.php", true, object_JSON)
+
+            query.onload = function()
             {
-                let response = JSON.parse(query.responseText)
-                if(response.status === true)
+                if(query.status === 200)
                 {
-                    loading_workout_all()
-                }
-                else if(response.status === false)
-                {
-                    console.log("Probleme avec le traitement de la requête")
+                    let response = JSON.parse(query.responseText)
+                    if(response.status === true)
+                    {
+                        loading_workout_all()
+                    }
+                    else if(response.status === false)
+                    {
+                        console.log("Probleme avec le traitement de la requête")
+                    }
                 }
             }
         }
+        
     }
     else if(classes.contains("check_invalid"))
     {
@@ -425,21 +431,25 @@ function update_value_in_database(event)
         let parent = event.target.closest(".box_description_check")
         let parent_previous = parent.previousElementSibling
         let exercice_name = parent_previous.querySelector(".exercice_name").innerHTML
-        // On rempli l'objet
-        object.exercice_name = exercice_name
-        // On converti l'objet
-        let object_JSON = JSON.stringify(object)
-        // On envoi l'objet au routeur
-        let query = XMLrequest("POST", "invalid_exercice", "routeur.php", true, object_JSON)
-
-        query.onload = function ()
+        // On demande la confirmation de l'echec
+        let confirmation = window.confirm(`L'exercice ${exercice_name} a été un échec ?`)
+        if(confirmation)
         {
-            if(query.status === 200)
+            // On rempli l'objet
+            object.exercice_name = exercice_name
+            // On converti l'objet
+            let object_JSON = JSON.stringify(object)
+            // On envoi l'objet au routeur
+            let query = XMLrequest("POST", "invalid_exercice", "routeur.php", true, object_JSON)
+
+            query.onload = function ()
             {
-                loading_workout_all()
+                if(query.status === 200)
+                {
+                    loading_workout_all()
+                }
             }
         }
-        
     }
 }
 
