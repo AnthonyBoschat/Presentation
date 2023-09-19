@@ -4,8 +4,6 @@ if(isset($_POST["data"]))
 {
     // On récupère le tableau
     $tableau = json_decode($_POST["data"]);
-    // On se connecte à PDO
-    $PDO = connection_PDO("musculation");
     // On prépare une requête pour supprimer les données de la table muscle
     $query_delete_muscle = $PDO->prepare("TRUNCATE TABLE muscle");
     $query_delete_muscle->execute();

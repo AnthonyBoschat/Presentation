@@ -6,8 +6,6 @@ if(isset($_POST["data"]))
     // On récupère le nom de l'exercice et le poid
     $exercice_name = $object->exercice_name;
     $repos = $object->repos;
-    // On se connecte à PDO
-    $PDO = connection_PDO("musculation");
     // On récupère l'id de l'exercice
     $query_recup_id_exercice = $PDO->prepare("SELECT exercice_id 
                                             FROM exercice

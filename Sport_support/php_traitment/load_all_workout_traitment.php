@@ -1,8 +1,6 @@
 <?php
 // On initialise un objet vide
 $object = new stdClass();
-// On se connecte à PDO
-$PDO = connection_PDO("musculation");
 // On effectue une requête pour récupérer tout les exercice_ID présent dans exercice
 $query_recup_all_exerciceID = $PDO -> prepare("SELECT exercice_id FROM exercice");
 $query_recup_all_exerciceID->execute();

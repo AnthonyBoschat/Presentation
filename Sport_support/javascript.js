@@ -91,6 +91,16 @@ function delete_exercice_in_database_pilote()
         })
 }
 
+function validation_exercice_pilote()
+{
+    let validation_buttons = document.querySelectorAll(".check")
+    validation_buttons.forEach(bouton => 
+        {
+            bouton.removeEventListener("click",update_value_in_database)
+            bouton.addEventListener("click",update_value_in_database)
+        })
+}
+
 //////////////////////////////////////////////
 /* Fonction des pilotes */
 //////////////////////////////////////////////
@@ -183,8 +193,8 @@ function create_new_exercice(event)
                             <div class="repos"><span class="repos_value" contenteditable="true">0</span> min</div>
                         </div>
                         <div class="box_check">
-                            <div class="check hover_green"><i class="fa-solid fa-check"></i></div>
-                            <div class="check hover_red"><i class="fa-solid fa-xmark"></i></div>
+                            <div class="check_box hover_green"><i class="check fa-solid fa-check"></i></div>
+                            <div class="check_box hover_red"><i class="check fa-solid fa-xmark"></i></div>
                         </div>
                         `
                         // On assemble les éléments
@@ -199,6 +209,8 @@ function create_new_exercice(event)
                         // On réinitialise les listeners d'update de nom, et value, pour prendre en compte le nouvel élément
                         update_in_database_pilote()
                         delete_exercice_in_database_pilote()
+                        loading_workout_all()
+                        validation_exercice_pilote()
                         console.log("Un nouvel exercice a été initialiser")
                     }
                     else if(response.status === false)
@@ -393,6 +405,54 @@ function update_value_in_database(event)
         }
         
     }
+    else if(classes.contains("check_valid"))
+    {
+        // Envoyer une requete XML avec pour information le nom de l'exercice, le poid et les repetition
+        // switch case pour les repetitions
+        // On envoie dans le fichier les informations qui va gérer selon les information donné
+        // 1 --- 6 ou 8 repetition -> on augmente la repetiion de 2 dans la base de donnée pour l'exercice -> refresh (js)
+        // 2 --- 10 repetition -> On verifie en php dans la BDD si le controle est à 0 ou 1
+        // -> 0 -> passe à 1 -> refresh (js)
+        // -> 1 -> passe les repetition à 6, le controle à 0, le poid à +2.5 -> refresh (js)
+        // On initialise un objet
+        let object = {}
+        // On récupère le nom de l'exercice, le poid, les repetitions
+        let parent = event.target.closest(".box_description_check")
+        let parent_previous = parent.previousElementSibling
+        let exercice_name = parent_previous.querySelector(".exercice_name").innerHTML
+        let poid = parent.querySelector(".poid_value").innerHTML
+        let repetition = parent.querySelector(".repetition_value").innerHTML
+        // On rempli l'objet
+        object.exercice_name = exercice_name
+        object.poid = poid
+        object.repetition = repetition
+        // On converti l'objet
+        let object_JSON = JSON.stringify(object)
+        // On envoi l'objet au routeur
+        let query = XMLrequest("POST", "update_repetition_controle", "routeur.php", true, object_JSON)
+
+        query.onload = function()
+        {
+            if(query.status === 200)
+            {
+                let response = JSON.parse(query.responseText)
+                if(response.status === true)
+                {
+                    loading_workout_all()
+                }
+                else if(response.status === false)
+                {
+                    console.log("Probleme avec le traitement de la requête")
+                }
+            }
+        }
+    }
+    else if(classes.contains("check_invalid"))
+    {
+        // Injecter une classe dans la boite de l'exercice pour rendre visible le fait que l'exercice a été fait cette semaine
+        // classe de opacity pourquoi pas
+        console.log("L'exercice n'a pas été réussi")
+    }
 }
 
 // Récupère et affiche tout les exercice éxistant dans la base de donnée
@@ -446,8 +506,8 @@ function loading_workout_all()
                                 <div class="repos"><span class="repos_value" contenteditable="true">${object[index].repos}</span> min</div>
                             </div>
                             <div class="box_check">
-                                <div class="check hover_green"><i class="fa-solid fa-check"></i></div>
-                                <div class="check hover_red"><i class="fa-solid fa-xmark"></i></div>
+                                <div class="check_box hover_green"><i class="check check_valid fa-solid fa-check"></i></div>
+                                <div class="check_box hover_red"><i class="check check_invalid fa-solid fa-xmark"></i></div>
                             </div>
                             `
                             // On assemble les éléments
@@ -466,6 +526,7 @@ function loading_workout_all()
             }
             console.log("Les exercices ont été chargé")
             delete_exercice_in_database_pilote()
+            validation_exercice_pilote()
         }
     }
 }

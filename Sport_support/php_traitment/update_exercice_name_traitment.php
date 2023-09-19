@@ -8,8 +8,6 @@ if(isset($_POST["data"]))
     $groupe_musculaire = $object->groupe_musculaire;
     $exercice_name = $object->exercice_name;
     $old_exercice_name = $object->old_exercice_name;
-    // On se connecte à PDO
-    $PDO = connection_PDO("musculation");
     // On prépare une requête pour récupérer l'id du groupe musculaire
     $query_get_id = $PDO->prepare("SELECT muscle_id FROM muscle WHERE muscle_name = :muscle_name");
     $query_get_id -> bindValue(":muscle_name", $groupe_musculaire);

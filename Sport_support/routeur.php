@@ -1,6 +1,9 @@
 <?php
 require "../../global_tools.php";
 
+// On se connecte à PDO
+$PDO = connection_PDO("musculation");
+
 // Reception JS et redirection
 if(isset($_POST["query"]))
 {
@@ -36,6 +39,10 @@ if(isset($_POST["query"]))
 
         case "delete_exercice":
             require "php_traitment/delete_exercice_traitment.php";
+            break;
+        
+        case "update_repetition_controle":
+            require "php_traitment/update_repetition_controle_traitment.php";
             break;
     }
 }

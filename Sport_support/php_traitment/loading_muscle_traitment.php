@@ -3,8 +3,6 @@
 if(isset($_POST["query"]))
 {
     $query = $_POST["query"];
-    // On se connecte à PDO
-    $PDO = connection_PDO("musculation");
     
     // On effectue la requête
     $query_get_all_muscle = $PDO->prepare("SELECT muscle_name FROM muscle");
