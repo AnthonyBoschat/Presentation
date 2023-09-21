@@ -55,7 +55,7 @@ foreach($informations as $clef => $valeur)
     <?php if(isset($_SESSION["ID"])): ?>
         <div id="connecter_box">
             <p id="user_presentation">Utilisateur : <?= $_SESSION["user_name"] ?></p>
-            <form action="../../-- login_page/destroy_session.php" method="post">
+            <form action="../login_page/destroy_session.php" method="post">
                 <button name="deconnexion">Déconnexion</button>
             </form>
         </div>
