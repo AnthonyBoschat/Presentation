@@ -1,0 +1,121 @@
+*{margin: 0; padding: 0;}
+
+/*******************/
+/* Animation Class */
+/*******************/
+
+/*************************/
+/* Animation Description */
+/*************************/
+
+/*********/
+/* Hover */
+/*********/
+.hover_pointer:hover
+{
+    cursor: pointer;
+}
+
+/*********/
+/* Basic */
+/*********/
+
+/* Entête */
+
+body{
+    width: 100%;
+    height: 100vh;
+    background-color: rgb(176, 176, 176);
+}
+
+header{
+    width: 100%;
+    height: 10%;
+    background-color: rgb(78, 78, 78);
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+header div{
+    font-size: 30px;
+    padding-left: 20px;
+    color: white;
+}
+
+header form{
+    padding-right: 20px;
+}
+
+header form button{
+    font-size: 30px;
+}
+
+/* Main */
+
+main{
+    width: 100%;
+    height: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* chat_box */
+
+#chat_box{
+    width: 90%;
+    height: 90%;
+    background-color: rgb(203, 234, 255);
+    outline: 2px solid black;
+}
+
+#content_box{
+    width: 100%;
+    height: 95%;
+    display: flex;
+    flex-direction: column;
+    padding-left: 5px;
+}
+
+#content_box #message{
+    margin-top: 10px;
+    font-size: 20px;
+}
+
+#content_box #message .username
+{
+    font-size: 25px;
+    font-weight: 700;
+}
+
+
+/* Writting_box */
+
+#writting_box{
+    width: 100%;
+    height: 5%;
+}
+
+#writting_box form{
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+#writting_area{
+    height: 100%;
+    width: 80%;
+    font-size: 22px;
+    padding-left: 8px;
+}   
+
+#submit_area{
+    height: 100%;
+    width: 20%;
+}
+
+/***********/
+/* Special */
+/***********/
