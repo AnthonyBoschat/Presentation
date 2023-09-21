@@ -1,3 +1,4 @@
+use boulangerie;
 DROP TABLE user_information;
 CREATE TABLE IF NOT EXISTS user_information
 (

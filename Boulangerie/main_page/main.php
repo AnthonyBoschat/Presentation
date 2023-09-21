@@ -44,7 +44,7 @@
             <div id="my_recette_list"></div>
         </div>
         <div id="deconnection">
-            <form action="main_treatment.php" method="post"><input type="submit" name="deconnection" value="Se déconnecter" id="deconnection_button"></form>
+            <form action="../../../-- login_page/destroy_session.php" method="post"><input type="submit" name="deconnection" value="Se déconnecter" id="deconnection_button"></form>
         </div>
     </header>
 
