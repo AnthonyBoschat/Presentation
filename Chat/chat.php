@@ -1,4 +1,11 @@
-<?php session_start() ?>
+<?php
+require "/home/parkser/Travail/global_tools.php";
+session_start();
+
+$id = $_GET["id"];
+require "php_traitment/user_name_recup.php";
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,7 +18,7 @@
 <body>
     
     <header>
-        <div>Utilisateur : <?= $_SESSION["user_name"] ?></div>
+        <div>Utilisateur : <span id="user_name"><?= $user_name ?></span></div>
         <form action="../login_page/destroy_session.php">
             <button class="hover_pointer">Se déconnecter</button>
         </form>
@@ -19,14 +26,12 @@
     <main>
         <div id="chat_box">
             <div id="content_box">
-                <div id="message"> <span class="username"><?= $_SESSION["user_name"] ?></span> : Salut tout le monde !</div>
-                <div id="message"> <span class="username"><?= $_SESSION["user_name"] ?></span> : Comment vous allez ?</div>
-                <div id="message"> <span class="username"><?= $_SESSION["user_name"] ?></span> : Moi ça va ♥</div>
             </div>
+            
             <div id="writting_box">
-                <form action="">
-                    <input type="text" id="writting_area">
-                    <input type="submit" value="Envoyer" id="submit_area">
+                <form action="routeur.php" method="post" id="formulaire">
+                    <input type="text" id="writting_area" name="message_user">
+                    <input type="submit" value="Envoyer" id="submit_area" name="submit">
                 </form>
             </div>
         </div>
@@ -36,7 +41,14 @@
 
 
 
+<!--
 
+<div class="message">
+    <span class="username"><?= $id ?></span>
+    <span class="text_content">: Salut tout le monde !</span>
+</div>
+
+ -->
 
 
     <script src="../../global_tools.js"></script>

@@ -1,5 +1,8 @@
 <?php
 
+session_start();
+$id = $_SESSION["ID"];
+
 if(isset($_POST["select"]))
 {
     $select = $_POST["select"];
@@ -14,7 +17,7 @@ if(isset($_POST["select"]))
             header("Location: ../Caterpillar/index.php");
             exit;
         case "Chat":
-            header("Location: ../Chat/chat.php");
+            header("Location: ../Chat/chat.php?id=$id");
             exit;
     }
 }
