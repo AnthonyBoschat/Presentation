@@ -19,5 +19,8 @@ if(isset($_POST["select"]))
         case "Chat":
             header("Location: ../Chat/chat.php?id=$id");
             exit;
+        case "To-Do-List":
+            header("Location: ../To-Do List/index.php?id=$id");
+            exit;
     }
 }

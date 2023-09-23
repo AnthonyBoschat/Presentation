@@ -38,6 +38,7 @@
                         <option value="Boulangerie">Boulangerie</option>
                         <option value="Caterpillar">Caterpillar</option>
                         <option value="Chat">Chat</option>
+                        <option value="To-Do-List">To-Do List</option>
                     </select>
                 </div>
             </div>

@@ -1,9 +1,7 @@
 <?php
 require "/home/parkser/Travail/global_tools.php";
 session_start();
-
-$id = $_GET["id"];
-require "php_traitment/user_name_recup.php";
+$user_name = recup_username_from_database();
 
 ?>
 <!DOCTYPE html>
