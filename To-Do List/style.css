@@ -16,6 +16,18 @@ header input:hover
     cursor: pointer;
 }
 
+.categorie:hover
+{
+    cursor: pointer;
+    font-size: 25px;
+}
+
+#add_categorie:hover
+{
+    cursor: pointer;
+    font-size: 15px;
+}
+
 /*********/
 /* Basic */
 /*********/
@@ -49,6 +61,7 @@ main{
     width: 100%;
     height: 92%;
     display: flex;
+    font-family: 'Open Sans', sans-serif;
 }
 /*categorie_box*/
 #categorie_box{
@@ -56,8 +69,41 @@ main{
     height: 100%;
     background-color: rgba(246, 171, 65, 0.505);
     box-shadow: 5px 5px 5px black;
-
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
+
+#categorie_box div
+{
+    width: 90%;
+    height: 95%;
+    background-color: rgba(255, 0, 0, 0.29);
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+    max-height: 95%;
+    align-items: center;
+    box-shadow: 0px 0px 10px 1px black inset;
+}
+
+.categorie
+{
+    width: fit-content;
+    font-size: 20px;
+    margin-top: 20px;
+    transition: 0.2s;
+}
+
+#add_categorie
+{
+    width: fit-content;
+    font-size: 13px;
+    margin-top: 20px;
+    transition: 0.2s;
+    font-weight: 600;
+}
+
 
 /*list_box*/
 #list_box{
@@ -65,6 +111,8 @@ main{
     height: 100%;
     background-color: rgba(255, 231, 75, 0.722);
 }
+
+
 
 /***********/
 /* Special */
