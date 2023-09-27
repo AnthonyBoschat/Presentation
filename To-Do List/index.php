@@ -56,8 +56,18 @@ $user_name = recup_username_from_database();
         </section>
 
         <section id="list_box">
+        </section>
 
 
+
+
+
+
+
+
+
+
+<!--
             <div class="todo" id="new_todo">
                 <div class="new_todo_box">
                     <span><i class="fa-solid fa-plus"></i></span>
@@ -75,11 +85,12 @@ $user_name = recup_username_from_database();
                     <span class="content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam.</span>
                 </div>
             </div>
+-->
 
 
 
-            
-        </section>
+
+        
     </main>
 
 

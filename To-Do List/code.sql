@@ -16,6 +16,6 @@ CREATE TABLE todo_list
 
 SELECT * FROM todo_list;
 
-INSERT INTO todo_list(user_name, todo_content, todo_color)
+INSERT INTO todo_list(user_name, todo_categorie, todo_content, todo_color)
 VALUES
-(:user_name, :todo_content, :todo_color);
+("Anthony", "Lecture", "Faire les courses", "##FBD990");
