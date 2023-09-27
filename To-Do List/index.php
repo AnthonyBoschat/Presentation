@@ -64,16 +64,21 @@ $user_name = recup_username_from_database();
                 </div>
             </div>
 
+
+
+
             <div class="todo">
                 <div class="todo_option">
-                    <div class="parameter_box"><i class="fa-solid fa-gear parameter"></i></div>
+                    <div class="parameter_box"><i class="fa-solid fa-check parameter todo_valid"></i><i class="fa-solid fa-gear parameter option"></i></div>
                 </div>
-
                 <div class="todo_content">
                     <span class="content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam.</span>
                 </div>
             </div>
 
+
+
+            
         </section>
     </main>
 

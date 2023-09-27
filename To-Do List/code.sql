@@ -6,6 +6,7 @@ DROP TABLE IF EXISTS todo_list;
 CREATE TABLE todo_list
 (
     user_name varchar(65),
+    todo_categorie varchar(65),
     todo_content text,
     todo_color text
 );
