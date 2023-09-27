@@ -23,7 +23,7 @@ $user_name = recup_username_from_database();
             <div id="new_todo_creation_box">
 
                 <div id="new_todo_color_box">
-                    <input type="color" id="new_todo_color" value="#FBD990">
+                    <input type="color" id="new_todo_color" value="#F6AB41">
                 </div>
 
                 <div id="new_todo_content_box">
@@ -47,11 +47,7 @@ $user_name = recup_username_from_database();
 
     <main>
         <section id="categorie_box">
-            <div>
-                <span class="categorie">Lecture</span>
-                <span class="categorie">Travail</span>
-                <span class="categorie">Programmation</span>
-                <span id="add_categorie">(Ajouter une catégorie)</span>
+            <div id="destination_categorie_box">
             </div>
         </section>
 

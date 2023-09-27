@@ -11,18 +11,46 @@ main()
 
 function main()
 {
+    load_categorie_for_this_user_pilote()
     initialize_listener_pilote()
 }
 
 //////////////////////////////////////////////
 /* Pilote */
 //////////////////////////////////////////////
+
+function load_categorie_for_this_user_pilote()
+{
+    let object = {}
+    object.user_name = user_name
+    let object_JSON = JSON.stringify(object)
+    let query = XMLrequest("POST", "load_categorie_for_this_user", "routeur.php", true, object_JSON)
+    onload(query, function(response)
+    {
+        if(response)
+        {
+            let destination = document.querySelector("#destination_categorie_box")
+            destination.innerHTML = ""
+            response.data.forEach(categorie => 
+                {
+                    let template = `<span class="categorie">${categorie["todo_categorie"]}</span>`
+                    destination.insertAdjacentHTML("afterbegin", template)
+                })
+            let template_for_creation_new_categorie = `<span id="add_categorie">(Ajouter une catégorie)</span>`
+            destination.insertAdjacentHTML("beforeend", template_for_creation_new_categorie)
+            initialize_listener_pilote()
+        }
+    })
+}
+
+
 function initialize_listener_pilote()
 {
     let buttons_categorie = document.querySelectorAll(".categorie"),
         button_new_todo = document.querySelector("#new_todo"),
         button_change_color_new_todo = document.querySelector("#new_todo_color"),
-        button_save_new_todo = document.querySelector("#enregistrer_new_todo");
+        button_save_new_todo = document.querySelector("#enregistrer_new_todo"),
+        button_new_categorie = document.querySelector("#add_categorie");
     
     buttons_categorie.forEach(button => 
     {
@@ -42,6 +70,13 @@ function initialize_listener_pilote()
 
     button_save_new_todo.removeEventListener("click", enregistrer_new_todo)
     button_save_new_todo.addEventListener("click", enregistrer_new_todo)
+
+    if(button_new_categorie != null)
+    {
+        button_new_categorie.removeEventListener("click", create_new_categorie)
+        button_new_categorie.addEventListener("click", create_new_categorie)
+    }
+    
 }
 
 //////////////////////////////////////////////
@@ -68,7 +103,7 @@ function overlay_new_todo_display_on()
 function change_background_color_of_new_todo_box(event)
 {
     let boite_creation_new_todo = document.querySelector("#new_todo_creation_box")
-    boite_creation_new_todo.style.backgroundColor = event.target.value
+    boite_creation_new_todo.style.boxShadow = `0px 0px 50px 1px ${event.target.value} inset`
 }
 
 // Permet d'enregistrer le nouveau todo dans la base de donnée
@@ -115,9 +150,31 @@ function enregistrer_new_todo()
     }
 }
 
+// Enregistre une nouvelle categorie
+function create_new_categorie()
+{
+    let name_of_new_categorie = window.prompt("Nom de la nouvelle categorie ?")
+    if(name_of_new_categorie)
+    {
+        let object = {}
+        object.user_name = user_name
+        object.categorie_name = name_of_new_categorie
+        let object_JSON = JSON.stringify(object)
+        let query = XMLrequest("POST", "create_new_categorie_for_this_user", "routeur.php", true, object_JSON)
+        onload(query, function(response)
+        {
+            if(response)
+            {
+                console.log("Nouvelle categorie enregistrer avec succès")
+                load_categorie_for_this_user_pilote()
+            }
+        })
+    }
+}
 //////////////////////////////////////////////
 /* Special */
 //////////////////////////////////////////////
+
 
 // change la categorie selectionner
 function change_categorie_selected(event)
@@ -125,7 +182,7 @@ function change_categorie_selected(event)
     categorie_selected = event.target.innerHTML
 }
 
-// Charge les todo pour la categorie selectionner
+// Charge les todos pour la categorie selectionner
 function load_all_todo_for_this_categorie()
 {
     let object = {}
@@ -151,7 +208,7 @@ function load_all_todo_for_this_categorie()
             // on boucle dans response.data pour insert les tâches correspondantes
             response.data.forEach(todo => 
                 {
-                    let template_todo = ` <div class="todo" style="background-color: ${todo["todo_color"]}">
+                    let template_todo = ` <div class="todo" style="box-shadow: 0px 0px 20px 0px black inset, 0px 0px 200px -50px ${todo["todo_color"]} inset, 5px 5px 10px black;">
                                             <div class="todo_option">
                                                 <div class="parameter_box"><i class="fa-solid fa-check parameter"></i><i class="fa-solid fa-gear parameter"></i></div>
                                             </div>

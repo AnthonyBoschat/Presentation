@@ -12,5 +12,11 @@ if(isset($_POST["query"]))
         case "load_todos_for_this_categorie":
             require "php_traitment/load_todo_for_this_categorie_traitment.php";
             exit;
+        case "load_categorie_for_this_user":
+            require "php_traitment/load_categorie_for_this_user_traitment.php";
+            exit;
+        case "create_new_categorie_for_this_user":
+            require "php_traitment/create_new_categorie_for_this_user_traitment.php";
+            exit;
     }
 }

@@ -50,7 +50,7 @@ body{
 header{
     width: 100%;
     height: 8%;
-    background-color: rgba(215, 196, 71, 0.925);
+    background-color: rgba(246, 171, 65, 0.505);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -119,7 +119,7 @@ main{
 #list_box{
     width: 85%;
     height: 100%;
-    background-color: rgba(255, 231, 75, 0.722);
+    background-color: rgba(246, 171, 65, 0.505);
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -130,10 +130,12 @@ main{
 #list_box .todo{
     margin-top: 20px;
     width: 300px;
-    background-color: rgb(251, 217, 144);
+    background-color: rgba(246, 171, 65, 0.505);
     height: 300px;
-    box-shadow: 0px 0px 10px 1px black inset;
     border-radius: 20px;
+    outline: 1px solid black;
+    box-shadow: 5px 5px 10px black,
+                0px 0px 20px 0px black inset;
 }
 
 /*new_todo*/
@@ -141,7 +143,6 @@ main{
 .new_todo_box{
     width: 100%;
     height: 100%;
-    outline: 1px solid black;
     border-radius: 20px;
     display: flex;
     justify-content: center;
@@ -156,7 +157,6 @@ main{
 {
     width: 100%;
     height: 20%;
-    outline: 1px solid black;
     border-radius: 20px;
     align-items: center;
 }
@@ -169,7 +169,6 @@ main{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    outline: 1px solid red;
 }
 
 .todo_option .parameter{
@@ -182,11 +181,11 @@ main{
 {
     width: 100%;
     height: 80%;
-    outline: 1px solid black;
     border-radius: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
+    font-weight: 600;
 }
 
 .content{
@@ -195,7 +194,6 @@ main{
     align-items: center;
     width: 80%;
     height: 80%;
-    outline: 1px solid red;
     overflow-y: auto;
     text-align: center;
 }
