@@ -32,7 +32,7 @@ $user_name = recup_username_from_database();
                 
                 <div id="new_todo_button_box">
                     <input type="submit" value="Enregistrer" id="enregistrer_new_todo">
-                    <input type="submit" value="Annuler" id="annuler">
+                    <input type="submit" value="Annuler" id="annuler_new_todo">
                 </div>
             </div>
         </div>

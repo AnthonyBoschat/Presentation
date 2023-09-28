@@ -50,7 +50,9 @@ function initialize_listener_pilote()
         button_new_todo = document.querySelector("#new_todo"),
         button_change_color_new_todo = document.querySelector("#new_todo_color"),
         button_save_new_todo = document.querySelector("#enregistrer_new_todo"),
-        button_new_categorie = document.querySelector("#add_categorie");
+        button_new_categorie = document.querySelector("#add_categorie"),
+        button_annulation_new_todo = document.querySelector("#annuler_new_todo"),
+        buttons_todo_finish = document.querySelectorAll(".todo_valid");
     
     buttons_categorie.forEach(button => 
     {
@@ -60,8 +62,8 @@ function initialize_listener_pilote()
 
     if(button_new_todo != null)
     {
-        button_new_todo.removeEventListener("click", overlay_new_todo_display_on)
-        button_new_todo.addEventListener("click", overlay_new_todo_display_on) 
+        button_new_todo.removeEventListener("click", overlay_new_todo_display_on_off)
+        button_new_todo.addEventListener("click", overlay_new_todo_display_on_off) 
     }
     
 
@@ -75,6 +77,19 @@ function initialize_listener_pilote()
     {
         button_new_categorie.removeEventListener("click", create_new_categorie)
         button_new_categorie.addEventListener("click", create_new_categorie)
+    }
+
+    
+    button_annulation_new_todo.removeEventListener("click", overlay_new_todo_display_on_off)
+    button_annulation_new_todo.addEventListener("click", overlay_new_todo_display_on_off)
+    
+    if(buttons_todo_finish != null)
+    {
+        buttons_todo_finish.forEach(button => 
+            {
+                button.removeEventListener("click", todo_is_finish)
+                button.addEventListener("click", todo_is_finish)
+            })
     }
     
 }
@@ -92,11 +107,14 @@ function load_todos_for_this_categorie(event)
 }
 
 // Permet d'afficher l'overlay pour créé un nouveau todo
-function overlay_new_todo_display_on()
+function overlay_new_todo_display_on_off()
 {
-    console.log("controle")
+    let new_todo_content = document.querySelector("#new_todo_content")
+    new_todo_content.value = ""
     let overlay = document.querySelector("#new_todo_overlay")
-    overlay.style.display = "flex"
+    let display = window.getComputedStyle(overlay).getPropertyValue("display")
+    overlay.style.display = display
+    overlay.style.display == "none" ? overlay.style.display = "flex" : overlay.style.display = "none"
 }
 
 // Permet de changer la couleur du nouveau todo
@@ -210,7 +228,7 @@ function load_all_todo_for_this_categorie()
                 {
                     let template_todo = ` <div class="todo" style="box-shadow: 0px 0px 20px 0px black inset, 0px 0px 200px -50px ${todo["todo_color"]} inset, 5px 5px 10px black;">
                                             <div class="todo_option">
-                                                <div class="parameter_box"><i class="fa-solid fa-check parameter"></i><i class="fa-solid fa-gear parameter"></i></div>
+                                                <div class="parameter_box"><i class="fa-solid fa-check parameter todo_valid"></i><i class="fa-solid fa-gear parameter option"></i></div>
                                             </div>
 
                                             <div class="todo_content">
@@ -221,8 +239,36 @@ function load_all_todo_for_this_categorie()
                 })
             // On réapplique les listener
             initialize_listener_pilote()
-
         }
         else{console.log("Echec du traitement de la requête")}
     })
+}
+
+// Permet de terminer un todo
+function todo_is_finish(event)
+{
+    let confirm_end_of_todo = window.confirm("Supprimer cette tâche ?")
+    if(confirm_end_of_todo)
+    {
+        // On supprime la tâche du flux
+        let parent = event.target.closest(".todo")
+        let todo_content = parent.querySelector(".content").innerHTML
+        let super_parent = document.querySelector("#list_box")
+        super_parent.removeChild(parent)
+
+        // On supprime la tâche de la base de donnée
+        let object = {}
+        object.todo_content = todo_content
+        object.user_name = user_name
+        let object_JSON = JSON.stringify(object)
+        let query = XMLrequest("POST", "delete_this_todo_for_this_user", "routeur.php", true, object_JSON)
+        onload(query, function(response)
+        {
+            if(response)
+            {
+                window.alert("La tâche a été supprimer de la base de donnée")
+            }
+        })
+    }
+    
 }
