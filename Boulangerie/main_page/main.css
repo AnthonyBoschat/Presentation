@@ -90,10 +90,10 @@ input::-webkit-outer-spin-button {
 }
 
 /* WTFFFFFFFFF */
-#main_box .button_hover_true:hover
+.button_hover_true:hover
 {
     cursor: pointer;
-    box-shadow: 4px 4px 15px black;
+    box-shadow: 4px 4px 15px black !important;
 }
 /*********/
 /* Basic */

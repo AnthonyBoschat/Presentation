@@ -102,6 +102,8 @@
                 <button class="big_button unavailable_button modify_recette">Modifier ma recette</button>
                 <button class="big_button delete_recette unavailable_button">Supprimer ma recette</button>
             </div>
+
+            
             <div id="programme_box">
                 <div id="programme_box_header">
                     <button id="button_calcule_again" class="button_hover_true">Calculer à nouveau</button>
