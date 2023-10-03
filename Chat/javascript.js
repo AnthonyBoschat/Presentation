@@ -7,7 +7,7 @@ const nom_utilisateur = document.querySelector("#user_name").innerHTML
 
 
 
-// Lorsque que le fichier est chargé
+// Lorsque que le fichier est chargé e
 document.addEventListener("DOMContentLoaded", function(){
     // Charge les message enregistrer dans la base de donnée
     loading_all_message()
