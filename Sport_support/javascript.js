@@ -1,3 +1,5 @@
+import {Tools} from "../../global_tools.js"
+
 // Interet de new exercice si load_workout_all ?
 
 //////////////////////////////////////////////
@@ -123,7 +125,7 @@ function loading_muscle_from_database()
     // On récupère toutes les destination
     let muscles_destinations = document.querySelectorAll(".muscle_name")
     // On Envoie une requête au fichier routeur php
-    let query = XMLrequest("POST","load_muscle", "routeur.php", false)
+    let query = Tools.XMLrequest("POST","load_muscle", "routeur.php", false)
     // Quand on a la réponse du routeur
     query.onload = function ()
     {
@@ -168,7 +170,7 @@ function create_new_exercice(event)
         // On converti en JSON l'objet
         let object_JSON = JSON.stringify(object)
         // On injecte dans la base de donnée le template vierge d'un nouvel exercice
-        let query = XMLrequest("POST","new_exercice", "routeur.php", true, object_JSON);
+        let query = Tools.XMLrequest("POST","new_exercice", "routeur.php", true, object_JSON);
 
         query.onload = function()
         {
@@ -216,7 +218,7 @@ function update_value_in_database(event)
         // On converti le tableau
         let tableau_muscle_name_JSON = JSON.stringify(tableau_muscle_name)
         // On envoie le tableau au routeur
-        let query = XMLrequest("POST","update_muscle", "routeur.php", true, tableau_muscle_name_JSON)
+        let query = Tools.XMLrequest("POST","update_muscle", "routeur.php", true, tableau_muscle_name_JSON)
         query.onload = function()
         {
             if(query.status === 200)
@@ -247,7 +249,7 @@ function update_value_in_database(event)
         // On converti
         let object_JSON = JSON.stringify(object)
         // On envoie l'information au routeur
-        let query = XMLrequest("POST","update_exercice_name", "routeur.php", true, object_JSON)
+        let query = Tools.XMLrequest("POST","update_exercice_name", "routeur.php", true, object_JSON)
 
         query.onload = function()
         {
@@ -284,7 +286,7 @@ function update_value_in_database(event)
         // On converti
         let object_JSON = JSON.stringify(object)
         // On envoie l'information au routeur
-        let query = XMLrequest("POST","update_poid", "routeur.php", true, object_JSON)
+        let query = Tools.XMLrequest("POST","update_poid", "routeur.php", true, object_JSON)
 
         query.onload = function()
         {
@@ -322,7 +324,7 @@ function update_value_in_database(event)
         // On converti
         let object_JSON = JSON.stringify(object)
         // On envoie l'information au routeur
-        let query = XMLrequest("POST","update_repos", "routeur.php", true, object_JSON)
+        let query = Tools.XMLrequest("POST","update_repos", "routeur.php", true, object_JSON)
 
         query.onload = function()
         {
@@ -356,7 +358,7 @@ function update_value_in_database(event)
             // On converti en JSON
             let object_JSON = JSON.stringify(object)
             // On envoi l'information au routeur
-            let query = XMLrequest("POST", "delete_exercice", "routeur.php", true, object_JSON)
+            let query = Tools.XMLrequest("POST", "delete_exercice", "routeur.php", true, object_JSON)
 
             query.onload = function ()
             {
@@ -403,7 +405,7 @@ function update_value_in_database(event)
             // On converti l'objet
             let object_JSON = JSON.stringify(object)
             // On envoi l'objet au routeur
-            let query = XMLrequest("POST", "update_repetition_controle", "routeur.php", true, object_JSON)
+            let query = Tools.XMLrequest("POST", "update_repetition_controle", "routeur.php", true, object_JSON)
 
             query.onload = function()
             {
@@ -440,7 +442,7 @@ function update_value_in_database(event)
             // On converti l'objet
             let object_JSON = JSON.stringify(object)
             // On envoi l'objet au routeur
-            let query = XMLrequest("POST", "invalid_exercice", "routeur.php", true, object_JSON)
+            let query = Tools.XMLrequest("POST", "invalid_exercice", "routeur.php", true, object_JSON)
 
             query.onload = function ()
             {
@@ -457,7 +459,7 @@ function update_value_in_database(event)
 function loading_workout_all()
 {
     // On créé une requête pour récupérer les exercices et leurs descriptions présent dans la base de donnée
-    let query = XMLrequest("POST","load_all_workout", "routeur.php", false)
+    let query = Tools.XMLrequest("POST","load_all_workout", "routeur.php", false)
 
     query.onload = function ()
     {
@@ -475,7 +477,7 @@ function loading_workout_all()
                     champ.innerHTML = ""
                 })
             // On boucle dans l'object retourner par php
-            for(index in object)
+            for(let index in object)
             {
                 muscles_list.forEach(muscle => 
                     {
@@ -583,7 +585,7 @@ function verification_workout_week()
         let element_with_validate_classe = document.querySelectorAll(".validate")
         element_with_validate_classe.forEach(element => 
             {
-                XMLrequest("POST", "reset_validate", "routeur.php", false)
+                Tools.XMLrequest("POST", "reset_validate", "routeur.php", false)
                 element.classList.remove("validate")
             })
         window.alert("Félicitation pour avoir terminer cette semaine !")

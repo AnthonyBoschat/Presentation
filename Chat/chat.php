@@ -49,7 +49,6 @@ $user_name = recup_username_from_database();
  -->
 
 
-    <script src="/global_tools.js"></script>
-    <script src="javascript.js"></script>
+    <script type="module" src="javascript.js"></script>
 </body>
 </html>

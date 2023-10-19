@@ -1,3 +1,4 @@
+import {Tools} from "../../global_tools.js"
 // Récupération du HTML
 const nom_utilisateur = document.querySelector("#user_name").innerHTML
 
@@ -21,7 +22,7 @@ document.addEventListener("DOMContentLoaded", function(){
 
 function loading_all_message()
 {
-    let query = XMLrequest("POST", "load_all_message", "routeur.php")
+    let query = Tools.XMLrequest("POST", "load_all_message", "routeur.php")
     query.onload = function(){
         if(query.status === 200){
             let response = JSON.parse(query.responseText)
@@ -56,7 +57,7 @@ function listener_submit_button()
         object.user_name = nom_utilisateur
         object.user_message = user_message
         object_JSON = JSON.stringify(object)
-        let query = XMLrequest("POST", "save_message", "routeur.php", true, object_JSON)
+        let query = Tools.XMLrequest("POST", "save_message", "routeur.php", true, object_JSON)
 
         query.onload = function()
         {

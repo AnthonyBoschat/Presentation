@@ -1,3 +1,4 @@
+import {Tools} from "../../global_tools.js"
 //////////////////////////////////////////////
 /* Variable d'initialisation */
 //////////////////////////////////////////////
@@ -24,8 +25,8 @@ function load_categorie_for_this_user_pilote()
     let object = {}
     object.user_name = user_name
     let object_JSON = JSON.stringify(object)
-    let query = XMLrequest("POST", "load_categorie_for_this_user", "routeur.php", true, object_JSON)
-    onload(query, function(response)
+    let query = Tools.XMLrequest("POST", "load_categorie_for_this_user", "routeur.php", true, object_JSON)
+    Tools.onload(query, function(response)
     {
         if(response)
         {
@@ -136,7 +137,7 @@ function enregistrer_new_todo()
     object.todo_color = todo_color.value
     object.todo_categorie = categorie_selected
     let object_JSON = JSON.stringify(object)
-    let query = XMLrequest("POST", "save_new_todo", "routeur.php", true, object_JSON)
+    let query = Tools.XMLrequest("POST", "save_new_todo", "routeur.php", true, object_JSON)
     query.onload = function()
     {
         if(query.status === 200)
@@ -178,8 +179,8 @@ function create_new_categorie()
         object.user_name = user_name
         object.categorie_name = name_of_new_categorie
         let object_JSON = JSON.stringify(object)
-        let query = XMLrequest("POST", "create_new_categorie_for_this_user", "routeur.php", true, object_JSON)
-        onload(query, function(response)
+        let query = Tools.XMLrequest("POST", "create_new_categorie_for_this_user", "routeur.php", true, object_JSON)
+        Tools.onload(query, function(response)
         {
             if(response)
             {
@@ -207,8 +208,8 @@ function load_all_todo_for_this_categorie()
     object.todo_categorie = categorie_selected
     object.user_name = user_name
     let object_JSON = JSON.stringify(object) 
-    let query = XMLrequest("POST", "load_todos_for_this_categorie", "routeur.php", true, object_JSON)
-    onload(query, function(response)
+    let query = Tools.XMLrequest("POST", "load_todos_for_this_categorie", "routeur.php", true, object_JSON)
+    Tools.onload(query, function(response)
     {
         if(response)
         {
@@ -261,8 +262,8 @@ function todo_is_finish(event)
         object.todo_content = todo_content
         object.user_name = user_name
         let object_JSON = JSON.stringify(object)
-        let query = XMLrequest("POST", "delete_this_todo_for_this_user", "routeur.php", true, object_JSON)
-        onload(query, function(response)
+        let query = Tools.XMLrequest("POST", "delete_this_todo_for_this_user", "routeur.php", true, object_JSON)
+        Tools.onload(query, function(response)
         {
             if(response)
             {
